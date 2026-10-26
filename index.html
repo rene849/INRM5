@@ -7,43 +7,46 @@
 <title>Global demographic changes - M5</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ── Tokens & Base Variables (Matched to Baseline M1) ── */
+/* ── Tokens & Base Variables ── */
 :root{
   --red:#E3120B; --navy:#1F2E7A; --navy-deep:#141F52;
   --blue:#2E45B8; --teal:#36E2BD; --cream:#EBE9E0;
   --ink:#0f172a; --muted:#5a5f73; --rule:#d7d9e0;
   --maxw:1320px;
   --pad:clamp(18px,4vw,52px);
-  --screen-min:580px;
   color-scheme: only light;
 }
 
-/* Belt-and-braces: Lock background & prevent vertical scrollbars matching Base M1 */
 html, body{
   background:#fff !important;
   color:#0f172a !important;
-  overflow-x:hidden !important;
-  overflow-y:hidden !important;
-  height:100% !important;
-  margin:0;padding:0;
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:640px;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+*,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Noto Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+body{
+  font-family:'Noto Sans',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
 button{font-family:inherit;cursor:pointer;border:none;background:none;touch-action:manipulation;}
 :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px;}
 
-/* ── Screen switching matching Base M1 ── */
+/* ── Screen switching ── */
 .screen{display:none;}
 .screen.is-active{
   display:flex;
   flex-direction:column;
-  overflow:hidden;
-  height:100vh;
-  min-height:var(--screen-min,580px);
+  width:100%;
+  min-height:640px;
+  position:relative;
 }
 
-/* ── APPBAR (Matched to Baseline M1) ── */
+/* ── APPBAR ── */
 .appbar{
   position:relative;z-index:40;flex:none;
   background:#fff;
@@ -64,12 +67,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .appbar-tools{display:flex;align-items:center;gap:8px;flex:none;}
 
-/* Icon Buttons SVG Rules from Baseline M1 */
+/* Icon Buttons SVG Rules */
 .icon-btn{
   --ring:#2E45B8; --ring-fill:transparent; --glyph:#2E45B8;
   width:36px;height:36px;padding:0;border:0;background:none;
   cursor:pointer;flex:none;display:block;border-radius:50%;
-  transition:none;
 }
 .icon-btn svg{width:100%;height:100%;display:block;overflow:visible;}
 .icon-btn .ring{fill:var(--ring-fill);stroke:var(--ring);stroke-width:1;}
@@ -78,13 +80,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:hover,.icon-btn:focus-visible{--ring:#1f2e7a;--ring-fill:#ebedfa;--glyph:#1f2e7a;}
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent;--glyph:#1f2e7a;}
 
-/* ── COVER STAGE (Exact Grid Sizing from Base M1) ── */
-#cover{overflow:hidden;}
+/* ── COVER STAGE ── */
 .cover-stage{
   position:relative;width:100%;max-width:var(--maxw);margin:0 auto;
   display:grid;
-  padding:clamp(12px,2vw,24px) clamp(18px,4vw,52px);
-  flex:1 0 auto;align-content:center;overflow:visible;
+  padding:clamp(20px,3vw,36px) clamp(18px,4vw,52px);
+  flex:1 0 auto;align-content:center;
 }
 .cover-text{
   grid-area:1/1;align-self:center;justify-self:start;
@@ -105,7 +106,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   width:100%;aspect-ratio:1000/450;pointer-events:none;z-index:1;
 }
 .cover-art-container {
-  position: relative;width: 100%;height:100%;aspect-ratio:1000/450;
+  position: relative;width: 100%;height:100%;
 }
 
 /* Pulsing Cover Dots Layer */
@@ -136,7 +137,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .map-container{
   position:relative;width:100%;max-width:var(--maxw);
   margin:0 auto;flex:1;display:flex;flex-direction:column;
-  padding:0 var(--pad);overflow:hidden;
+  padding:0 var(--pad);
 }
 .map-header{
   display:flex;justify-content:space-between;align-items:baseline;
@@ -146,7 +147,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .map-year-display{font-size:clamp(28px,3vw,42px);font-weight:800;color:var(--navy-deep);}
 
 .map-viewport{
-  position:relative;width:100%;flex:1;min-height:0;
+  position:relative;width:100%;aspect-ratio:1000/450;
   background:#f8fafc;border-radius:8px;border:1px solid var(--rule);
   overflow:hidden;margin-bottom:8px;
 }
@@ -171,4 +172,199 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 
 /* ── CONTROL PANEL ── */
 .control-panel{
-  display:flex;flex-direction:column;gap
+  display:flex;flex-direction:column;gap:8px;
+  background:#fff;padding:8px 0 16px;border-top:1px solid var(--rule);flex:none;
+}
+.time-tabs{display:flex;gap:8px;align-items:center;}
+.time-btn{
+  padding:5px 12px;border-radius:4px;border:1px solid var(--blue);
+  color:var(--blue);font-weight:700;font-size:13px;
+  transition:all .18s ease;
+}
+.time-btn:hover{background:#eef0fb;}
+.time-btn.active{background:var(--navy-deep);color:#fff;border-color:var(--navy-deep);}
+
+.category-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.cat-btn{
+  padding:10px 8px;border-radius:4px;background:#f1f5f9;
+  color:var(--ink);font-size:13px;font-weight:700;text-align:center;
+  border:1px solid var(--rule);transition:all .18s ease;
+}
+.cat-btn:hover{background:#e2e8f0;}
+.cat-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+/* ── MODALS ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(15,23,42,.65);backdrop-filter:blur(3px);
+  z-index:200;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:#fff;border-radius:10px;max-width:680px;width:100%;
+  max-height:82vh;display:flex;flex-direction:column;
+  box-shadow:0 16px 52px rgba(0,0,0,.24);
+}
+.modal-head{
+  padding:16px 20px 12px;border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;flex:none;
+}
+.modal-head h2{font-size:18px;font-weight:700;}
+.modal-body{padding:16px 20px;overflow-y:auto;font-size:14px;line-height:1.6;}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+@media(max-width:560px){
+  .category-tabs{grid-template-columns:1fr;}
+}
+body{box-shadow:0 0 6px 0 rgba(13,13,13,0.14),0 4px 8px 0 rgba(13,13,13,0.15);}
+</style>
+</head>
+<body>
+
+<div id="srStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- ── SCREEN 1: COVER ── -->
+<section id="cover" class="screen is-active" aria-label="Module Cover">
+  <div class="cover-stage">
+    <div class="cover-text">
+      <h1 class="cover-title">Global<br>demographic<br>changes</h1>
+      <button type="button" class="btn-start" id="btnCoverStart">Start</button>
+    </div>
+
+    <div class="cover-art">
+      <div class="cover-art-container">
+        <!-- Direct Inlined SVG Map -->
+        <svg viewBox="0 0 1000 450" style="width:100%;height:100%;display:block;" preserveAspectRatio="xMidYMid meet">
+          <g fill="#b0b5ba">
+            <path d="M102,74 L142,66 L175,69 L204,45 L252,43 L298,85 L328,118 L296,152 L260,192 L228,212 L192,216 L172,176 L132,156 L94,142 L72,106 Z M338,22 L388,18 L418,52 L384,106 L342,88 Z"/>
+            <path d="M236,220 L278,216 L332,234 L368,284 L364,352 L312,424 L276,432 L256,388 L238,296 L226,242 Z"/>
+            <path d="M452,56 L512,48 L568,64 L628,42 L748,36 L878,48 L934,136 L882,184 L768,172 L662,152 L592,162 L542,126 L474,124 L448,96 Z M472,132 L498,128 L512,156 L478,162 Z"/>
+            <path d="M428,154 L522,148 L584,204 L608,272 L572,364 L524,402 L488,382 L462,284 L418,226 L422,174 Z M604,312 L624,312 L616,364 L596,356 Z"/>
+            <path d="M602,152 L682,164 L746,212 L722,274 L678,262 L632,212 L602,176 Z M826,168 L854,166 L866,224 L832,204 Z M748,278 L788,276 L812,324 L764,332 Z"/>
+            <path d="M784,296 L872,288 L908,348 L878,412 L798,406 L782,352 Z M916,388 L944,382 L936,428 L912,416 Z"/>
+          </g>
+        </svg>
+        
+        <div class="cover-dots-layer">
+          <div class="dot-pulse blue" style="left: 28%; top: 32%; width: 12px; height: 12px;"></div>
+          <div class="dot-pulse orange" style="left: 33%; top: 62%; width: 10px; height: 10px;"></div>
+          <div class="dot-pulse orange" style="left: 34%; top: 82%; width: 10px; height: 10px;"></div>
+          <div class="dot-pulse yellow" style="left: 50%; top: 58%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse yellow" style="left: 54%; top: 60%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse yellow" style="left: 56%; top: 48%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse yellow" style="left: 55%; top: 78%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse red" style="left: 61%; top: 32%; width: 12px; height: 12px;"></div>
+          <div class="dot-pulse red" style="left: 62%; top: 42%; width: 14px; height: 14px;"></div>
+          <div class="dot-pulse red" style="left: 65%; top: 46%; width: 34px; height: 34px; animation-duration: 2s;"></div>
+          <div class="dot-pulse red" style="left: 67%; top: 44%; width: 18px; height: 18px;"></div>
+          <div class="dot-pulse red" style="left: 73%; top: 38%; width: 22px; height: 22px;"></div>
+          <div class="dot-pulse red" style="left: 70%; top: 52%; width: 12px; height: 12px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCREEN 2: INTERACTIVE INFOGRAPHIC ── -->
+<section id="mainApp" class="screen" aria-label="Interactive Infographic Stage">
+  <!-- Exact Baseline M1 Appbar -->
+  <header class="appbar">
+    <div class="appbar-inner">
+      <div class="appbar-title">Global demographic changes</div>
+      <div class="appbar-tools">
+        <!-- Baseline Home Button[cite: 1] -->
+        <button type="button" class="icon-btn btn-home" aria-label="Return to cover">
+          <svg viewBox="0 0 36 36">
+            <circle class="ring" cx="18" cy="18" r="17"/>
+            <path class="glyph" d="M18,10.2L9.5,17v10.5h6v-6h5v6h6V17L18,10.2z M24.5,25.5h-2v-6h-9v6h-2V18l6.5-5.2l6.5,5.2V25.5z"/>
+          </svg>
+        </button>
+        <!-- Baseline Bibliography Button[cite: 1] -->
+        <button type="button" class="icon-btn btn-bib" id="btnOpenBib" aria-label="Open Bibliography">
+          <svg viewBox="0 0 36 36">
+            <circle class="ring" cx="18" cy="18" r="17"/>
+            <path class="glyph" d="M12,11.5h12V13H12V11.5z M12,16.5h12V18H12V16.5z M12,21.5h8V23h-8V21.5z"/>
+          </svg>
+        </button>
+        <!-- Baseline Close Button[cite: 1] -->
+        <button type="button" class="icon-btn btn-close" aria-label="Close interaction">
+          <svg viewBox="0 0 36 36">
+            <circle class="ring" cx="18" cy="18" r="17"/>
+            <path class="xglyph" d="M11,11l14,14 M25,11L11,25"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="map-container">
+    <div class="map-header">
+      <div class="map-title-text" id="displayCategoryTitle">Population per continent (in millions)</div>
+      <div class="map-year-display" id="displayYear">1950</div>
+    </div>
+
+    <div class="map-viewport">
+      <svg viewBox="0 0 1000 450" style="width:100%;height:100%;display:block;" preserveAspectRatio="xMidYMid meet">
+        <g fill="#b0b5ba">
+          <path d="M102,74 L142,66 L175,69 L204,45 L252,43 L298,85 L328,118 L296,152 L260,192 L228,212 L192,216 L172,176 L132,156 L94,142 L72,106 Z M338,22 L388,18 L418,52 L384,106 L342,88 Z"/>
+          <path d="M236,220 L278,216 L332,234 L368,284 L364,352 L312,424 L276,432 L256,388 L238,296 L226,242 Z"/>
+          <path d="M452,56 L512,48 L568,64 L628,42 L748,36 L878,48 L934,136 L882,184 L768,172 L662,152 L592,162 L542,126 L474,124 L448,96 Z M472,132 L498,128 L512,156 L478,162 Z"/>
+          <path d="M428,154 L522,148 L584,204 L608,272 L572,364 L524,402 L488,382 L462,284 L418,226 L422,174 Z M604,312 L624,312 L616,364 L596,356 Z"/>
+          <path d="M602,152 L682,164 L746,212 L722,274 L678,262 L632,212 L602,176 Z M826,168 L854,166 L866,224 L832,204 Z M748,278 L788,276 L812,324 L764,332 Z"/>
+          <path d="M784,296 L872,288 L908,348 L878,412 L798,406 L782,352 Z M916,388 L944,382 L936,428 L912,416 Z"/>
+        </g>
+      </svg>
+      <div id="markerOverlay"></div>
+    </div>
+
+    <div class="control-panel">
+      <div class="time-tabs" id="timeTabContainer"></div>
+      <div class="category-tabs">
+        <button type="button" class="cat-btn active" data-cat="continent">Population per continent</button>
+        <button type="button" class="cat-btn" data-cat="country">Five most populous countries</button>
+        <button type="button" class="cat-btn" data-cat="city">Ten most populous cities</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTRO MODAL ── -->
+<div class="modal-overlay" id="introModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Module Introduction</h2>
+      <button type="button" class="icon-btn" id="btnCloseIntro" aria-label="Close modal">
+        <svg viewBox="0 0 36 36"><circle class="ring" cx="18" cy="18" r="17"/><path class="xglyph" d="M11 11l14 14M25 11L11 25"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Demography is a game-changer, not only for the US-China rivalry but also for geopolitics in general[cite: 3]. Populations and their characteristics evolve constantly[cite: 3]. Engage with the following interactive infographic to learn more about the manner and frequency of demographic shifts[cite: 3].</p>
+      <br>
+      <button type="button" class="btn-start" id="btnContinueIntro" style="width:100%;">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── BIBLIOGRAPHY MODAL ── -->
+<div class="modal-overlay" id="bibModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Bibliography</h2>
+      <button type="button" class="icon-btn" id="btnCloseBib" aria-label="Close modal">
+        <svg viewBox="0 0 36 36"><circle class="ring" cx="18" cy="18" r="17"/><path class="xglyph" d="M11 11l14 14M25 11L11 25"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>United Nations, Department of Economic and Social Affairs, Population Division. 2019. <i>World population prospects 2019</i>[cite: 3].</p>
+      <br>
+      <p>United Nations, Department of Economic and Social Affairs, Population Division. 2019. <i>World urbanization prospects: the 2018 revision</i>[cite: 3].</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const DATA = {
+    continent: {
+      title: "Population per continent (in
