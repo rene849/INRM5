@@ -7,7 +7,6 @@
 <title>Global demographic changes - M5</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ── Tokens matching M1 baseline ── */
 :root{
   --red:#E3120B; --navy:#1F2E7A; --navy-deep:#141F52;
   --blue:#2E45B8; --teal:#1DC9A4; --orange:#E57373;
@@ -17,15 +16,16 @@
   color-scheme: only light;
 }
 
-/* Strict viewport lock - Prevents Moodle internal scrollbars */
+/* Bulletproof height configuration for Moodle 4.5 sandboxed iframes */
 html, body{
   background:#fff !important;
   color:#0f172a !important;
-  overflow:hidden !important;
-  height:580px !important;
-  width:100% !important;
   margin:0;
   padding:0;
+  width:100%;
+  min-height:580px;
+  height:580px;
+  overflow:hidden !important;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{
@@ -36,11 +36,21 @@ body{
 button{font-family:inherit;cursor:pointer;border:none;background:none;touch-action:manipulation;}
 :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px;}
 
-/* ── Screen Management ── */
-.screen{display:none;width:100%;height:580px;position:relative;}
-.screen.is-active{display:flex;flex-direction:column;overflow:hidden;}
+/* ── Screen Containers (Hard min-heights prevent 0px collapse) ── */
+.screen{
+  display:none;
+  width:100%;
+  height:580px;
+  min-height:580px;
+  position:relative;
+}
+.screen.is-active{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
 
-/* ── BASELINE APPBAR ── */
+/* ── APPBAR (Matched to baseline M1) ── */
 .appbar{
   position:relative;z-index:40;flex:none;
   background:#fff;height:54px;display:flex;align-items:stretch;
@@ -53,9 +63,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   content:'';position:absolute;left:var(--pad);right:var(--pad);bottom:0;
   height:1px;background:var(--rule);
 }
-.appbar-title{flex:1;display:flex;align-items:center;
+.appbar-title{
+  flex:1;display:flex;align-items:center;
   font-size:15px;font-weight:700;color:var(--ink);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
 .appbar-tools{display:flex;align-items:center;gap:8px;flex:none;}
 
 .icon-btn{
@@ -71,11 +83,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent;--glyph:#1f2e7a;}
 
 /* ── COVER STAGE ── */
-#cover{overflow:hidden;}
 .cover-stage{
   position:relative;width:100%;max-width:var(--maxw);height:100%;margin:0 auto;
   display:grid;grid-template-columns:300px 1fr;align-items:center;
-  padding:20px var(--pad);gap:24px;
+  padding:20px var(--pad);gap:24px;flex:1;
 }
 .cover-text{
   position:relative;z-index:10;display:flex;flex-direction:column;justify-content:center;
@@ -102,8 +113,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 }
 .world-map-svg{width:100%;height:100%;display:block;}
 
-/* Demographic Pulsing Dots */
-.cover-dots-layer{position:absolute;inset:0;pointer-events:none;}
+/* Demographic Pulsing Dots Layer */
+.cover-dots-layer{position:absolute;inset:0;pointer-events:none;z-index:10;}
 .dot-pulse{
   position:absolute;border-radius:50%;transform:translate(-50%, -50%);
   animation:pulseGlow 2.5s infinite ease-in-out;
@@ -125,7 +136,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   }
 }
 
-/* ── INTERACTIVE STAGE ── */
+/* ── INTERACTIVE MAP STAGE ── */
 .map-stage-container{
   position:relative;width:100%;max-width:var(--maxw);
   margin:0 auto;flex:1;display:flex;flex-direction:column;
@@ -170,4 +181,60 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 }
 .time-tabs{display:flex;gap:8px;align-items:center;}
 .time-btn{
-  padding:4px 14px;
+  padding:4px 14px;border-radius:4px;border:1px solid var(--blue);
+  color:var(--blue);font-weight:700;font-size:13px;transition:all .18s;
+}
+.time-btn:hover{background:#eef0fb;}
+.time-btn.active{background:var(--navy-deep);color:#fff;border-color:var(--navy-deep);}
+
+.category-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.cat-btn{
+  padding:8px;border-radius:4px;background:#f1f5f9;
+  color:var(--ink);font-size:13px;font-weight:700;text-align:center;
+  border:1px solid var(--rule);transition:all .18s;
+}
+.cat-btn:hover{background:#e2e8f0;}
+.cat-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+/* ── MODALS ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(15,23,42,.65);backdrop-filter:blur(3px);
+  z-index:200;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:#fff;border-radius:8px;max-width:620px;width:100%;
+  max-height:85vh;display:flex;flex-direction:column;
+  box-shadow:0 16px 52px rgba(0,0,0,.24);
+}
+.modal-head{
+  padding:14px 20px;border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;flex:none;
+}
+.modal-head h2{font-size:17px;font-weight:700;}
+.modal-body{padding:16px 20px;overflow-y:auto;font-size:14px;line-height:1.6;}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+</style>
+</head>
+<body>
+
+<div id="srStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- ── SCREEN 1: COVER ── -->
+<section id="cover" class="screen is-active" aria-label="Module Cover">
+  <div class="cover-stage">
+    <div class="cover-text">
+      <h1 class="cover-title">Global<br>demographic<br>changes</h1>
+      <button type="button" class="btn-start" id="btnCoverStart">Start</button>
+    </div>
+
+    <div class="cover-art">
+      <div class="world-map-wrap">
+        <!-- Self-Contained High-Accuracy Robinson World Silhouette[cite: 18] -->
+        <svg class="world-map-svg" viewBox="0 0 968 450" preserveAspectRatio="xMidYMid meet">
+          <g fill="#b0b5ba">
+            <path d="M78,96 c3-5,12-13,22-14 c14-2,38,0,56-4 c16-4,28-13,42-18 c16-6,38-5,55-1 c18,4,32,15,46,25 c18,14,32,32,42,52 c8,15,11,33,6,50 c-4,14-16,24-25,35 c-13,14-28,25-44,36 c-12,8-26,12-41,13 c-15,1-29-4-42-9 c-16-6-30-15-44-24 c-18-12-34-27-46-45 c-10-16-16-35-18-54 c-2-15-1-31,5-46 c2-5,5-10,8-15 c2-2,4-5,7-6 Z"/>
+            <path d="M192,214 c6,5,14,10,18,16 c4,5,7,13,8,19 c1,5-1,9-5,12 c-5,3-11,3-16,0 c-6-4-10-10-12-17 c-2-7-2-14,1-21 c1-3,3-6,6-9 Z"/>
+            <path d="M238,252 c14-3,30-4,44-2 c18,3,35,12,47,25 c16,17,25,40,28,64 c2,22-
