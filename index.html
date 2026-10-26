@@ -7,25 +7,25 @@
 <title>Global demographic changes - M5</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
+/* ── Tokens matching M1 baseline ── */
 :root{
   --red:#E3120B; --navy:#1F2E7A; --navy-deep:#141F52;
   --blue:#2E45B8; --teal:#1DC9A4; --orange:#E57373;
   --yellow:#F9C21F; --cream:#EBE9E0; --ink:#0f172a;
-  --muted:#5a5f73; --rule:#d7d9e0; --maxw:1200px;
+  --muted:#5a5f73; --rule:#d7d9e0; --maxw:1280px;
   --pad:clamp(16px,3vw,36px);
   color-scheme: only light;
 }
 
-/* Bulletproof height configuration for Moodle 4.5 sandboxed iframes */
+/* Strict viewport lock - Prevents Moodle internal scrollbars */
 html, body{
   background:#fff !important;
   color:#0f172a !important;
+  overflow:hidden !important;
+  height:580px !important;
+  width:100% !important;
   margin:0;
   padding:0;
-  width:100%;
-  min-height:580px;
-  height:580px;
-  overflow:hidden !important;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{
@@ -36,21 +36,11 @@ body{
 button{font-family:inherit;cursor:pointer;border:none;background:none;touch-action:manipulation;}
 :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px;}
 
-/* ── Screen Containers (Hard min-heights prevent 0px collapse) ── */
-.screen{
-  display:none;
-  width:100%;
-  height:580px;
-  min-height:580px;
-  position:relative;
-}
-.screen.is-active{
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
+/* ── Screen Management ── */
+.screen{display:none;width:100%;height:580px;position:relative;}
+.screen.is-active{display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── APPBAR (Matched to baseline M1) ── */
+/* ── BASELINE APPBAR ── */
 .appbar{
   position:relative;z-index:40;flex:none;
   background:#fff;height:54px;display:flex;align-items:stretch;
@@ -63,11 +53,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   content:'';position:absolute;left:var(--pad);right:var(--pad);bottom:0;
   height:1px;background:var(--rule);
 }
-.appbar-title{
-  flex:1;display:flex;align-items:center;
+.appbar-title{flex:1;display:flex;align-items:center;
   font-size:15px;font-weight:700;color:var(--ink);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .appbar-tools{display:flex;align-items:center;gap:8px;flex:none;}
 
 .icon-btn{
@@ -83,10 +71,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent;--glyph:#1f2e7a;}
 
 /* ── COVER STAGE ── */
+#cover{overflow:hidden;}
 .cover-stage{
   position:relative;width:100%;max-width:var(--maxw);height:100%;margin:0 auto;
-  display:grid;grid-template-columns:300px 1fr;align-items:center;
-  padding:20px var(--pad);gap:24px;flex:1;
+  display:grid;grid-template-columns:320px 1fr;align-items:center;
+  padding:20px var(--pad);gap:24px;
 }
 .cover-text{
   position:relative;z-index:10;display:flex;flex-direction:column;justify-content:center;
@@ -109,11 +98,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   display:flex;align-items:center;justify-content:center;
 }
 .world-map-wrap{
-  position:relative;width:100%;max-width:850px;aspect-ratio:968/450;
+  position:relative;width:100%;max-width:860px;aspect-ratio:945.9/423.6;
 }
 .world-map-svg{width:100%;height:100%;display:block;}
 
-/* Demographic Pulsing Dots Layer */
+/* Demographic Pulsing Dots */
 .cover-dots-layer{position:absolute;inset:0;pointer-events:none;z-index:10;}
 .dot-pulse{
   position:absolute;border-radius:50%;transform:translate(-50%, -50%);
@@ -136,7 +125,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   }
 }
 
-/* ── INTERACTIVE MAP STAGE ── */
+/* ── INTERACTIVE STAGE ── */
 .map-stage-container{
   position:relative;width:100%;max-width:var(--maxw);
   margin:0 auto;flex:1;display:flex;flex-direction:column;
@@ -155,7 +144,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   margin:6px 0;display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
-.map-viewport .world-map-wrap{max-width:800px;}
+.map-viewport .world-map-wrap{max-width:820px;}
 
 /* Marker Bubbles */
 .data-marker{
@@ -222,6 +211,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 
 <div id="srStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
+<!-- ── SVG ASSET STORE (Exact Illustrator Vectors from PastedVector-18) ── -->
+<svg id="svgSourceStore" style="display:none;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="pastedVector18Map">
+      <path fill="#B3B3B3" d="M252.2,208.1c-0.3,0-0.3-0.4-0.6-0.4C251.9,207.3,252,207.9,252.2,208.1"/>
+      <path fill="#B3B3B3" d="M616.6,402.8c-0.2,0-0.2-0.6,0.1-0.6C617.2,402.2,617,402.8,616.6,402.8 M616.3,402.9c0.5,0.1,0.7-0.4,1.2-0.4c-0.1,0.6-0.2,0.5-0.7,0.7c0.7,0.9,3-1.5,2.8,0.3c-0.6,0.5-3.9,0.2-1,0.9c-0.5,0.7-1.8,0.3-2.4-0.1c-2.6,2-0.6-2.5,0.5-2.7C616.7,401.7,615.6,403.1,616.3,402.9 M576,394.7C575.2,394.9,576,394.1,576,394.7"/>
+      <path fill="#B3B3B3" d="M313.1,90.9c-0.7-0.3,0.2-0.3,0.6-0.4C313.5,90.7,313.3,90.7,313.1,90.9"/>
+      <path fill="#B3B3B3" d="M314.6,90.4c0.1-0.1,0.2-0.2,0.3-0.3c0,0.2,0.1,0.3,0.3,0.3C314.7,91,313.8,90.3,314.6,90.4"/>
+      <path fill="#B3B3B3" d="M312.4,97.5c0,0-0.1-0.1-0.1-0.1c0.4-0.2,0.4-0.5,0.7-0.7C312.9,96.9,312.7,97.2,312.4,97.5"/>
+      <path fill="#B3B3B3" d="M312.1,87.2C312.5,86.7,312.7,87,312.1,87.2"/>
+      <path fill="#B3B3B3" d="M313.7,83.6C314.1,83,314.3,83.6,313.7,83.6"/>
+      <path fill="#B3B3B3" d="M315.9,39.5c-0.4-0.3,0.7-0.5,1-0.4C316.6,39.4,316.2,39.3,315.9,39.5"/>
+      <path fill="#B3B3B3" d="M379.3,200.4c-0.2,0.3-0.4-0.1-0.6-0.3C379.1,199.7,379.4,199.8,379.3,200.4 M382.5,199.5c-0.1,0-0.3-0.4-0.1-0.6C382.6,198.7,382.7,199.3,382.5,199.5 M381.8,199.8c-0.4,1.1-1.2-0.3-0.9-1C381.1,199.2,381.4,199.5,381.8,199.8 M383.3,196.1c0.4-0.1,0.8,0.2,0.4,0.6C383.2,197,383.1,196.5,383.3,196.1 M380,194.8c0,0,0.1,0.1,0.1,0.1c-0.3,0-0.7-0.1-0.7,0.3c-0.1-0.2-0.1-0.4-0.1-0.6C379.5,194.8,379.8,194.8,380,194.8 M383.3,194.6c0,0,0,0.1,0,0.1c-0.2-0.2-0.2-0.6,0-0.7C383.3,194.2,383.3,194.4,383.3,194.6 M377.8,194.2c-0.2,0-0.4,0-0.6-0.1C377.5,194,377.9,193.7,377.8,194.2 M377.1,193.7c-0.6,0.2-0.5-0.6,0-0.6C377.9,192.8,377.7,193.6,377.1,193.7"/>
+      <path fill="#B3B3B3" d="M344,57.2c-0.4,0.4-0.6,0-1.2,0c0.5-0.2,1-0.4,1.4-0.6C344.1,56.8,343.9,57,344,57.2 M368.3,43.6c-0.5,0.1-0.3-0.4-0.1-0.4C368.6,43.2,368.6,43.6,368.3,43.6 M343.4,32.7c-1.2-0.2,0.3-1.5,1.2-0.9C344.2,32.2,343.8,32.4,343.4,32.7 M340.5,31.7c4.9,1.4-6.5,2.2-2.5,1.2c-1.7,0.1-3.6-1.3-0.7-1.2C334.9,30.5,339.9,30.3,340.5,31.7 M343.7,29.3c-0.2,0-1.3,0-0.7-0.3C343.2,28.8,344.1,29.2,343.7,29.3 M396.1,29.1c0,0,0.1,0.1,0.1,0.1c-0.5,1.4-3.9,0.8-5.6,1C391.6,28.9,394.6,28.8,396.1,29.1 M340.4,28.8c-0.3,0-0.7-0.1-0.9-0.3C340.1,28.1,341.1,27.9,340.4,28.8 M339.8,24.2c-0.7,0.5-1.7,0.7-2.5,0.3C338.2,24.1,338.9,24.4,339.8,24.2 M413,17.7c0.1,1.2,0.7,0.3,1,0.9C412,19.4,409.7,17.8,413,17.7 M412.3,16.1c-0.4,0.6-1.1-1.5-0.5-1.4C412.5,14.6,412.3,15.5,412.3,16.1 M316.2,13.1c-0.4,0-1.1,0.1-1.4-0.1c0.7-0.3,1.3,0,2,0C316.6,13.1,316.4,13.1,316.2,13.1 M414.3,12.3c-0.2,0-0.4,0-0.6,0C414.2,11.6,415.7,11.7,414.3,12.3 M412.6,11.6c-0.8,0-0.4-1,0.1-1.2C412.9,10.7,412.9,11.4,412.6,11.6 M416.1,7.4c-0.7,0.1-2.3,0.5-2.7-0.1C413.8,6.9,417.4,6.4,416.1,7.4 M415.2,3.2c-0.2,0.2-1.5-0.1-1.4-0.4C413.9,2.2,415.1,3.1,415.2,3.2 M371.2,2.8c-0.8-0.1-3.1-0.5-3.4-1.1C368.7,1.4,373.1,1.7,371.2,2.8 M397.5,0c2.1,0.5,4.6-0.1,6.7,0.6c-3.4,0.3-7.3-0.2-10.6,0.4c15-0.5,25.5,0.9,2.9,2c3.5,0.4,21.9-1.7,10.6,2.4c6.4-1.8,13.5-2.6,20.3-1.4c-1.6,0.6-3.6,0.8-5.4,1c0.1,0.1,0.3,0.1,0.4,0.1c-1.2,0.8-3.1,0.4-4.5,0.7c0.2,0.3,1,0.2,1.3,0.3c-1.8,1-10.4-0.6-6.4,1.9c0.6,1.6-1.9,1.3-3.8,2c0.8,0.1-0.6,0.8-0.7,1.2c-2.6,2.1,2.5-0.3,3.4,1.3c-0.9,0-1.7-0.5-2.6,0c0.7,1.5,5.9-0.1,3.3,2c-2.4-0.7-5.3-0.2-7.4,0.1c0.5,0.4,1.3-0.1,1.4,0.7c0.8,0.8,2.3-0.1,3.4,0.6c-0.8,0.6,0.6,0.7,0.4,1.3c0.2,0.8-0.4,1.2-1.1,0.9c-1.5-0.6-2.9,1-4.4,0.3c0.6,0.8,3.8-0.5,2,1.2c4.6-2.1,4.2,2.5-2,1c0.4-0.3,0.8-0.6,0.1-0.9c0.1,0.4-0.4,0.8-0.9,0.7c0.4,0.2,0.2,0.5-0.1,0.6c6.7,0.6,2.4,2.1-1.5,1.9c-0.9,0.1-1.7-1.2-2.4-1c-0.8,0.8-1.6-0.3-2.3-0.3c0.2,0.3,1,0.8,1.3,0.7c-1.5,0.7-3.2,0.9-4.9,0.3c0.2,0.3,0.9,0.4,1.3,0.4c-0.5,0.4-1.2,0.3-1.8,0.3c2,0.2,7.3-1.4,10.4,0.6c0,2.7-3.4,2-4.7,0.4c-0.7-1.5-3.1,0.1-4.4,0.1c1,0.5,3.6-1.3,3.8,0.1c0,0.5-0.8,0.6-1.2,0.6c2,0.1,4.1,1.3,5.9,1.7c-0.4,0.5-1.4,0.4-1.2,1.3c2.1-2.1,0.9,0.9,1.4,1.9c-0.9,0.4-2.1,0.3-1.7-0.9c-1.9,3.8-5.5-4-8.8-1.7c6.5,0.4-0.7,1.8-2.9,1.4c0.1,0,0.7,0.2,0.7,0.1c-0.1,1.1-1.7,1-2.5,1.2c2.4,0.5,7.7-1,2.6,1.2c3.3-1.1,7.5-0.6,11-0.1c-1.4,0.4-2.2,0.9-3.6,0.9c0.7,0.5-0.4,0.7-0.9,0.4c-3.1,2.6-9.4,3.4-14,3.6c0,1.4-2.4-0.1-3.2-0.4c0.3,0.4,0.1,0.4-0.3,0.6c1.3,0.8-1.3,1-1.7,1.4c-2.1,1.3-4.2,4.7-6.9,3.5c1.2,0.9-1.1,1-1.4,1.6c0.1-1-0.4-0.3-0.7,0.1c0,0,0-0.1,0-0.1c-0.2,0.2-0.7,0.3-0.7-0.1c-0.6,0.7-3,1.2-1.6-0.1c1.2-1.1,2.2-1.3-0.3-1.4c0.3,0.1,0.5,0.3,0.7,0.4c-0.7,0.2-1,1.4-1.7,0.6c1.9,2.1-6.5,0.5-2.9,1.9c-0.8,1.2-2.5,0.4-3.5,0.9c2.4,1.2,0.8,2.7-1.7,2c4.4,0.9-1.2,4.2-2.2,3.3c0.3,0.3,0.5,0.3,0.9,0.4c-0.8,1.2-2,0.6-3.2,0.7c0.2,0.5,2.3,0.3,1.3,0.7c0.4,0.4-0.4,0.6-0.4,0.9c0.6,0.9-0.4,1.1-1,1.2c0.2,0,0.4,0.1,0.6,0.1c-1.4,1.9-2.1,3.8-4.6,3.2c2.4,0.1,1.5,2.6-0.6,1.6c0.2,0,0.4,0.3,0.6,0.4c-0.2,0-1.4,0.4-0.9-0.1c-1.3,0.1-0.4-0.5,0-1c-2.2,1.5-3.3-0.1-0.9-1.2c-5.6,2-0.8-2.6-2.2-1.3c-0.9,0.5-7.4,2-4.1,0.3c-1.4,0.4-0.9-0.7-2.1-0.7c-0.2-0.3,0.1-1-0.6-0.9c0.5-0.5,0.1-1.4,1.6-1.4c-0.5-0.3-2.8,0.7-1.4-0.4c-0.5-0.2-1-0.5-1.4-0.7c0.2-0.2,0.6-0.5,0.3-0.7c0.5-0.3,1-0.6,1.6-0.9c-3.5,1.3-4.3-3.8,0.3-3.3c-0.2,0-0.4,0-0.6,0c0.1-0.1,0.2-0.2,0.3-0.3c-6.5,2.1-0.5-2,0.7-0.7c0.2,0.7,0.5-0.4,0.2-0.6c-1,0.1-0.7-0.6-1.1-1.2c0.3,1-0.1,1.6-1.2,1.6c0.1-0.2,0.2-0.3,0.3-0.4c-1.9,0.8-3,3.2-2-0.7c-0.9-1.4,2.2-1.9,3.3-2.1c-1.1,0-6.5,1.9-4.1-0.6c-1.2-0.7,4.2-1.6,5.1-2.5c-1.8-0.3-4.8,3.1-5.9,1.6c0.7-1.1,2.2-1.7,3.5-1.6c-7.1-0.5,1.8-3.5,4.5-1.7c-0.2-0.3-0.7-0.4-1-0.6c0.2-0.2,0.5-0.2,0.7-0.1c-2-0.2-4.2,0-6.2,0.6c1.6-3,4.6-0.2,6.4-2.3c-1.6,0.8-3.1,0.3-4.8,0.3c1.6-2.3,4.4,0.5,5.9-1.4c-0.4,0.3-0.6,0.3-1,0.3c0.4-1.3,1.6-0.7,2.5-1.2c-0.2,0-0.3-0.1-0.3-0.3c-0.3,0.2-0.8,0.1-1.2,0.1c4.8-4,0.8-0.7-3.2-3c-3.2,0-1.2-1.9,0.8-1c1.7-0.2,3,1.3,4.7,0.9c-2.1-0.3,0.1-1.2-1.6-1.6c0.4,0,1.3,0.4,1.6,0c-3.1-0.6-5.9-0.4-0.7-1.7c-0.9-0.1-4.7,1-2.5-0.3c-0.1,0-0.3,0-0.4,0c0.6-0.5-0.8-1.3,0.1-1.4c-1.4,0,0.4,1.3-0.8,1.6c-3.2,2-6.2,0.9-1.5-1.7c-0.8,0.6-2.7,0.7-0.9,0.1c-1.1-0.4,1.8-0.2,1.7-1.3c-0.1-0.9-0.7,0.1-1.1-0.2c-1-0.1-0.2-0.5,0.3-0.6c0.9-0.5,0.4-0.7-0.4-0.5c-1-0.7,2.5-2.6-1.7-1.9c1-0.2,1.5-0.8,2.5-1c-0.9-0.5-4.2-2.1-2.3-2.5c-1.3-1.1-4.2-1.4-6.1-1.7c-1.7,0.1-9.3-0.4-8.8,0.7c-3,0-6.5-1.3-1.3-1.7c-0.7,0-4.2,0.2-2.3-0.7c-0.5,0-2.4,0.9-2,0.1c-0.3-1.7,7.7-0.2,9.4-1.4c-2-1-5.7,1.1-7.4-0.4c0.3-0.1,0.7-0.2,1-0.3c-12.9-1.1,12.6-2.6,15.1-5.2c-1.6,0.1-3.6,0.6-5.1,0c2-1.3,6-2,8.5-1.6c0-1.3,2.7,0,3.5-0.7c1-1,1.9-1.5,3.5-1.4c4,0.7,5.7,1.6,1.2-0.1c2.2,0.3,10.4-2.3,9.1,0.7c2.1-1.8,4.1-0.5,7.1-0.6c-5-2.8,7.5,1,8.5-0.1c2.8-1.4-1.7-1.1-0.2-1.4c2.1-0.2,4.6,0.4,6.4,0c-2.7-0.3-5.6,0.2-8.2-0.3c4.7-0.8,9.9-0.5,14.5-0.4C381.8-0.4,394.9,0.2,397.5,0"/>
+      <path fill="#B3B3B3" d="M414.2,41.7c0.7,0,1.3-0.4,2-0.4c-0.3,0.2-0.7,0.2-1,0.5c-0.5,0.8,1.4,0,0.2,1.2c0.5,0,1.5-0.1,0.7,0.6c0.6-0.5,2.4-0.1,1.3,0.6c0.2,0.1,0.5,0.5,0,0.4c1.3,1.7-14.4,7-14.6,4.1c-0.4-0.2-1.8,0-1.6-0.6c-0.8,0.7-5.2,0-2.9-0.1c1.1,0.3,1.4-1,2.3-1c-0.3-0.4-0.9,0.2-1.3,0.1c0.1-0.1,0.2-0.2,0.4-0.3c-0.5-0.1,0.5-0.6,0.7-0.6c-0.3,0-2,0.6-1.3-0.3c-1.2-0.5-3,0.3-3.8-0.4c1.4-0.5,4.1,0.1,5.1-0.9c-0.4,0.2-2.3,0.3-1.2-0.3c2.9-1.3-3.7-0.2-4.5-0.6c0.4-0.5,0.8-0.2,1.3-0.1c-0.1,0-0.2-0.1-0.3-0.1c0.3-0.2,0.1-0.3-0.1-0.4c0.6,0,1.3,0.6,1.7,0c-1.7,0.1-0.1-0.3-0.9-0.7c0.1-0.3,0.5,0,0.7,0c-0.9-0.6,1.1-0.6,0.9,0.1c0.3,0.2,1.1-0.5,0.9,0.3c1.1-0.5,0-0.7-0.6-1c0.2,0,1.2,0.1,0.9-0.1c0,0-0.5-0.1-0.4-0.1c-0.3,0-0.5,0-0.8,0c0.9-1.1,2.6,0.6,3.5,0.9c-0.1,0.1-0.1,0.1-0.3,0.1c0.8,0.2,0.1,1-0.4,0.7c0.2,0.2,0.5,0,0.4,0.4c0,0,0.1-0.1,0.1-0.1c-0.4,0.5,0.4,0.5,0.3,1c0.3-0.7,0.9-1.6,1.6-0.9c0.7-0.5,0.1-2.3,1.4-1c0.9,1,2.5-2.3,3.5,0.6c0.5-0.7-0.8-1.6,0.8-1.2c0.7,0.9,1-0.1,1.9-0.1C412.8,42.3,412.1,39.6,414.2,41.7"/>
+      <path fill="#B3B3B3" d="M96.3,325.1c-0.2,0-0.1-0.1-0.3-0.1C96.1,324.7,96.3,324.8,96.3,325.1"/>
+      <path fill="#B3B3B3" d="M70.4,306.4c0,0.1,0,0.1,0,0.1c-0.1-0.2-0.4-0.2-0.6-0.3C70,306.2,70.2,306.3,70.4,306.4 M68.3,305.8c-0.1-0.1-0.2-0.2-0.3-0.3C68.1,305.6,68.2,305.7,68.3,305.8"/>
+      <path fill="#B3B3B3" d="M277.5,203.7c-0.4,0.6-0.6-0.1-0.4-0.5C277.5,202.4,277.5,203.3,277.5,203.7"/>
+    </g>
+  </defs>
+</svg>
+
 <!-- ── SCREEN 1: COVER ── -->
 <section id="cover" class="screen is-active" aria-label="Module Cover">
   <div class="cover-stage">
@@ -232,9 +243,345 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 
     <div class="cover-art">
       <div class="world-map-wrap">
-        <!-- Self-Contained High-Accuracy Robinson World Silhouette[cite: 18] -->
-        <svg class="world-map-svg" viewBox="0 0 968 450" preserveAspectRatio="xMidYMid meet">
-          <g fill="#b0b5ba">
-            <path d="M78,96 c3-5,12-13,22-14 c14-2,38,0,56-4 c16-4,28-13,42-18 c16-6,38-5,55-1 c18,4,32,15,46,25 c18,14,32,32,42,52 c8,15,11,33,6,50 c-4,14-16,24-25,35 c-13,14-28,25-44,36 c-12,8-26,12-41,13 c-15,1-29-4-42-9 c-16-6-30-15-44-24 c-18-12-34-27-46-45 c-10-16-16-35-18-54 c-2-15-1-31,5-46 c2-5,5-10,8-15 c2-2,4-5,7-6 Z"/>
-            <path d="M192,214 c6,5,14,10,18,16 c4,5,7,13,8,19 c1,5-1,9-5,12 c-5,3-11,3-16,0 c-6-4-10-10-12-17 c-2-7-2-14,1-21 c1-3,3-6,6-9 Z"/>
-            <path d="M238,252 c14-3,30-4,44-2 c18,3,35,12,47,25 c16,17,25,40,28,64 c2,22-
+        <!-- Exact Vector Visual Surface from PastedVector-18 -->
+        <svg class="world-map-svg" viewBox="0 0 945.9 423.6" preserveAspectRatio="xMidYMid meet">
+          <use href="#pastedVector18Map"/>
+        </svg>
+
+        <!-- Positioned Demographic Population Clusters Matching Video[cite: 2, 17] -->
+        <div class="cover-dots-layer">
+          <!-- North America (Blue) -->
+          <div class="dot-pulse blue" style="left: 23%; top: 31%; width: 22px; height: 22px;"></div>
+          <div class="dot-pulse blue" style="left: 22%; top: 40%; width: 14px; height: 14px;"></div>
+
+          <!-- South America (Orange) -->
+          <div class="dot-pulse orange" style="left: 28%; top: 51%; width: 10px; height: 10px;"></div>
+          <div class="dot-pulse orange" style="left: 28%; top: 58%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse orange" style="left: 33%; top: 59%; width: 20px; height: 20px;"></div>
+          <div class="dot-pulse orange" style="left: 30%; top: 73%; width: 10px; height: 10px;"></div>
+
+          <!-- Europe (Teal) -->
+          <div class="dot-pulse teal" style="left: 48%; top: 25%; width: 7px; height: 7px;"></div>
+          <div class="dot-pulse teal" style="left: 52%; top: 26%; width: 9px; height: 9px;"></div>
+          <div class="dot-pulse teal" style="left: 53%; top: 31%; width: 13px; height: 13px;"></div>
+
+          <!-- Africa / Middle East (Yellow) -->
+          <div class="dot-pulse yellow" style="left: 45%; top: 48%; width: 9px; height: 9px;"></div>
+          <div class="dot-pulse yellow" style="left: 48%; top: 46%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse yellow" style="left: 51%; top: 52%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse yellow" style="left: 54%; top: 55%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse yellow" style="left: 53%; top: 64%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse yellow" style="left: 56%; top: 62%; width: 10px; height: 10px;"></div>
+
+          <!-- Asia Clusters (Red) -->
+          <div class="dot-pulse red" style="left: 55%; top: 38%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse red" style="left: 57%; top: 34%; width: 13px; height: 13px;"></div>
+          <div class="dot-pulse red" style="left: 63%; top: 38%; width: 6px; height: 6px;"></div>
+          <div class="dot-pulse red" style="left: 67%; top: 32%; width: 44px; height: 44px; animation-duration: 2.2s;"></div>
+          <div class="dot-pulse red" style="left: 71%; top: 32%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse red" style="left: 72%; top: 46%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse red" style="left: 71%; top: 53%; width: 13px; height: 13px;"></div>
+
+          <!-- Australia (Navy) -->
+          <div class="dot-pulse" style="left: 74%; top: 66%; width: 8px; height: 8px; background:var(--navy-deep);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCREEN 2: MAIN INTERACTIVE STAGE ── -->
+<section id="mainApp" class="screen" aria-label="Interactive Infographic Stage">
+  <header class="appbar">
+    <div class="appbar-inner">
+      <div class="appbar-title">Global demographic changes</div>
+      <div class="appbar-tools">
+        <!-- Return Home Button -->
+        <button type="button" class="icon-btn btn-home" aria-label="Return to cover">
+          <svg viewBox="0 0 36 36">
+            <circle class="ring" cx="18" cy="18" r="17"/>
+            <path class="glyph" d="M18,10.2L9.5,17v10.5h6v-6h5v6h6V17L18,10.2z M24.5,25.5h-2v-6h-9v6h-2V18l6.5-5.2l6.5,5.2V25.5z"/>
+          </svg>
+        </button>
+        <!-- Bibliography Button -->
+        <button type="button" class="icon-btn btn-bib" id="btnOpenBib" aria-label="Open Bibliography">
+          <svg viewBox="0 0 36 36">
+            <circle class="ring" cx="18" cy="18" r="17"/>
+            <path class="glyph" d="M12,11.5h12V13H12V11.5z M12,16.5h12V18H12V16.5z M12,21.5h8V23h-8V21.5z"/>
+          </svg>
+        </button>
+        <!-- Close Interaction Button -->
+        <button type="button" class="icon-btn btn-close" aria-label="Close interaction">
+          <svg viewBox="0 0 36 36">
+            <circle class="ring" cx="18" cy="18" r="17"/>
+            <path class="xglyph" d="M11,11l14,14 M25,11L11,25"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="map-stage-container">
+    <div class="map-header">
+      <div class="map-title-text" id="displayCategoryTitle">Population per continent (in millions)</div>
+      <div class="map-year-display" id="displayYear">1950</div>
+    </div>
+
+    <div class="map-viewport">
+      <div class="world-map-wrap">
+        <svg class="world-map-svg" viewBox="0 0 945.9 423.6" preserveAspectRatio="xMidYMid meet">
+          <use href="#pastedVector18Map"/>
+        </svg>
+      </div>
+      <!-- Interactive Data Overlay -->
+      <div id="markerOverlay"></div>
+    </div>
+
+    <!-- Category & Timeline Tabs -->
+    <div class="control-panel">
+      <div class="time-tabs" id="timeTabContainer"></div>
+      <div class="category-tabs">
+        <button type="button" class="cat-btn active" data-cat="continent">Population per continent</button>
+        <button type="button" class="cat-btn" data-cat="country">Five most populous countries</button>
+        <button type="button" class="cat-btn" data-cat="city">Ten most populous cities</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTRO DIALOG MODAL ── -->
+<div class="modal-overlay" id="introModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Module Introduction</h2>
+      <button type="button" class="icon-btn" id="btnCloseIntro" aria-label="Close modal">
+        <svg viewBox="0 0 36 36"><circle class="ring" cx="18" cy="18" r="17"/><path class="xglyph" d="M11 11l14 14M25 11L11 25"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Demography is a game-changer, not only for the US-China rivalry but also for geopolitics in general[cite: 3]. Populations and their characteristics evolve constantly[cite: 3]. Engage with the following interactive infographic to learn more about the manner and frequency of demographic shifts[cite: 3].</p>
+      <br>
+      <button type="button" class="btn-start" id="btnContinueIntro" style="width:100%;">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── BIBLIOGRAPHY MODAL ── -->
+<div class="modal-overlay" id="bibModal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Bibliography</h2>
+      <button type="button" class="icon-btn" id="btnCloseBib" aria-label="Close modal">
+        <svg viewBox="0 0 36 36"><circle class="ring" cx="18" cy="18" r="17"/><path class="xglyph" d="M11 11l14 14M25 11L11 25"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>United Nations, Department of Economic and Social Affairs, Population Division. 2019. <i>World population prospects 2019</i>[cite: 3].</p>
+      <br>
+      <p>United Nations, Department of Economic and Social Affairs, Population Division. 2019. <i>World urbanization prospects: the 2018 revision</i>[cite: 3].</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const DATA = {
+    continent: {
+      title: "Population per continent (in millions)",
+      years: ["1950", "1980", "2020", "2050"],
+      points: {
+        "1950": [
+          { name: "Asia", val: "1,405", x: 74, y: 35, r: 38 },
+          { name: "Europe", val: "549", x: 53, y: 22, r: 24 },
+          { name: "Africa", val: "228", x: 50, y: 55, r: 18 },
+          { name: "North America", val: "173", x: 22, y: 30, r: 16 },
+          { name: "South America", val: "109", x: 30, y: 68, r: 14 },
+          { name: "Oceania", val: "13", x: 84, y: 75, r: 10 }
+        ],
+        "1980": [
+          { name: "Asia", val: "2,650", x: 74, y: 35, r: 46 },
+          { name: "Europe", val: "694", x: 53, y: 22, r: 26 },
+          { name: "Africa", val: "476", x: 50, y: 55, r: 22 },
+          { name: "North America", val: "254", x: 22, y: 30, r: 18 },
+          { name: "South America", val: "361", x: 30, y: 68, r: 20 },
+          { name: "Oceania", val: "23", x: 84, y: 75, r: 12 }
+        ],
+        "2020": [
+          { name: "Asia", val: "4,641", x: 74, y: 35, r: 56 },
+          { name: "Europe", val: "748", x: 53, y: 22, r: 28 },
+          { name: "Africa", val: "1,341", x: 50, y: 55, r: 34 },
+          { name: "North America", val: "369", x: 22, y: 30, r: 20 },
+          { name: "South America", val: "654", x: 30, y: 68, r: 24 },
+          { name: "Oceania", val: "43", x: 84, y: 75, r: 14 }
+        ],
+        "2050": [
+          { name: "Asia", val: "5,290", x: 74, y: 35, r: 60 },
+          { name: "Europe", val: "710", x: 53, y: 22, r: 27 },
+          { name: "Africa", val: "2,489", x: 50, y: 55, r: 42 },
+          { name: "North America", val: "425", x: 22, y: 30, r: 22 },
+          { name: "South America", val: "762", x: 30, y: 68, r: 26 },
+          { name: "Oceania", val: "57", x: 84, y: 75, r: 15 }
+        ]
+      }
+    },
+    country: {
+      title: "Five most populous countries (in millions)",
+      years: ["1950", "1980", "2020", "2050"],
+      points: {
+        "1950": [
+          { name: "China", val: "554", x: 76, y: 36, r: 28 },
+          { name: "India", val: "376", x: 68, y: 44, r: 22 },
+          { name: "US", val: "159", x: 22, y: 32, r: 16 },
+          { name: "Russia", val: "103", x: 63, y: 20, r: 14 },
+          { name: "Japan", val: "83", x: 84, y: 34, r: 12 }
+        ],
+        "2020": [
+          { name: "China", val: "1,439", x: 76, y: 36, r: 48 },
+          { name: "India", val: "1,380", x: 68, y: 44, r: 46 },
+          { name: "US", val: "331", x: 22, y: 32, r: 22 },
+          { name: "Indonesia", val: "274", x: 78, y: 58, r: 20 },
+          { name: "Pakistan", val: "221", x: 64, y: 41, r: 18 }
+        ]
+      }
+    },
+    city: {
+      title: "Ten most populous cities (in millions)",
+      years: ["1950", "1980", "2020", "2035"],
+      points: {
+        "1950": [
+          { name: "New York", val: "12", x: 26, y: 32, r: 16 },
+          { name: "Tokyo", val: "11", x: 84, y: 34, r: 15 },
+          { name: "London", val: "8", x: 48, y: 21, r: 14 },
+          { name: "Osaka", val: "7", x: 82, y: 36, r: 13 },
+          { name: "Paris", val: "6", x: 49, y: 24, r: 12 }
+        ],
+        "2035": [
+          { name: "Tokyo", val: "36", x: 84, y: 34, r: 30 },
+          { name: "Delhi", val: "43", x: 67, y: 40, r: 34 },
+          { name: "Shanghai", val: "34", x: 77, y: 38, r: 28 },
+          { name: "Dhaka", val: "31", x: 72, y: 43, r: 26 },
+          { name: "Kinshasa", val: "27", x: 52, y: 62, r: 24 }
+        ]
+      }
+    }
+  };
+
+  let currentCategory = "continent";
+  let currentYear = "1950";
+
+  const markerOverlay = document.getElementById('markerOverlay');
+  const timeTabContainer = document.getElementById('timeTabContainer');
+  const displayCategoryTitle = document.getElementById('displayCategoryTitle');
+  const displayYear = document.getElementById('displayYear');
+
+  function setCategory(catKey) {
+    currentCategory = catKey;
+    const catData = DATA[catKey];
+    displayCategoryTitle.textContent = catData.title;
+
+    if (!catData.years.includes(currentYear)) {
+      currentYear = catData.years[0];
+    }
+
+    renderTimeTabs();
+    renderMarkers();
+    reportHeight();
+  }
+
+  function setYear(year) {
+    currentYear = year;
+    renderTimeTabs();
+    renderMarkers();
+  }
+
+  function renderTimeTabs() {
+    const years = DATA[currentCategory].years;
+    timeTabContainer.innerHTML = '';
+    years.forEach(yr => {
+      const btn = document.createElement('button');
+      btn.className = `time-btn ${yr === currentYear ? 'active' : ''}`;
+      btn.textContent = yr;
+      btn.addEventListener('click', () => setYear(yr));
+      timeTabContainer.appendChild(btn);
+    });
+  }
+
+  function renderMarkers() {
+    displayYear.textContent = currentYear;
+    markerOverlay.innerHTML = '';
+
+    const catPoints = DATA[currentCategory].points;
+    const pointsList = catPoints[currentYear] || catPoints[Object.keys(catPoints)[0]] || [];
+
+    pointsList.forEach(pt => {
+      const marker = document.createElement('div');
+      marker.className = 'data-marker';
+      marker.style.left = `${pt.x}%`;
+      marker.style.top = `${pt.y}%`;
+
+      const size = pt.r ? pt.r * 1.4 : 24;
+      marker.innerHTML = `
+        <div class="marker-bubble" style="width:${size}px;height:${size}px;font-size:${Math.max(10, size*0.35)}px;">
+          ${pt.val}
+        </div>
+        <div class="marker-card">${pt.name}</div>
+      `;
+      markerOverlay.appendChild(marker);
+    });
+  }
+
+  /* Fixed Height Signal for Moodle 4.5 iframe */
+  function reportHeight() {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ frameHeight: 580 }, '*');
+    }
+  }
+
+  function init() {
+    document.getElementById('btnCoverStart').addEventListener('click', () => {
+      document.getElementById('cover').classList.remove('is-active');
+      document.getElementById('mainApp').classList.add('is-active');
+      document.getElementById('introModal').classList.add('open');
+      setCategory('continent');
+      reportHeight();
+    });
+
+    document.querySelectorAll('.btn-home, .btn-close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('mainApp').classList.remove('is-active');
+        document.getElementById('cover').classList.add('is-active');
+        reportHeight();
+      });
+    });
+
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        setCategory(e.target.getAttribute('data-cat'));
+      });
+    });
+
+    document.getElementById('btnCloseIntro').addEventListener('click', () => {
+      document.getElementById('introModal').classList.remove('open');
+    });
+    document.getElementById('btnContinueIntro').addEventListener('click', () => {
+      document.getElementById('introModal').classList.remove('open');
+    });
+
+    document.getElementById('btnOpenBib').addEventListener('click', () => {
+      document.getElementById('bibModal').classList.add('open');
+    });
+    document.getElementById('btnCloseBib').addEventListener('click', () => {
+      document.getElementById('bibModal').classList.remove('open');
+    });
+
+    reportHeight();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+  window.addEventListener('load', reportHeight);
+})();
+</script>
+</body>
+</html>
