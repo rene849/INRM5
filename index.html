@@ -7,70 +7,60 @@
 <title>Global demographic changes - M5</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ── Tokens & Base Variables ── */
+/* ── Tokens matching M1 baseline ── */
 :root{
   --red:#E3120B; --navy:#1F2E7A; --navy-deep:#141F52;
   --blue:#2E45B8; --teal:#36E2BD; --cream:#EBE9E0;
   --ink:#0f172a; --muted:#5a5f73; --rule:#d7d9e0;
-  --maxw:1320px;
-  --pad:clamp(18px,4vw,52px);
+  --maxw:1200px;
+  --pad:clamp(16px,3vw,36px);
   color-scheme: only light;
 }
 
+/* Strict viewport lock - Prevents Moodle internal scrollbars */
 html, body{
   background:#fff !important;
   color:#0f172a !important;
+  overflow:hidden !important;
+  height:580px !important;
+  width:100% !important;
   margin:0;
   padding:0;
-  width:100%;
-  min-height:640px;
-  overflow-x:hidden;
-  overflow-y:auto;
 }
-*,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{
   font-family:'Noto Sans',Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
+  position:relative;
 }
 button{font-family:inherit;cursor:pointer;border:none;background:none;touch-action:manipulation;}
 :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px;}
 
-/* ── Screen switching ── */
-.screen{display:none;}
-.screen.is-active{
-  display:flex;
-  flex-direction:column;
-  width:100%;
-  min-height:640px;
-  position:relative;
-}
+/* ── Screen Management ── */
+.screen{display:none;width:100%;height:580px;position:relative;}
+.screen.is-active{display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── APPBAR ── */
+/* ── BASELINE APPBAR ── */
 .appbar{
   position:relative;z-index:40;flex:none;
-  background:#fff;
-  height:60px;
-  display:flex;align-items:stretch;
+  background:#fff;height:54px;display:flex;align-items:stretch;
 }
 .appbar-inner{
   width:100%;max-width:var(--maxw);margin:0 auto;
-  display:flex;align-items:stretch;
-  padding:0 var(--pad);position:relative;
+  display:flex;align-items:stretch;padding:0 var(--pad);position:relative;
 }
 .appbar-inner::after{
   content:'';position:absolute;left:var(--pad);right:var(--pad);bottom:0;
   height:1px;background:var(--rule);
 }
 .appbar-title{flex:1;display:flex;align-items:center;
-  padding:0;font-size:14px;font-weight:500;color:var(--ink);
+  font-size:15px;font-weight:700;color:var(--ink);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .appbar-tools{display:flex;align-items:center;gap:8px;flex:none;}
 
-/* Icon Buttons SVG Rules */
 .icon-btn{
   --ring:#2E45B8; --ring-fill:transparent; --glyph:#2E45B8;
-  width:36px;height:36px;padding:0;border:0;background:none;
+  width:34px;height:34px;padding:0;border:0;background:none;
   cursor:pointer;flex:none;display:block;border-radius:50%;
 }
 .icon-btn svg{width:100%;height:100%;display:block;overflow:visible;}
@@ -81,83 +71,85 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent;--glyph:#1f2e7a;}
 
 /* ── COVER STAGE ── */
+#cover{overflow:hidden;}
 .cover-stage{
-  position:relative;width:100%;max-width:var(--maxw);margin:0 auto;
-  display:grid;
-  padding:clamp(20px,3vw,36px) clamp(18px,4vw,52px);
-  flex:1 0 auto;align-content:center;
+  position:relative;width:100%;max-width:var(--maxw);height:100%;margin:0 auto;
+  display:grid;grid-template-columns:300px 1fr;align-items:center;
+  padding:20px var(--pad);gap:24px;
 }
 .cover-text{
-  grid-area:1/1;align-self:center;justify-self:start;
-  position:relative;z-index:5;max-width:clamp(300px,42%,560px);
+  position:relative;z-index:10;display:flex;flex-direction:column;justify-content:center;
 }
-.cover-title{font-size:clamp(32px,3.8vw,52px);font-weight:800;
+.cover-title{
+  font-size:clamp(32px,3.8vw,48px);font-weight:800;
   line-height:1.08;letter-spacing:-.02em;color:var(--ink);
-  margin-bottom:clamp(16px,2.4vw,28px);}
+  margin-bottom:28px;
+}
 .btn-start{
   display:inline-flex;align-items:center;justify-content:center;
   background:var(--blue);color:#fff;font-weight:700;font-size:15px;
-  min-width:clamp(120px,14vw,152px);height:44px;padding:0 24px;
-  border-radius:4px;cursor:pointer;transition:background .18s;}
-.btn-start:hover,.btn-start:focus-visible{background:var(--navy);}
+  width:140px;height:42px;border-radius:4px;cursor:pointer;
+  transition:background .18s;
+}
+.btn-start:hover{background:var(--navy);}
 
 .cover-art{
-  grid-area:1/1;align-self:center;justify-self:stretch;
-  width:100%;aspect-ratio:1000/450;pointer-events:none;z-index:1;
+  position:relative;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
 }
-.cover-art-container {
-  position: relative;width: 100%;height:100%;
+.world-map-wrap{
+  position:relative;width:100%;max-width:850px;aspect-ratio:968/450;
 }
+.world-map-svg{width:100%;height:100%;display:block;fill:#b0b5ba;}
 
-/* Pulsing Cover Dots Layer */
-.cover-dots-layer {
-  position: absolute;inset: 0;pointer-events: none;z-index: 10;
+/* Demographic Pulsing Dots */
+.cover-dots-layer{position:absolute;inset:0;pointer-events:none;}
+.dot-pulse{
+  position:absolute;border-radius:50%;transform:translate(-50%, -50%);
+  animation:pulseGlow 2.5s infinite ease-in-out;
 }
-.dot-pulse {
-  position: absolute;border-radius: 50%;transform: translate(-50%, -50%);
-  animation: pulseGlow 2.5s infinite ease-in-out;
-}
-.dot-pulse.blue   { background: #2E45B8; }
-.dot-pulse.orange { background: #E57373; }
-.dot-pulse.yellow { background: #F9C21F; }
-.dot-pulse.red    { background: #E3120B; }
+.dot-pulse.blue   { background:#2E45B8; }
+.dot-pulse.orange { background:#E57373; }
+.dot-pulse.yellow { background:#F9C21F; }
+.dot-pulse.red    { background:#E3120B; }
 
 @keyframes pulseGlow {
   0%, 100% {
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.95);
     box-shadow: 0 0 0 0 rgba(227, 18, 11, 0.4);
   }
   50% {
     transform: translate(-50%, -50%) scale(1.15);
-    box-shadow: 0 0 12px 4px rgba(227, 18, 11, 0.2);
+    box-shadow: 0 0 10px 3px rgba(227, 18, 11, 0.25);
   }
 }
 
-/* ── INTERACTIVE MAP STAGE ── */
-.map-container{
+/* ── INTERACTIVE STAGE ── */
+.map-stage-container{
   position:relative;width:100%;max-width:var(--maxw);
   margin:0 auto;flex:1;display:flex;flex-direction:column;
-  padding:0 var(--pad);
+  padding:0 var(--pad);overflow:hidden;
 }
 .map-header{
   display:flex;justify-content:space-between;align-items:baseline;
-  margin:8px 0;border-bottom:1px solid var(--rule);padding-bottom:6px;flex:none;
+  padding:8px 0 4px;border-bottom:1px solid var(--rule);flex:none;
 }
-.map-title-text{font-size:clamp(16px,1.8vw,22px);font-weight:800;color:var(--ink);}
-.map-year-display{font-size:clamp(28px,3vw,42px);font-weight:800;color:var(--navy-deep);}
+.map-title-text{font-size:18px;font-weight:800;color:var(--ink);}
+.map-year-display{font-size:32px;font-weight:800;color:var(--navy-deep);line-height:1;}
 
 .map-viewport{
-  position:relative;width:100%;aspect-ratio:1000/450;
-  background:#f8fafc;border-radius:8px;border:1px solid var(--rule);
-  overflow:hidden;margin-bottom:8px;
+  position:relative;width:100%;flex:1;min-height:0;
+  background:#f8fafc;border-radius:6px;border:1px solid var(--rule);
+  margin:6px 0;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
 }
+.map-viewport .world-map-wrap{max-width:800px;}
 
-/* Data overlay markers */
+/* Marker Bubbles */
 .data-marker{
   position:absolute;transform:translate(-50%,-50%);
   display:flex;flex-direction:column;align-items:center;
-  pointer-events:none;transition:all .3s ease;
-  z-index:15;
+  pointer-events:none;transition:all .3s ease;z-index:20;
 }
 .marker-bubble{
   background:var(--red);color:#fff;font-weight:800;
@@ -170,25 +162,24 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   white-space:nowrap;box-shadow:0 2px 4px rgba(0,0,0,0.08);margin-top:2px;
 }
 
-/* ── CONTROL PANEL ── */
+/* Control Strips */
 .control-panel{
-  display:flex;flex-direction:column;gap:8px;
-  background:#fff;padding:8px 0 16px;border-top:1px solid var(--rule);flex:none;
+  display:flex;flex-direction:column;gap:6px;
+  background:#fff;padding:6px 0 10px;border-top:1px solid var(--rule);flex:none;
 }
 .time-tabs{display:flex;gap:8px;align-items:center;}
 .time-btn{
-  padding:5px 12px;border-radius:4px;border:1px solid var(--blue);
-  color:var(--blue);font-weight:700;font-size:13px;
-  transition:all .18s ease;
+  padding:4px 14px;border-radius:4px;border:1px solid var(--blue);
+  color:var(--blue);font-weight:700;font-size:13px;transition:all .18s;
 }
 .time-btn:hover{background:#eef0fb;}
 .time-btn.active{background:var(--navy-deep);color:#fff;border-color:var(--navy-deep);}
 
 .category-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .cat-btn{
-  padding:10px 8px;border-radius:4px;background:#f1f5f9;
+  padding:8px;border-radius:4px;background:#f1f5f9;
   color:var(--ink);font-size:13px;font-weight:700;text-align:center;
-  border:1px solid var(--rule);transition:all .18s ease;
+  border:1px solid var(--rule);transition:all .18s;
 }
 .cat-btn:hover{background:#e2e8f0;}
 .cat-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
@@ -201,23 +192,18 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 }
 .modal-overlay.open{display:flex;}
 .modal-box{
-  background:#fff;border-radius:10px;max-width:680px;width:100%;
-  max-height:82vh;display:flex;flex-direction:column;
+  background:#fff;border-radius:8px;max-width:620px;width:100%;
+  max-height:85vh;display:flex;flex-direction:column;
   box-shadow:0 16px 52px rgba(0,0,0,.24);
 }
 .modal-head{
-  padding:16px 20px 12px;border-bottom:1px solid var(--rule);
+  padding:14px 20px;border-bottom:1px solid var(--rule);
   display:flex;align-items:center;justify-content:space-between;flex:none;
 }
-.modal-head h2{font-size:18px;font-weight:700;}
+.modal-head h2{font-size:17px;font-weight:700;}
 .modal-body{padding:16px 20px;overflow-y:auto;font-size:14px;line-height:1.6;}
 
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-
-@media(max-width:560px){
-  .category-tabs{grid-template-columns:1fr;}
-}
-body{box-shadow:0 0 6px 0 rgba(13,13,13,0.14),0 4px 8px 0 rgba(13,13,13,0.15);}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
 </style>
 </head>
 <body>
@@ -233,61 +219,93 @@ body{box-shadow:0 0 6px 0 rgba(13,13,13,0.14),0 4px 8px 0 rgba(13,13,13,0.15);}
     </div>
 
     <div class="cover-art">
-      <div class="cover-art-container">
-        <!-- Direct Inlined SVG Map -->
-        <svg viewBox="0 0 1000 450" style="width:100%;height:100%;display:block;" preserveAspectRatio="xMidYMid meet">
-          <g fill="#b0b5ba">
-            <path d="M102,74 L142,66 L175,69 L204,45 L252,43 L298,85 L328,118 L296,152 L260,192 L228,212 L192,216 L172,176 L132,156 L94,142 L72,106 Z M338,22 L388,18 L418,52 L384,106 L342,88 Z"/>
-            <path d="M236,220 L278,216 L332,234 L368,284 L364,352 L312,424 L276,432 L256,388 L238,296 L226,242 Z"/>
-            <path d="M452,56 L512,48 L568,64 L628,42 L748,36 L878,48 L934,136 L882,184 L768,172 L662,152 L592,162 L542,126 L474,124 L448,96 Z M472,132 L498,128 L512,156 L478,162 Z"/>
-            <path d="M428,154 L522,148 L584,204 L608,272 L572,364 L524,402 L488,382 L462,284 L418,226 L422,174 Z M604,312 L624,312 L616,364 L596,356 Z"/>
-            <path d="M602,152 L682,164 L746,212 L722,274 L678,262 L632,212 L602,176 Z M826,168 L854,166 L866,224 L832,204 Z M748,278 L788,276 L812,324 L764,332 Z"/>
-            <path d="M784,296 L872,288 L908,348 L878,412 L798,406 L782,352 Z M916,388 L944,382 L936,428 L912,416 Z"/>
-          </g>
+      <div class="world-map-wrap">
+        <!-- Exact Inline World Vector Silhouette (Robinson Projection) -->
+        <svg class="world-map-svg" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet">
+          <!-- Greenland & North America -->
+          <path d="M360,25 Q395,15 425,40 Q435,70 410,105 Q375,115 350,90 Z" />
+          <path d="M90,75 Q150,55 235,50 Q280,75 320,115 Q300,165 265,200 Q225,225 185,215 Q155,185 130,165 Q85,145 70,110 Z" />
+          <path d="M190,215 Q220,230 250,265 Q235,280 215,260 Z" /> <!-- Central America -->
+          <!-- South America -->
+          <path d="M245,265 Q310,250 355,300 Q370,360 320,435 Q285,450 265,400 Q245,330 235,285 Z" />
+          <!-- Europe & UK -->
+          <path d="M435,95 Q450,75 465,95 Q455,120 440,115 Z" />
+          <path d="M470,65 Q540,55 585,85 Q590,135 540,145 Q495,150 460,115 Z" />
+          <path d="M495,45 Q515,25 545,40 Q530,85 500,75 Z" /> <!-- Scandinavia -->
+          <!-- Africa & Madagascar -->
+          <path d="M435,160 Q545,150 595,215 Q625,285 585,370 Q535,420 500,390 Q445,300 425,230 Z" />
+          <path d="M605,320 Q625,325 615,375 Q595,370 605,320 Z" />
+          <!-- Russia, Asia & India -->
+          <path d="M585,55 Q730,40 910,65 Q945,115 900,175 Q820,195 725,180 Q645,160 585,110 Z" />
+          <path d="M670,180 Q740,195 730,265 Q685,280 660,235 Z" /> <!-- India -->
+          <path d="M735,180 Q840,175 845,250 Q780,285 735,245 Z" /> <!-- East Asia / China -->
+          <path d="M840,165 Q860,160 865,225 Q845,235 840,185 Z" /> <!-- Japan -->
+          <path d="M760,280 Q820,280 840,320 Q785,340 750,305 Z" /> <!-- SE Asia -->
+          <!-- Australia & NZ -->
+          <path d="M790,315 Q880,300 915,355 Q885,420 815,415 Q785,370 790,315 Z" />
+          <path d="M920,400 Q940,395 940,430 Q915,435 920,400 Z" />
         </svg>
-        
+
+        <!-- Animated Pulse Dots Layer matching your Economist design -->
         <div class="cover-dots-layer">
-          <div class="dot-pulse blue" style="left: 28%; top: 32%; width: 12px; height: 12px;"></div>
-          <div class="dot-pulse orange" style="left: 33%; top: 62%; width: 10px; height: 10px;"></div>
-          <div class="dot-pulse orange" style="left: 34%; top: 82%; width: 10px; height: 10px;"></div>
-          <div class="dot-pulse yellow" style="left: 50%; top: 58%; width: 11px; height: 11px;"></div>
-          <div class="dot-pulse yellow" style="left: 54%; top: 60%; width: 11px; height: 11px;"></div>
-          <div class="dot-pulse yellow" style="left: 56%; top: 48%; width: 11px; height: 11px;"></div>
-          <div class="dot-pulse yellow" style="left: 55%; top: 78%; width: 11px; height: 11px;"></div>
-          <div class="dot-pulse red" style="left: 61%; top: 32%; width: 12px; height: 12px;"></div>
-          <div class="dot-pulse red" style="left: 62%; top: 42%; width: 14px; height: 14px;"></div>
-          <div class="dot-pulse red" style="left: 65%; top: 46%; width: 34px; height: 34px; animation-duration: 2s;"></div>
-          <div class="dot-pulse red" style="left: 67%; top: 44%; width: 18px; height: 18px;"></div>
-          <div class="dot-pulse red" style="left: 73%; top: 38%; width: 22px; height: 22px;"></div>
-          <div class="dot-pulse red" style="left: 70%; top: 52%; width: 12px; height: 12px;"></div>
+          <!-- North America (Blue) -->
+          <div class="dot-pulse blue" style="left: 24%; top: 31%; width: 18px; height: 18px;"></div>
+          <div class="dot-pulse blue" style="left: 23%; top: 40%; width: 12px; height: 12px;"></div>
+
+          <!-- South America (Orange) -->
+          <div class="dot-pulse orange" style="left: 29%; top: 50%; width: 9px; height: 9px;"></div>
+          <div class="dot-pulse orange" style="left: 29%; top: 57%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse orange" style="left: 33%; top: 59%; width: 18px; height: 18px;"></div>
+          <div class="dot-pulse orange" style="left: 31%; top: 72%; width: 9px; height: 9px;"></div>
+
+          <!-- Europe (Teal) -->
+          <div class="dot-pulse yellow" style="left: 49%; top: 25%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse teal" style="left: 52%; top: 26%; width: 8px; height: 8px; background:var(--teal);"></div>
+          <div class="dot-pulse teal" style="left: 53%; top: 31%; width: 11px; height: 11px; background:var(--teal);"></div>
+
+          <!-- Africa / Middle East (Yellow) -->
+          <div class="dot-pulse yellow" style="left: 46%; top: 48%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse yellow" style="left: 49%; top: 46%; width: 10px; height: 10px;"></div>
+          <div class="dot-pulse yellow" style="left: 52%; top: 50%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse yellow" style="left: 54%; top: 55%; width: 7px; height: 7px;"></div>
+          <div class="dot-pulse yellow" style="left: 53%; top: 62%; width: 9px; height: 9px;"></div>
+
+          <!-- Asia Clusters (Red) -->
+          <div class="dot-pulse red" style="left: 58%; top: 34%; width: 11px; height: 11px;"></div>
+          <div class="dot-pulse red" style="left: 61%; top: 36%; width: 8px; height: 8px;"></div>
+          <div class="dot-pulse red" style="left: 69%; top: 32%; width: 38px; height: 38px; animation-duration: 2.2s;"></div>
+          <div class="dot-pulse red" style="left: 74%; top: 32%; width: 9px; height: 9px;"></div>
+          <div class="dot-pulse red" style="left: 73%; top: 53%; width: 10px; height: 10px;"></div>
+
+          <!-- Australia (Grey/Black) -->
+          <div class="dot-pulse" style="left: 75%; top: 66%; width: 8px; height: 8px; background:#141F52;"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── SCREEN 2: INTERACTIVE INFOGRAPHIC ── -->
+<!-- ── SCREEN 2: MAIN INTERACTIVE STAGE ── -->
 <section id="mainApp" class="screen" aria-label="Interactive Infographic Stage">
-  <!-- Exact Baseline M1 Appbar -->
   <header class="appbar">
     <div class="appbar-inner">
       <div class="appbar-title">Global demographic changes</div>
       <div class="appbar-tools">
-        <!-- Baseline Home Button[cite: 1] -->
+        <!-- Return Home Button -->
         <button type="button" class="icon-btn btn-home" aria-label="Return to cover">
           <svg viewBox="0 0 36 36">
             <circle class="ring" cx="18" cy="18" r="17"/>
             <path class="glyph" d="M18,10.2L9.5,17v10.5h6v-6h5v6h6V17L18,10.2z M24.5,25.5h-2v-6h-9v6h-2V18l6.5-5.2l6.5,5.2V25.5z"/>
           </svg>
         </button>
-        <!-- Baseline Bibliography Button[cite: 1] -->
+        <!-- Bibliography Button -->
         <button type="button" class="icon-btn btn-bib" id="btnOpenBib" aria-label="Open Bibliography">
           <svg viewBox="0 0 36 36">
             <circle class="ring" cx="18" cy="18" r="17"/>
             <path class="glyph" d="M12,11.5h12V13H12V11.5z M12,16.5h12V18H12V16.5z M12,21.5h8V23h-8V21.5z"/>
           </svg>
         </button>
-        <!-- Baseline Close Button[cite: 1] -->
+        <!-- Close Interaction Button -->
         <button type="button" class="icon-btn btn-close" aria-label="Close interaction">
           <svg viewBox="0 0 36 36">
             <circle class="ring" cx="18" cy="18" r="17"/>
@@ -298,274 +316,21 @@ body{box-shadow:0 0 6px 0 rgba(13,13,13,0.14),0 4px 8px 0 rgba(13,13,13,0.15);}
     </div>
   </header>
 
-  <div class="map-container">
+  <div class="map-stage-container">
     <div class="map-header">
       <div class="map-title-text" id="displayCategoryTitle">Population per continent (in millions)</div>
       <div class="map-year-display" id="displayYear">1950</div>
     </div>
 
     <div class="map-viewport">
-      <svg viewBox="0 0 1000 450" style="width:100%;height:100%;display:block;" preserveAspectRatio="xMidYMid meet">
-        <g fill="#b0b5ba">
-          <path d="M102,74 L142,66 L175,69 L204,45 L252,43 L298,85 L328,118 L296,152 L260,192 L228,212 L192,216 L172,176 L132,156 L94,142 L72,106 Z M338,22 L388,18 L418,52 L384,106 L342,88 Z"/>
-          <path d="M236,220 L278,216 L332,234 L368,284 L364,352 L312,424 L276,432 L256,388 L238,296 L226,242 Z"/>
-          <path d="M452,56 L512,48 L568,64 L628,42 L748,36 L878,48 L934,136 L882,184 L768,172 L662,152 L592,162 L542,126 L474,124 L448,96 Z M472,132 L498,128 L512,156 L478,162 Z"/>
-          <path d="M428,154 L522,148 L584,204 L608,272 L572,364 L524,402 L488,382 L462,284 L418,226 L422,174 Z M604,312 L624,312 L616,364 L596,356 Z"/>
-          <path d="M602,152 L682,164 L746,212 L722,274 L678,262 L632,212 L602,176 Z M826,168 L854,166 L866,224 L832,204 Z M748,278 L788,276 L812,324 L764,332 Z"/>
-          <path d="M784,296 L872,288 L908,348 L878,412 L798,406 L782,352 Z M916,388 L944,382 L936,428 L912,416 Z"/>
-        </g>
-      </svg>
-      <div id="markerOverlay"></div>
-    </div>
-
-    <div class="control-panel">
-      <div class="time-tabs" id="timeTabContainer"></div>
-      <div class="category-tabs">
-        <button type="button" class="cat-btn active" data-cat="continent">Population per continent</button>
-        <button type="button" class="cat-btn" data-cat="country">Five most populous countries</button>
-        <button type="button" class="cat-btn" data-cat="city">Ten most populous cities</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── INTRO MODAL ── -->
-<div class="modal-overlay" id="introModal" role="dialog" aria-modal="true">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2>Module Introduction</h2>
-      <button type="button" class="icon-btn" id="btnCloseIntro" aria-label="Close modal">
-        <svg viewBox="0 0 36 36"><circle class="ring" cx="18" cy="18" r="17"/><path class="xglyph" d="M11 11l14 14M25 11L11 25"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>Demography is a game-changer, not only for the US-China rivalry but also for geopolitics in general[cite: 3]. Populations and their characteristics evolve constantly[cite: 3]. Engage with the following interactive infographic to learn more about the manner and frequency of demographic shifts[cite: 3].</p>
-      <br>
-      <button type="button" class="btn-start" id="btnContinueIntro" style="width:100%;">Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── BIBLIOGRAPHY MODAL ── -->
-<div class="modal-overlay" id="bibModal" role="dialog" aria-modal="true">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2>Bibliography</h2>
-      <button type="button" class="icon-btn" id="btnCloseBib" aria-label="Close modal">
-        <svg viewBox="0 0 36 36"><circle class="ring" cx="18" cy="18" r="17"/><path class="xglyph" d="M11 11l14 14M25 11L11 25"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>United Nations, Department of Economic and Social Affairs, Population Division. 2019. <i>World population prospects 2019</i>[cite: 3].</p>
-      <br>
-      <p>United Nations, Department of Economic and Social Affairs, Population Division. 2019. <i>World urbanization prospects: the 2018 revision</i>[cite: 3].</p>
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  const DATA = {
-    continent: {
-      title: "Population per continent (in millions)",
-      years: ["1950", "1980", "2020", "2050"],
-      points: {
-        "1950": [
-          { name: "Asia", val: "1,405", x: 72, y: 35, r: 38 },
-          { name: "Europe", val: "549", x: 52, y: 22, r: 24 },
-          { name: "Africa", val: "228", x: 51, y: 55, r: 18 },
-          { name: "North America", val: "173", x: 22, y: 30, r: 16 },
-          { name: "South America", val: "109", x: 32, y: 68, r: 14 },
-          { name: "Oceania", val: "13", x: 84, y: 75, r: 10 }
-        ],
-        "1980": [
-          { name: "Asia", val: "2,650", x: 72, y: 35, r: 46 },
-          { name: "Europe", val: "694", x: 52, y: 22, r: 26 },
-          { name: "Africa", val: "476", x: 51, y: 55, r: 22 },
-          { name: "North America", val: "254", x: 22, y: 30, r: 18 },
-          { name: "South America", val: "361", x: 32, y: 68, r: 20 },
-          { name: "Oceania", val: "23", x: 84, y: 75, r: 12 }
-        ],
-        "2020": [
-          { name: "Asia", val: "4,641", x: 72, y: 35, r: 58 },
-          { name: "Europe", val: "748", x: 52, y: 22, r: 28 },
-          { name: "Africa", val: "1,341", x: 51, y: 55, r: 34 },
-          { name: "North America", val: "369", x: 22, y: 30, r: 20 },
-          { name: "South America", val: "654", x: 32, y: 68, r: 24 },
-          { name: "Oceania", val: "43", x: 84, y: 75, r: 14 }
-        ],
-        "2050": [
-          { name: "Asia", val: "5,290", x: 72, y: 35, r: 62 },
-          { name: "Europe", val: "710", x: 52, y: 22, r: 27 },
-          { name: "Africa", val: "2,489", x: 51, y: 55, r: 44 },
-          { name: "North America", val: "425", x: 22, y: 30, r: 22 },
-          { name: "South America", val: "762", x: 32, y: 68, r: 26 },
-          { name: "Oceania", val: "57", x: 84, y: 75, r: 15 }
-        ]
-      }
-    },
-    country: {
-      title: "Five most populous countries (in millions)",
-      years: ["1950", "1980", "2020", "2050"],
-      points: {
-        "1950": [
-          { name: "China", val: "554", x: 75, y: 36, r: 28 },
-          { name: "India", val: "376", x: 68, y: 44, r: 22 },
-          { name: "US", val: "159", x: 22, y: 32, r: 16 },
-          { name: "Russia", val: "103", x: 62, y: 20, r: 14 },
-          { name: "Japan", val: "83", x: 83, y: 34, r: 12 }
-        ],
-        "2020": [
-          { name: "China", val: "1,439", x: 75, y: 36, r: 48 },
-          { name: "India", val: "1,380", x: 68, y: 44, r: 46 },
-          { name: "US", val: "331", x: 22, y: 32, r: 22 },
-          { name: "Indonesia", val: "274", x: 78, y: 58, r: 20 },
-          { name: "Pakistan", val: "221", x: 64, y: 41, r: 18 }
-        ]
-      }
-    },
-    city: {
-      title: "Ten most populous cities (in millions)",
-      years: ["1950", "1980", "2020", "2035"],
-      points: {
-        "1950": [
-          { name: "New York", val: "12", x: 26, y: 32, r: 16 },
-          { name: "Tokyo", val: "11", x: 83, y: 34, r: 15 },
-          { name: "London", val: "8", x: 48, y: 21, r: 14 },
-          { name: "Osaka", val: "7", x: 81, y: 36, r: 13 },
-          { name: "Paris", val: "6", x: 49, y: 24, r: 12 }
-        ],
-        "2035": [
-          { name: "Tokyo", val: "36", x: 83, y: 34, r: 30 },
-          { name: "Delhi", val: "43", x: 67, y: 40, r: 34 },
-          { name: "Shanghai", val: "34", x: 77, y: 38, r: 28 },
-          { name: "Dhaka", val: "31", x: 72, y: 43, r: 26 },
-          { name: "Kinshasa", val: "27", x: 52, y: 62, r: 24 }
-        ]
-      }
-    }
-  };
-
-  let currentCategory = "continent";
-  let currentYear = "1950";
-
-  const markerOverlay = document.getElementById('markerOverlay');
-  const timeTabContainer = document.getElementById('timeTabContainer');
-  const displayCategoryTitle = document.getElementById('displayCategoryTitle');
-  const displayYear = document.getElementById('displayYear');
-
-  function setCategory(catKey) {
-    currentCategory = catKey;
-    const catData = DATA[catKey];
-    displayCategoryTitle.textContent = catData.title;
-
-    if (!catData.years.includes(currentYear)) {
-      currentYear = catData.years[0];
-    }
-
-    renderTimeTabs();
-    renderMarkers();
-    reportHeight();
-  }
-
-  function setYear(year) {
-    currentYear = year;
-    renderTimeTabs();
-    renderMarkers();
-  }
-
-  function renderTimeTabs() {
-    const years = DATA[currentCategory].years;
-    timeTabContainer.innerHTML = '';
-    years.forEach(yr => {
-      const btn = document.createElement('button');
-      btn.className = `time-btn ${yr === currentYear ? 'active' : ''}`;
-      btn.textContent = yr;
-      btn.addEventListener('click', () => setYear(yr));
-      timeTabContainer.appendChild(btn);
-    });
-  }
-
-  function renderMarkers() {
-    displayYear.textContent = currentYear;
-    markerOverlay.innerHTML = '';
-
-    const catPoints = DATA[currentCategory].points;
-    const pointsList = catPoints[currentYear] || catPoints[Object.keys(catPoints)[0]] || [];
-
-    pointsList.forEach(pt => {
-      const marker = document.createElement('div');
-      marker.className = 'data-marker';
-      marker.style.left = `${pt.x}%`;
-      marker.style.top = `${pt.y}%`;
-
-      const size = pt.r ? pt.r * 1.5 : 24;
-      marker.innerHTML = `
-        <div class="marker-bubble" style="width:${size}px;height:${size}px;font-size:${Math.max(10, size*0.35)}px;">
-          ${pt.val}
-        </div>
-        <div class="marker-card">${pt.name}</div>
-      `;
-      markerOverlay.appendChild(marker);
-    });
-  }
-
-  /* Robust Height Communication for Moodle 4.5 iframe */
-  function reportHeight() {
-    const computedHeight = Math.max(document.body.scrollHeight, 680);
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ frameHeight: computedHeight }, '*');
-    }
-  }
-
-  function init() {
-    document.getElementById('btnCoverStart').addEventListener('click', () => {
-      document.getElementById('cover').classList.remove('is-active');
-      document.getElementById('mainApp').classList.add('is-active');
-      document.getElementById('introModal').classList.add('open');
-      setCategory('continent');
-      reportHeight();
-    });
-
-    document.querySelectorAll('.btn-home, .btn-close').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('mainApp').classList.remove('is-active');
-        document.getElementById('cover').classList.add('is-active');
-        reportHeight();
-      });
-    });
-
-    document.querySelectorAll('.cat-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        setCategory(e.target.getAttribute('data-cat'));
-      });
-    });
-
-    document.getElementById('btnOpenIntro').addEventListener('click', () => {
-      document.getElementById('introModal').classList.add('open');
-    });
-    document.getElementById('btnCloseIntro').addEventListener('click', () => {
-      document.getElementById('introModal').classList.remove('open');
-    });
-    document.getElementById('btnContinueIntro').addEventListener('click', () => {
-      document.getElementById('introModal').classList.remove('open');
-    });
-
-    document.getElementById('btnOpenBib').addEventListener('click', () => {
-      document.getElementById('bibModal').classList.add('open');
-    });
-    document.getElementById('btnCloseBib').addEventListener('click', () => {
-      document.getElementById('bibModal').classList.remove('open');
-    });
-
-    reportHeight();
-  }
-
-  document.addEventListener('DOMContentLoaded', init);
-  window.addEventListener('load', reportHeight);
-})();
-</script>
-</body>
-</html>
+      <div class="world-map-wrap">
+        <svg class="world-map-svg" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet">
+          <path d="M360,25 Q395,15 425,40 Q435,70 410,105 Q375,115 350,90 Z" />
+          <path d="M90,75 Q150,55 235,50 Q280,75 320,115 Q300,165 265,200 Q225,225 185,215 Q155,185 130,165 Q85,145 70,110 Z" />
+          <path d="M190,215 Q220,230 250,265 Q235,280 215,260 Z" />
+          <path d="M245,265 Q310,250 355,300 Q370,360 320,435 Q285,450 265,400 Q245,330 235,285 Z" />
+          <path d="M435,95 Q450,75 465,95 Q455,120 440,115 Z" />
+          <path d="M470,65 Q540,55 585,85 Q590,135 540,145 Q495,150 460,115 Z" />
+          <path d="M495,45 Q515,25 545,40 Q530,85 500,75 Z" />
+          <path d="M435,160 Q545,150 595,215 Q625,285 585,370 Q535,420 500,390 Q445,300 425,230 Z" />
+          <path d="M605,320 Q625,325 61
