@@ -367,4 +367,205 @@ body{box-shadow:0 0 6px 0 rgba(13,13,13,0.14),0 4px 8px 0 rgba(13,13,13,0.15);}
 (function(){
   const DATA = {
     continent: {
-      title: "Population per continent (in
+      title: "Population per continent (in millions)",
+      years: ["1950", "1980", "2020", "2050"],
+      points: {
+        "1950": [
+          { name: "Asia", val: "1,405", x: 72, y: 35, r: 38 },
+          { name: "Europe", val: "549", x: 52, y: 22, r: 24 },
+          { name: "Africa", val: "228", x: 51, y: 55, r: 18 },
+          { name: "North America", val: "173", x: 22, y: 30, r: 16 },
+          { name: "South America", val: "109", x: 32, y: 68, r: 14 },
+          { name: "Oceania", val: "13", x: 84, y: 75, r: 10 }
+        ],
+        "1980": [
+          { name: "Asia", val: "2,650", x: 72, y: 35, r: 46 },
+          { name: "Europe", val: "694", x: 52, y: 22, r: 26 },
+          { name: "Africa", val: "476", x: 51, y: 55, r: 22 },
+          { name: "North America", val: "254", x: 22, y: 30, r: 18 },
+          { name: "South America", val: "361", x: 32, y: 68, r: 20 },
+          { name: "Oceania", val: "23", x: 84, y: 75, r: 12 }
+        ],
+        "2020": [
+          { name: "Asia", val: "4,641", x: 72, y: 35, r: 58 },
+          { name: "Europe", val: "748", x: 52, y: 22, r: 28 },
+          { name: "Africa", val: "1,341", x: 51, y: 55, r: 34 },
+          { name: "North America", val: "369", x: 22, y: 30, r: 20 },
+          { name: "South America", val: "654", x: 32, y: 68, r: 24 },
+          { name: "Oceania", val: "43", x: 84, y: 75, r: 14 }
+        ],
+        "2050": [
+          { name: "Asia", val: "5,290", x: 72, y: 35, r: 62 },
+          { name: "Europe", val: "710", x: 52, y: 22, r: 27 },
+          { name: "Africa", val: "2,489", x: 51, y: 55, r: 44 },
+          { name: "North America", val: "425", x: 22, y: 30, r: 22 },
+          { name: "South America", val: "762", x: 32, y: 68, r: 26 },
+          { name: "Oceania", val: "57", x: 84, y: 75, r: 15 }
+        ]
+      }
+    },
+    country: {
+      title: "Five most populous countries (in millions)",
+      years: ["1950", "1980", "2020", "2050"],
+      points: {
+        "1950": [
+          { name: "China", val: "554", x: 75, y: 36, r: 28 },
+          { name: "India", val: "376", x: 68, y: 44, r: 22 },
+          { name: "US", val: "159", x: 22, y: 32, r: 16 },
+          { name: "Russia", val: "103", x: 62, y: 20, r: 14 },
+          { name: "Japan", val: "83", x: 83, y: 34, r: 12 }
+        ],
+        "2020": [
+          { name: "China", val: "1,439", x: 75, y: 36, r: 48 },
+          { name: "India", val: "1,380", x: 68, y: 44, r: 46 },
+          { name: "US", val: "331", x: 22, y: 32, r: 22 },
+          { name: "Indonesia", val: "274", x: 78, y: 58, r: 20 },
+          { name: "Pakistan", val: "221", x: 64, y: 41, r: 18 }
+        ]
+      }
+    },
+    city: {
+      title: "Ten most populous cities (in millions)",
+      years: ["1950", "1980", "2020", "2035"],
+      points: {
+        "1950": [
+          { name: "New York", val: "12", x: 26, y: 32, r: 16 },
+          { name: "Tokyo", val: "11", x: 83, y: 34, r: 15 },
+          { name: "London", val: "8", x: 48, y: 21, r: 14 },
+          { name: "Osaka", val: "7", x: 81, y: 36, r: 13 },
+          { name: "Paris", val: "6", x: 49, y: 24, r: 12 }
+        ],
+        "2035": [
+          { name: "Tokyo", val: "36", x: 83, y: 34, r: 30 },
+          { name: "Delhi", val: "43", x: 67, y: 40, r: 34 },
+          { name: "Shanghai", val: "34", x: 77, y: 38, r: 28 },
+          { name: "Dhaka", val: "31", x: 72, y: 43, r: 26 },
+          { name: "Kinshasa", val: "27", x: 52, y: 62, r: 24 }
+        ]
+      }
+    }
+  };
+
+  let currentCategory = "continent";
+  let currentYear = "1950";
+
+  const markerOverlay = document.getElementById('markerOverlay');
+  const timeTabContainer = document.getElementById('timeTabContainer');
+  const displayCategoryTitle = document.getElementById('displayCategoryTitle');
+  const displayYear = document.getElementById('displayYear');
+
+  function setCategory(catKey) {
+    currentCategory = catKey;
+    const catData = DATA[catKey];
+    displayCategoryTitle.textContent = catData.title;
+
+    if (!catData.years.includes(currentYear)) {
+      currentYear = catData.years[0];
+    }
+
+    renderTimeTabs();
+    renderMarkers();
+    reportHeight();
+  }
+
+  function setYear(year) {
+    currentYear = year;
+    renderTimeTabs();
+    renderMarkers();
+  }
+
+  function renderTimeTabs() {
+    const years = DATA[currentCategory].years;
+    timeTabContainer.innerHTML = '';
+    years.forEach(yr => {
+      const btn = document.createElement('button');
+      btn.className = `time-btn ${yr === currentYear ? 'active' : ''}`;
+      btn.textContent = yr;
+      btn.addEventListener('click', () => setYear(yr));
+      timeTabContainer.appendChild(btn);
+    });
+  }
+
+  function renderMarkers() {
+    displayYear.textContent = currentYear;
+    markerOverlay.innerHTML = '';
+
+    const catPoints = DATA[currentCategory].points;
+    const pointsList = catPoints[currentYear] || catPoints[Object.keys(catPoints)[0]] || [];
+
+    pointsList.forEach(pt => {
+      const marker = document.createElement('div');
+      marker.className = 'data-marker';
+      marker.style.left = `${pt.x}%`;
+      marker.style.top = `${pt.y}%`;
+
+      const size = pt.r ? pt.r * 1.5 : 24;
+      marker.innerHTML = `
+        <div class="marker-bubble" style="width:${size}px;height:${size}px;font-size:${Math.max(10, size*0.35)}px;">
+          ${pt.val}
+        </div>
+        <div class="marker-card">${pt.name}</div>
+      `;
+      markerOverlay.appendChild(marker);
+    });
+  }
+
+  /* Robust Height Communication for Moodle 4.5 iframe */
+  function reportHeight() {
+    const computedHeight = Math.max(document.body.scrollHeight, 680);
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ frameHeight: computedHeight }, '*');
+    }
+  }
+
+  function init() {
+    document.getElementById('btnCoverStart').addEventListener('click', () => {
+      document.getElementById('cover').classList.remove('is-active');
+      document.getElementById('mainApp').classList.add('is-active');
+      document.getElementById('introModal').classList.add('open');
+      setCategory('continent');
+      reportHeight();
+    });
+
+    document.querySelectorAll('.btn-home, .btn-close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('mainApp').classList.remove('is-active');
+        document.getElementById('cover').classList.add('is-active');
+        reportHeight();
+      });
+    });
+
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        setCategory(e.target.getAttribute('data-cat'));
+      });
+    });
+
+    document.getElementById('btnOpenIntro').addEventListener('click', () => {
+      document.getElementById('introModal').classList.add('open');
+    });
+    document.getElementById('btnCloseIntro').addEventListener('click', () => {
+      document.getElementById('introModal').classList.remove('open');
+    });
+    document.getElementById('btnContinueIntro').addEventListener('click', () => {
+      document.getElementById('introModal').classList.remove('open');
+    });
+
+    document.getElementById('btnOpenBib').addEventListener('click', () => {
+      document.getElementById('bibModal').classList.add('open');
+    });
+    document.getElementById('btnCloseBib').addEventListener('click', () => {
+      document.getElementById('bibModal').classList.remove('open');
+    });
+
+    reportHeight();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+  window.addEventListener('load', reportHeight);
+})();
+</script>
+</body>
+</html>
