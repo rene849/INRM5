@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Light-mode lock to prevent UA dark mode background inversion -->
 <meta name="color-scheme" content="only light">
 <title>Global demographic changes - M5</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -15,6 +14,7 @@
   --ink:#0f172a; --muted:#5a5f73; --rule:#d7d9e0;
   --maxw:1320px;
   --pad:clamp(18px,4vw,52px);
+  --screen-min:580px;
   color-scheme: only light;
 }
 
@@ -33,14 +33,14 @@ body{font-family:'Noto Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased
 button{font-family:inherit;cursor:pointer;border:none;background:none;touch-action:manipulation;}
 :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px;}
 
-/* ── Screen switching ── */
+/* ── Screen switching matching Base M1 ── */
 .screen{display:none;}
 .screen.is-active{
   display:flex;
   flex-direction:column;
   overflow:hidden;
   height:100vh;
-  min-height:580px;
+  min-height:var(--screen-min,580px);
 }
 
 /* ── APPBAR (Matched to Baseline M1) ── */
@@ -78,7 +78,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:hover,.icon-btn:focus-visible{--ring:#1f2e7a;--ring-fill:#ebedfa;--glyph:#1f2e7a;}
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent;--glyph:#1f2e7a;}
 
-/* ── COVER STAGE ── */
+/* ── COVER STAGE (Exact Grid Sizing from Base M1) ── */
 #cover{overflow:hidden;}
 .cover-stage{
   position:relative;width:100%;max-width:var(--maxw);margin:0 auto;
@@ -96,4 +96,79 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .btn-start{
   display:inline-flex;align-items:center;justify-content:center;
   background:var(--blue);color:#fff;font-weight:700;font-size:15px;
-  min-width:clamp(120px,14vw,152px);height:
+  min-width:clamp(120px,14vw,152px);height:44px;padding:0 24px;
+  border-radius:4px;cursor:pointer;transition:background .18s;}
+.btn-start:hover,.btn-start:focus-visible{background:var(--navy);}
+
+.cover-art{
+  grid-area:1/1;align-self:center;justify-self:stretch;
+  width:100%;aspect-ratio:1000/450;pointer-events:none;z-index:1;
+}
+.cover-art-container {
+  position: relative;width: 100%;height:100%;aspect-ratio:1000/450;
+}
+
+/* Pulsing Cover Dots Layer */
+.cover-dots-layer {
+  position: absolute;inset: 0;pointer-events: none;z-index: 10;
+}
+.dot-pulse {
+  position: absolute;border-radius: 50%;transform: translate(-50%, -50%);
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+.dot-pulse.blue   { background: #2E45B8; }
+.dot-pulse.orange { background: #E57373; }
+.dot-pulse.yellow { background: #F9C21F; }
+.dot-pulse.red    { background: #E3120B; }
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    box-shadow: 0 0 0 0 rgba(227, 18, 11, 0.4);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 0 12px 4px rgba(227, 18, 11, 0.2);
+  }
+}
+
+/* ── INTERACTIVE MAP STAGE ── */
+.map-container{
+  position:relative;width:100%;max-width:var(--maxw);
+  margin:0 auto;flex:1;display:flex;flex-direction:column;
+  padding:0 var(--pad);overflow:hidden;
+}
+.map-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin:8px 0;border-bottom:1px solid var(--rule);padding-bottom:6px;flex:none;
+}
+.map-title-text{font-size:clamp(16px,1.8vw,22px);font-weight:800;color:var(--ink);}
+.map-year-display{font-size:clamp(28px,3vw,42px);font-weight:800;color:var(--navy-deep);}
+
+.map-viewport{
+  position:relative;width:100%;flex:1;min-height:0;
+  background:#f8fafc;border-radius:8px;border:1px solid var(--rule);
+  overflow:hidden;margin-bottom:8px;
+}
+
+/* Data overlay markers */
+.data-marker{
+  position:absolute;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;
+  pointer-events:none;transition:all .3s ease;
+  z-index:15;
+}
+.marker-bubble{
+  background:var(--red);color:#fff;font-weight:800;
+  border-radius:50%;display:grid;place-items:center;
+  box-shadow:0 2px 6px rgba(227,18,11,0.3);
+}
+.marker-card{
+  background:#fff;border:1px solid var(--rule);
+  border-radius:4px;padding:2px 6px;font-size:11px;font-weight:700;
+  white-space:nowrap;box-shadow:0 2px 4px rgba(0,0,0,0.08);margin-top:2px;
+}
+
+/* ── CONTROL PANEL ── */
+.control-panel{
+  display:flex;flex-direction:column;gap
