@@ -7,23 +7,21 @@
 <title>Global demographic changes - M5</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ── Tokens matching M1 baseline ── */
 :root{
   --red:#E3120B; --navy:#1F2E7A; --navy-deep:#141F52;
-  --blue:#2E45B8; --teal:#36E2BD; --cream:#EBE9E0;
-  --ink:#0f172a; --muted:#5a5f73; --rule:#d7d9e0;
-  --maxw:1200px;
-  --pad:clamp(16px,3vw,36px);
+  --blue:#2E45B8; --teal:#1DC9A4; --orange:#E57373;
+  --yellow:#F9C21F; --cream:#EBE9E0; --ink:#0f172a;
+  --muted:#5a5f73; --rule:#d7d9e0; --maxw:1280px;
+  --pad:clamp(16px,3vw,40px);
   color-scheme: only light;
 }
 
-/* Strict viewport lock - Prevents Moodle internal scrollbars */
 html, body{
   background:#fff !important;
   color:#0f172a !important;
   overflow:hidden !important;
-  height:580px !important;
   width:100% !important;
+  height:100% !important;
   margin:0;
   padding:0;
 }
@@ -31,19 +29,17 @@ html, body{
 body{
   font-family:'Noto Sans',Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
-  position:relative;
 }
 button{font-family:inherit;cursor:pointer;border:none;background:none;touch-action:manipulation;}
 :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px;}
 
-/* ── Screen Management ── */
-.screen{display:none;width:100%;height:580px;position:relative;}
+.screen{display:none;width:100%;height:100%;position:relative;}
 .screen.is-active{display:flex;flex-direction:column;overflow:hidden;}
 
-/* ── BASELINE APPBAR ── */
+/* ── APPBAR ── */
 .appbar{
   position:relative;z-index:40;flex:none;
-  background:#fff;height:54px;display:flex;align-items:stretch;
+  background:#fff;height:52px;display:flex;align-items:stretch;
 }
 .appbar-inner{
   width:100%;max-width:var(--maxw);margin:0 auto;
@@ -71,24 +67,23 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent;--glyph:#1f2e7a;}
 
 /* ── COVER STAGE ── */
-#cover{overflow:hidden;}
 .cover-stage{
   position:relative;width:100%;max-width:var(--maxw);height:100%;margin:0 auto;
-  display:grid;grid-template-columns:300px 1fr;align-items:center;
-  padding:20px var(--pad);gap:24px;
+  display:grid;grid-template-columns:minmax(260px, 320px) 1fr;align-items:center;
+  padding:16px var(--pad);gap:20px;flex:1;overflow:hidden;
 }
 .cover-text{
   position:relative;z-index:10;display:flex;flex-direction:column;justify-content:center;
 }
 .cover-title{
-  font-size:clamp(32px,3.8vw,48px);font-weight:800;
+  font-size:clamp(30px,3.5vw,46px);font-weight:800;
   line-height:1.08;letter-spacing:-.02em;color:var(--ink);
-  margin-bottom:28px;
+  margin-bottom:24px;
 }
 .btn-start{
   display:inline-flex;align-items:center;justify-content:center;
   background:var(--blue);color:#fff;font-weight:700;font-size:15px;
-  width:140px;height:42px;border-radius:4px;cursor:pointer;
+  width:130px;height:42px;border-radius:4px;cursor:pointer;
   transition:background .18s;
 }
 .btn-start:hover{background:var(--navy);}
@@ -96,13 +91,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .cover-art{
   position:relative;width:100%;height:100%;
   display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
 }
 .world-map-wrap{
-  position:relative;width:100%;max-width:850px;aspect-ratio:968/450;
+  position:relative;width:100%;max-width:880px;aspect-ratio:1000/480;
+  display:flex;align-items:center;justify-content:center;
 }
-.world-map-svg{width:100%;height:100%;display:block;fill:#b0b5ba;}
+.world-map-svg{width:100%;height:100%;display:block;}
 
-/* Demographic Pulsing Dots */
+/* Demographic Pulsing Dots Layer */
 .cover-dots-layer{position:absolute;inset:0;pointer-events:none;}
 .dot-pulse{
   position:absolute;border-radius:50%;transform:translate(-50%, -50%);
@@ -112,6 +109,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .dot-pulse.orange { background:#E57373; }
 .dot-pulse.yellow { background:#F9C21F; }
 .dot-pulse.red    { background:#E3120B; }
+.dot-pulse.teal   { background:#1DC9A4; }
 
 @keyframes pulseGlow {
   0%, 100% {
@@ -120,7 +118,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   }
   50% {
     transform: translate(-50%, -50%) scale(1.15);
-    box-shadow: 0 0 10px 3px rgba(227, 18, 11, 0.25);
+    box-shadow: 0 0 8px 3px rgba(227, 18, 11, 0.25);
   }
 }
 
@@ -132,10 +130,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 }
 .map-header{
   display:flex;justify-content:space-between;align-items:baseline;
-  padding:8px 0 4px;border-bottom:1px solid var(--rule);flex:none;
+  padding:6px 0 4px;border-bottom:1px solid var(--rule);flex:none;
 }
-.map-title-text{font-size:18px;font-weight:800;color:var(--ink);}
-.map-year-display{font-size:32px;font-weight:800;color:var(--navy-deep);line-height:1;}
+.map-title-text{font-size:17px;font-weight:800;color:var(--ink);}
+.map-year-display{font-size:30px;font-weight:800;color:var(--navy-deep);line-height:1;}
 
 .map-viewport{
   position:relative;width:100%;flex:1;min-height:0;
@@ -143,9 +141,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   margin:6px 0;display:flex;align-items:center;justify-content:center;
   overflow:hidden;
 }
-.map-viewport .world-map-wrap{max-width:800px;}
+.map-viewport .world-map-wrap{max-width:820px;}
 
-/* Marker Bubbles */
+/* Markers */
 .data-marker{
   position:absolute;transform:translate(-50%,-50%);
   display:flex;flex-direction:column;align-items:center;
@@ -162,14 +160,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
   white-space:nowrap;box-shadow:0 2px 4px rgba(0,0,0,0.08);margin-top:2px;
 }
 
-/* Control Strips */
+/* Controls */
 .control-panel{
   display:flex;flex-direction:column;gap:6px;
   background:#fff;padding:6px 0 10px;border-top:1px solid var(--rule);flex:none;
 }
 .time-tabs{display:flex;gap:8px;align-items:center;}
 .time-btn{
-  padding:4px 14px;border-radius:4px;border:1px solid var(--blue);
+  padding:4px 12px;border-radius:4px;border:1px solid var(--blue);
   color:var(--blue);font-weight:700;font-size:13px;transition:all .18s;
 }
 .time-btn:hover{background:#eef0fb;}
@@ -220,117 +218,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 
     <div class="cover-art">
       <div class="world-map-wrap">
-        <!-- Exact Inline World Vector Silhouette (Robinson Projection) -->
+        <!-- High-Resolution Coastline Vector Map matching PastedVector-18 -->
         <svg class="world-map-svg" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet">
-          <!-- Greenland & North America -->
-          <path d="M360,25 Q395,15 425,40 Q435,70 410,105 Q375,115 350,90 Z" />
-          <path d="M90,75 Q150,55 235,50 Q280,75 320,115 Q300,165 265,200 Q225,225 185,215 Q155,185 130,165 Q85,145 70,110 Z" />
-          <path d="M190,215 Q220,230 250,265 Q235,280 215,260 Z" /> <!-- Central America -->
-          <!-- South America -->
-          <path d="M245,265 Q310,250 355,300 Q370,360 320,435 Q285,450 265,400 Q245,330 235,285 Z" />
-          <!-- Europe & UK -->
-          <path d="M435,95 Q450,75 465,95 Q455,120 440,115 Z" />
-          <path d="M470,65 Q540,55 585,85 Q590,135 540,145 Q495,150 460,115 Z" />
-          <path d="M495,45 Q515,25 545,40 Q530,85 500,75 Z" /> <!-- Scandinavia -->
-          <!-- Africa & Madagascar -->
-          <path d="M435,160 Q545,150 595,215 Q625,285 585,370 Q535,420 500,390 Q445,300 425,230 Z" />
-          <path d="M605,320 Q625,325 615,375 Q595,370 605,320 Z" />
-          <!-- Russia, Asia & India -->
-          <path d="M585,55 Q730,40 910,65 Q945,115 900,175 Q820,195 725,180 Q645,160 585,110 Z" />
-          <path d="M670,180 Q740,195 730,265 Q685,280 660,235 Z" /> <!-- India -->
-          <path d="M735,180 Q840,175 845,250 Q780,285 735,245 Z" /> <!-- East Asia / China -->
-          <path d="M840,165 Q860,160 865,225 Q845,235 840,185 Z" /> <!-- Japan -->
-          <path d="M760,280 Q820,280 840,320 Q785,340 750,305 Z" /> <!-- SE Asia -->
-          <!-- Australia & NZ -->
-          <path d="M790,315 Q880,300 915,355 Q885,420 815,415 Q785,370 790,315 Z" />
-          <path d="M920,400 Q940,395 940,430 Q915,435 920,400 Z" />
-        </svg>
-
-        <!-- Animated Pulse Dots Layer matching your Economist design -->
-        <div class="cover-dots-layer">
-          <!-- North America (Blue) -->
-          <div class="dot-pulse blue" style="left: 24%; top: 31%; width: 18px; height: 18px;"></div>
-          <div class="dot-pulse blue" style="left: 23%; top: 40%; width: 12px; height: 12px;"></div>
-
-          <!-- South America (Orange) -->
-          <div class="dot-pulse orange" style="left: 29%; top: 50%; width: 9px; height: 9px;"></div>
-          <div class="dot-pulse orange" style="left: 29%; top: 57%; width: 8px; height: 8px;"></div>
-          <div class="dot-pulse orange" style="left: 33%; top: 59%; width: 18px; height: 18px;"></div>
-          <div class="dot-pulse orange" style="left: 31%; top: 72%; width: 9px; height: 9px;"></div>
-
-          <!-- Europe (Teal) -->
-          <div class="dot-pulse yellow" style="left: 49%; top: 25%; width: 8px; height: 8px;"></div>
-          <div class="dot-pulse teal" style="left: 52%; top: 26%; width: 8px; height: 8px; background:var(--teal);"></div>
-          <div class="dot-pulse teal" style="left: 53%; top: 31%; width: 11px; height: 11px; background:var(--teal);"></div>
-
-          <!-- Africa / Middle East (Yellow) -->
-          <div class="dot-pulse yellow" style="left: 46%; top: 48%; width: 8px; height: 8px;"></div>
-          <div class="dot-pulse yellow" style="left: 49%; top: 46%; width: 10px; height: 10px;"></div>
-          <div class="dot-pulse yellow" style="left: 52%; top: 50%; width: 8px; height: 8px;"></div>
-          <div class="dot-pulse yellow" style="left: 54%; top: 55%; width: 7px; height: 7px;"></div>
-          <div class="dot-pulse yellow" style="left: 53%; top: 62%; width: 9px; height: 9px;"></div>
-
-          <!-- Asia Clusters (Red) -->
-          <div class="dot-pulse red" style="left: 58%; top: 34%; width: 11px; height: 11px;"></div>
-          <div class="dot-pulse red" style="left: 61%; top: 36%; width: 8px; height: 8px;"></div>
-          <div class="dot-pulse red" style="left: 69%; top: 32%; width: 38px; height: 38px; animation-duration: 2.2s;"></div>
-          <div class="dot-pulse red" style="left: 74%; top: 32%; width: 9px; height: 9px;"></div>
-          <div class="dot-pulse red" style="left: 73%; top: 53%; width: 10px; height: 10px;"></div>
-
-          <!-- Australia (Grey/Black) -->
-          <div class="dot-pulse" style="left: 75%; top: 66%; width: 8px; height: 8px; background:#141F52;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── SCREEN 2: MAIN INTERACTIVE STAGE ── -->
-<section id="mainApp" class="screen" aria-label="Interactive Infographic Stage">
-  <header class="appbar">
-    <div class="appbar-inner">
-      <div class="appbar-title">Global demographic changes</div>
-      <div class="appbar-tools">
-        <!-- Return Home Button -->
-        <button type="button" class="icon-btn btn-home" aria-label="Return to cover">
-          <svg viewBox="0 0 36 36">
-            <circle class="ring" cx="18" cy="18" r="17"/>
-            <path class="glyph" d="M18,10.2L9.5,17v10.5h6v-6h5v6h6V17L18,10.2z M24.5,25.5h-2v-6h-9v6h-2V18l6.5-5.2l6.5,5.2V25.5z"/>
-          </svg>
-        </button>
-        <!-- Bibliography Button -->
-        <button type="button" class="icon-btn btn-bib" id="btnOpenBib" aria-label="Open Bibliography">
-          <svg viewBox="0 0 36 36">
-            <circle class="ring" cx="18" cy="18" r="17"/>
-            <path class="glyph" d="M12,11.5h12V13H12V11.5z M12,16.5h12V18H12V16.5z M12,21.5h8V23h-8V21.5z"/>
-          </svg>
-        </button>
-        <!-- Close Interaction Button -->
-        <button type="button" class="icon-btn btn-close" aria-label="Close interaction">
-          <svg viewBox="0 0 36 36">
-            <circle class="ring" cx="18" cy="18" r="17"/>
-            <path class="xglyph" d="M11,11l14,14 M25,11L11,25"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <div class="map-stage-container">
-    <div class="map-header">
-      <div class="map-title-text" id="displayCategoryTitle">Population per continent (in millions)</div>
-      <div class="map-year-display" id="displayYear">1950</div>
-    </div>
-
-    <div class="map-viewport">
-      <div class="world-map-wrap">
-        <svg class="world-map-svg" viewBox="0 0 1000 480" preserveAspectRatio="xMidYMid meet">
-          <path d="M360,25 Q395,15 425,40 Q435,70 410,105 Q375,115 350,90 Z" />
-          <path d="M90,75 Q150,55 235,50 Q280,75 320,115 Q300,165 265,200 Q225,225 185,215 Q155,185 130,165 Q85,145 70,110 Z" />
-          <path d="M190,215 Q220,230 250,265 Q235,280 215,260 Z" />
-          <path d="M245,265 Q310,250 355,300 Q370,360 320,435 Q285,450 265,400 Q245,330 235,285 Z" />
-          <path d="M435,95 Q450,75 465,95 Q455,120 440,115 Z" />
-          <path d="M470,65 Q540,55 585,85 Q590,135 540,145 Q495,150 460,115 Z" />
-          <path d="M495,45 Q515,25 545,40 Q530,85 500,75 Z" />
-          <path d="M435,160 Q545,150 595,215 Q625,285 585,370 Q535,420 500,390 Q445,300 425,230 Z" />
-          <path d="M605,320 Q625,325 61
+          <g fill="#b0b5ba">
+            <!-- Greenland -->
+            <path d="M345,28 C375,18,405,32,415,55 C425,82,398,112,370,118 C345,122,335,95,338,68 Z"/>
+            <!-- North America -->
+            <path d="M82,78 C115,62,185,52,228,48 C272,72,312,110,318,142 C302,175,274,198,245,212 C228,222,192,218,175,202 C158,188,142,168,118,158 C94,148,78,124,72,98 Z"/>
+            <!-- Central America -->
+            <path d="M192,214 C218,228,242,260,238,272 C
