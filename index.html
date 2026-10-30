@@ -34,21 +34,27 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn .xglyph{fill:none;stroke:var(--glyph);stroke-width:2}
 .icon-btn:hover,.icon-btn:focus-visible{--ring:#1f2e7a;--ring-fill:#ebedfa;--glyph:#1f2e7a}
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent}
-/* ── cover: two columns, so text and map can never overlap ── */
-.cover-stage{width:100%;max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:minmax(260px,34%) minmax(0,1fr);align-items:center;column-gap:clamp(8px,2vw,32px);padding:clamp(16px,3vw,40px) var(--pad);flex:1 0 auto}
-.cover-text{position:relative;z-index:2}
-.cover-title{font-size:clamp(34px,4.2vw,56px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:24px}
-.btn-start,.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-weight:700;font-size:15px;min-width:152px;height:44px;padding:0 24px;border-radius:4px;transition:background .18s}
-.btn:hover,.btn:focus-visible,.btn-start:hover,.btn-start:focus-visible{background:var(--navy)}
+/* ── cover: full stage with overlay text on left Pacific area ── */
+.cover-stage{position:relative;width:100%;max-width:var(--maxw);margin:0 auto;min-height:540px;display:flex;align-items:center;padding:clamp(20px,4vw,48px) var(--pad);flex:1 0 auto}
+.cover-art{position:absolute;inset:0;width:100%;height:100%;display:flex;align-items:center;justify-content:flex-end;pointer-events:none;z-index:1}
+.cover-art svg.map{width:100%;max-width:1120px;height:auto;aspect-ratio:945.9/423.6;margin-left:auto;transform:translateX(3%)}
+.cover-text{position:relative;z-index:2;max-width:380px;padding-bottom:12px}
+.cover-title{font-size:clamp(38px,4.8vw,60px);font-weight:800;line-height:1.06;letter-spacing:-.025em;margin-bottom:30px;opacity:0;transform:translateY(28px)}
+.btn-start{display:inline-flex;align-items:center;justify-content:center;background:#2E45B8;color:#fff;font-weight:700;font-size:16px;min-width:156px;height:48px;padding:0 28px;border-radius:4px;opacity:0;transform:translateY(28px);transition:background .18s,transform .2s,opacity .2s}
+.btn-start:hover,.btn-start:focus-visible{background:#1F2E7A}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-weight:700;font-size:15px;min-width:152px;height:44px;padding:0 24px;border-radius:4px;transition:background .18s}
+.btn:hover,.btn:focus-visible{background:var(--navy)}
 .btn.ghost{background:#fff;color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--blue)}
 .btn.ghost:hover{background:#ebedfa;color:var(--navy)}
-.cover-art{width:100%;aspect-ratio:945.9/423.6;pointer-events:none}
+#cover.go .cover-title{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .1s forwards}
+#cover.go .btn-start{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .25s forwards}
+@keyframes slide-up-in{0%{opacity:0;transform:translateY(32px)}100%{opacity:1;transform:translateY(0)}}
 svg.map{width:100%;height:100%;display:block;overflow:visible}
 .bubble{opacity:0;transform-box:fill-box;transform-origin:center}
 /* Staggered entrance pop for all bubbles */
 .go .bubble{animation:bubble-in .5s cubic-bezier(.16,1,.3,1) calc(150ms + var(--i)*35ms) forwards}
 /* Infinite gentle breathing pulse specifically for the cover screen dots */
-#coverMap.go .bubble{animation:bubble-in .5s cubic-bezier(.16,1,.3,1) calc(150ms + var(--i)*35ms) forwards, bubble-pulse 3.2s ease-in-out calc(650ms + var(--i)*35ms) infinite}
+#coverMap.go .bubble{animation:bubble-in .5s cubic-bezier(.16,1,.3,1) calc(300ms + var(--i)*35ms) forwards, bubble-pulse 3.4s ease-in-out calc(800ms + var(--i)*35ms) infinite}
 @keyframes bubble-in{0%{opacity:0;transform:scale(.1)}70%{opacity:.95;transform:scale(1.15)}100%{opacity:.88;transform:scale(1)}}
 @keyframes bubble-pulse{0%,100%{transform:scale(1);opacity:.88}50%{transform:scale(1.22);opacity:1}}
 /* ── main map screen: same height as cover (see fitScreens) ── */
@@ -99,11 +105,12 @@ th{font-weight:800;background:#f4f5fb}
 td b{font-weight:800}
 .tnote{margin-top:10px;font-size:13px;color:var(--muted)}
 @media(max-width:760px){
- .cover-stage{display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:22px 18px 28px}
- .cover-text{display:contents}
- .cover-title{order:1;font-size:clamp(28px,8vw,40px);margin-bottom:0}
- .cover-art{order:2;margin:8px 0}
- .btn-start{order:3;width:100%;height:52px;font-size:16px}
+ .cover-stage{flex-direction:column;align-items:stretch;justify-content:flex-start;padding:24px 18px 32px;min-height:auto}
+ .cover-art{position:relative;inset:auto;width:100%;margin:16px 0 24px}
+ .cover-art svg.map{transform:none;max-width:100%}
+ .cover-text{max-width:100%;width:100%}
+ .cover-title{font-size:clamp(30px,7.5vw,42px);margin-bottom:20px}
+ .btn-start{width:100%;height:52px}
 }
 @media(max-width:640px){.cb,.ld{display:none}.head{flex-wrap:wrap}.stage{padding-bottom:12px}.tabs{grid-template-columns:1fr}.yrs{position:static;margin:6px 0 0}.list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}}
 @media(max-width:560px){.screen.is-active{min-height:620px}.appbar-title{font-size:13px}.icon-btn{width:40px;height:40px}}
@@ -2045,7 +2052,42 @@ td b{font-weight:800}
    <button class="btn-start" id="startBtn">Start</button>
   </div>
   <div class="cover-art" aria-hidden="true">
-   <svg id="coverMap" class="map" viewBox="0 0 945.9 423.6" preserveAspectRatio="xMidYMid meet" focusable="false"><use href="#land" fill="#B3B3B3"/><g><circle class="bubble" cx="226" cy="132" r="10" fill="#2E45B8" stroke="#fff" stroke-width="1.1" style="--i:0"/><circle class="bubble" cx="177" cy="161" r="7.5" fill="#2E45B8" stroke="#fff" stroke-width="1.0" style="--i:1"/><circle class="bubble" cx="250" cy="226" r="4.5" fill="#E67E22" stroke="#fff" stroke-width="0.8" style="--i:2"/><circle class="bubble" cx="253" cy="265" r="4" fill="#E67E22" stroke="#fff" stroke-width="0.8" style="--i:3"/><circle class="bubble" cx="301" cy="260" r="10" fill="#E67E22" stroke="#fff" stroke-width="1.1" style="--i:4"/><circle class="bubble" cx="278" cy="334" r="4.5" fill="#E67E22" stroke="#fff" stroke-width="0.8" style="--i:5"/><circle class="bubble" cx="436" cy="82" r="3" fill="#1DC9A4" stroke="#fff" stroke-width="0.8" style="--i:6"/><circle class="bubble" cx="454" cy="110" r="4" fill="#1DC9A4" stroke="#fff" stroke-width="0.8" style="--i:7"/><circle class="bubble" cx="474" cy="100" r="4.5" fill="#1DC9A4" stroke="#fff" stroke-width="0.8" style="--i:8"/><circle class="bubble" cx="564" cy="76" r="6.5" fill="#1DC9A4" stroke="#fff" stroke-width="0.9" style="--i:9"/><circle class="bubble" cx="524" cy="166" r="4.5" fill="#F1C40F" stroke="#fff" stroke-width="0.8" style="--i:10"/><circle class="bubble" cx="483" cy="220" r="5.5" fill="#F1C40F" stroke="#fff" stroke-width="0.9" style="--i:11"/><circle class="bubble" cx="551" cy="220" r="4.5" fill="#F1C40F" stroke="#fff" stroke-width="0.8" style="--i:12"/><circle class="bubble" cx="517" cy="253" r="4.5" fill="#F1C40F" stroke="#fff" stroke-width="0.8" style="--i:13"/><circle class="bubble" cx="547" cy="269" r="3.5" fill="#F1C40F" stroke="#fff" stroke-width="0.8" style="--i:14"/><circle class="bubble" cx="515" cy="317" r="3" fill="#F1C40F" stroke="#fff" stroke-width="0.8" style="--i:15"/><circle class="bubble" cx="593" cy="152" r="6" fill="#E3120B" stroke="#fff" stroke-width="0.9" style="--i:16"/><circle class="bubble" cx="625" cy="170" r="6.5" fill="#E3120B" stroke="#fff" stroke-width="0.9" style="--i:17"/><circle class="bubble" cx="682" cy="177" r="3.5" fill="#E3120B" stroke="#fff" stroke-width="0.8" style="--i:18"/><circle class="bubble" cx="719" cy="109" r="2.5" fill="#E3120B" stroke="#fff" stroke-width="0.7" style="--i:19"/><circle class="bubble" cx="735" cy="193" r="3" fill="#E3120B" stroke="#fff" stroke-width="0.8" style="--i:20"/><circle class="bubble" cx="762" cy="153" r="21" fill="#E3120B" stroke="#fff" stroke-width="1.6" style="--i:21"/><circle class="bubble" cx="814" cy="150" r="5.5" fill="#E3120B" stroke="#fff" stroke-width="0.9" style="--i:22"/><circle class="bubble" cx="789" cy="201" r="4.5" fill="#E3120B" stroke="#fff" stroke-width="0.8" style="--i:23"/><circle class="bubble" cx="777" cy="238" r="6.5" fill="#E3120B" stroke="#fff" stroke-width="0.9" style="--i:24"/><circle class="bubble" cx="804" cy="324" r="4.5" fill="#2C3E50" stroke="#fff" stroke-width="0.8" style="--i:25"/></g></svg>
+   <svg id="coverMap" class="map" viewBox="0 0 945.9 423.6" preserveAspectRatio="xMidYMid meet" focusable="false">
+    <use href="#land" fill="#B3B3B3"/>
+    <g id="coverDots">
+      <!-- North America: Main US Blue Dot + Mexico -->
+      <circle class="bubble" cx="226" cy="132" r="16" fill="#2E45B8" stroke="#fff" stroke-width="1.4" style="--i:0"/>
+      <circle class="bubble" cx="185" cy="185" r="3.5" fill="#2E45B8" stroke="#fff" stroke-width="0.8" style="--i:1"/>
+
+      <!-- South America: Brazil Orange Dot + Andes/South -->
+      <circle class="bubble" cx="250" cy="226" r="4" fill="#E67E22" stroke="#fff" stroke-width="0.8" style="--i:2"/>
+      <circle class="bubble" cx="297" cy="275" r="10" fill="#E67E22" stroke="#fff" stroke-width="1.2" style="--i:3"/>
+      <circle class="bubble" cx="280" cy="340" r="3" fill="#E67E22" stroke="#fff" stroke-width="0.8" style="--i:4"/>
+
+      <!-- Europe: Teal Dots -->
+      <circle class="bubble" cx="447" cy="98" r="3.2" fill="#1DC9A4" stroke="#fff" stroke-width="0.8" style="--i:5"/>
+      <circle class="bubble" cx="475" cy="105" r="4" fill="#1DC9A4" stroke="#fff" stroke-width="0.8" style="--i:6"/>
+      <circle class="bubble" cx="505" cy="95" r="4.5" fill="#1DC9A4" stroke="#fff" stroke-width="0.9" style="--i:7"/>
+
+      <!-- Middle East: Red Dots -->
+      <circle class="bubble" cx="550" cy="140" r="5.5" fill="#E3120B" stroke="#fff" stroke-width="0.9" style="--i:8"/>
+      <circle class="bubble" cx="535" cy="165" r="2.8" fill="#E3120B" stroke="#fff" stroke-width="0.7" style="--i:9"/>
+
+      <!-- Africa: Gold / Yellow Dots -->
+      <circle class="bubble" cx="445" cy="195" r="5.5" fill="#F1C40F" stroke="#fff" stroke-width="1.0" style="--i:10"/>
+      <circle class="bubble" cx="470" cy="190" r="3.5" fill="#F1C40F" stroke="#fff" stroke-width="0.8" style="--i:11"/>
+      <circle class="bubble" cx="495" cy="220" r="4.5" fill="#F1C40F" stroke="#fff" stroke-width="0.9" style="--i:12"/>
+      <circle class="bubble" cx="515" cy="260" r="2.8" fill="#F1C40F" stroke="#fff" stroke-width="0.7" style="--i:13"/>
+
+      <!-- Asia: Main Red China/India Hub + Japan / SE Asia -->
+      <circle class="bubble" cx="635" cy="128" r="21" fill="#E3120B" stroke="#fff" stroke-width="1.6" style="--i:14"/>
+      <circle class="bubble" cx="675" cy="135" r="4" fill="#E3120B" stroke="#fff" stroke-width="0.8" style="--i:15"/>
+      <circle class="bubble" cx="670" cy="235" r="3.2" fill="#E3120B" stroke="#fff" stroke-width="0.7" style="--i:16"/>
+
+      <!-- Australia / Oceania: Charcoal / Navy Dot -->
+      <circle class="bubble" cx="695" cy="290" r="4.5" fill="#2C3E50" stroke="#fff" stroke-width="0.9" style="--i:17"/>
+    </g>
+   </svg>
   </div>
  </div>
 </div>
@@ -2171,7 +2213,8 @@ document.addEventListener('keydown',function(e){
  var f=[].slice.call(o.querySelectorAll('button,[tabindex]:not([tabindex="-1"])')).filter(function(x){return x.offsetParent!==null});if(!f.length)return;
  if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&document.activeElement===f[f.length-1]){e.preventDefault();f[0].focus()}});
 function goMain(){cur={tab:null,year:null};KEYS.forEach(function(x){var b=$('tab-'+x);b.setAttribute('aria-pressed','false');b.classList.toggle('visited',!!tabSeen[x]);var o=$('col-'+x).querySelector('.yrs');if(o)o.remove()});clearMap();$('ttl').textContent='';$('sub').innerHTML='';show('main');announce('Home: choose a topic.')}
-function goHome(){seen={};tabSeen={};doneShown=false;goMain();show('cover');var m=$('coverMap');m.classList.remove('go');requestAnimationFrame(function(){m.classList.add('go')});$('covTitle').setAttribute('tabindex','-1');$('covTitle').focus({preventScroll:true})}
+function triggerCoverAnimation(){var c=$('cover'),m=$('coverMap');c.classList.remove('go');m.classList.remove('go');requestAnimationFrame(function(){c.classList.add('go');m.classList.add('go')});}
+function goHome(){seen={};tabSeen={};doneShown=false;goMain();show('cover');triggerCoverAnimation();$('covTitle').setAttribute('tabindex','-1');$('covTitle').focus({preventScroll:true})}
 /* every screen gets the same height (as M1): the tallest at this width, never under 578px */
 function fitScreens(){var root=document.documentElement,w=innerWidth;if(w<=560){root.style.setProperty('--screen-min','620px');return}
  var els=['cover','main'].map($),was=els.map(function(e){return e.classList.contains('is-active')}),max=578;
@@ -2182,7 +2225,7 @@ function fitScreens(){var root=document.documentElement,w=innerWidth;if(w<=560){
 var _ft;addEventListener('resize',function(){clearTimeout(_ft);_ft=setTimeout(fitScreens,120)});
 fitScreens();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitScreens);
 BIB.forEach(function(b){var p=document.createElement('p');p.className='bib-entry';p.innerHTML=b;$('bibBody').appendChild(p)});
-requestAnimationFrame(function(){$('coverMap').classList.add('go')});
+triggerCoverAnimation();
 /* height reporting: identical to M1 */
 (function(){var last=0,q=false;
  function rep(f){var h=Math.ceil(document.body.getBoundingClientRect().height)+28;if(h===last&&f!==true)return;last=h;window.parent.postMessage({type:'resize',app:'ce-interactive',height:h},'*')}
