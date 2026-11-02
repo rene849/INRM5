@@ -35,7 +35,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:hover,.icon-btn:focus-visible{--ring:#1f2e7a;--ring-fill:#ebedfa;--glyph:#1f2e7a}
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent}
 /* ── cover: two columns so text and map can never overlap ── */
-.cover-stage{width:100%;max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:minmax(260px,33%) minmax(0,1fr);align-items:center;column-gap:clamp(16px,2.5vw,36px);padding:clamp(16px,3vw,36px) var(--pad);flex:1 0 auto}
+.cover-stage{width:100%;max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:minmax(280px,32%) minmax(0,1fr);align-items:center;column-gap:clamp(16px,3vw,40px);padding:clamp(16px,3vw,36px) var(--pad);flex:1 0 auto}
 .cover-text{position:relative;z-index:2;max-width:360px}
 .cover-title{font-size:clamp(32px,3.8vw,52px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:24px;opacity:0;transform:translateY(28px)}
 .btn-start{display:inline-flex;align-items:center;justify-content:center;background:#2E45B8;color:#fff;font-weight:700;font-size:16px;min-width:156px;height:48px;padding:0 28px;border-radius:4px;opacity:0;transform:translateY(28px);transition:background .18s,transform .2s,opacity .2s}
@@ -115,20 +115,18 @@ td b{font-weight:800}
 @media(max-width:560px){.screen.is-active{min-height:620px}.appbar-title{font-size:13px}.icon-btn{width:40px;height:40px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bubble{animation:none !important;opacity:.88 !important;transform:none !important}}
 
-/* ── Desktop 80% proportional scaling ── */
+/* ── Desktop balanced responsive scaling (~90% footprint, edge-to-edge balance) ── */
 @media (min-width: 769px) {
   :root {
-    --maxw: 1100px;
-    --screen-min: 490px;
-  }
-  body {
-    zoom: 0.82;
+    --maxw: 1380px;
+    --screen-min: 520px;
+    --pad: clamp(16px, 2.5vw, 40px);
   }
   .stage {
-    padding: 6px var(--pad) 20px;
+    padding: 4px var(--pad) 20px;
   }
   .map-wrap {
-    width: min(100%, 750px);
+    width: min(100%, 960px);
   }
 }
 </style>
