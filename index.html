@@ -128,12 +128,15 @@ td b{font-weight:800}
     --screen-min: 490px;
     --pad: clamp(16px, 2.5vw, 32px);
   }
-  .stage {
-    padding: 6px var(--pad) 16px;
-  }
-  .map-wrap {
-    width: min(100%, 740px);
-  }
+  body { margin: 0 !important; border-radius: 0; box-shadow: none; }
+  .screen.is-active { min-height: 100vh; justify-content: center; }
+  .stage { padding: 4px var(--pad) 12px; flex: 0 1 auto; }
+  .map-wrap { width: 100%; max-width: 780px; max-height: 380px; display: flex; align-items: center; }
+  .map-wrap svg.map { max-height: 100%; width: auto; margin: 0 auto; }
+  .cover-stage { padding: 16px var(--pad); align-items: center; }
+  .cover-art { max-height: 420px; }
+  .cover-art svg.map { max-height: 100%; width: auto; }
+  .tabs { padding-bottom: 6px; }
 }
 </style>
 </head>
