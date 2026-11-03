@@ -14,7 +14,7 @@
 html,body{background:#fff !important;color:var(--ink) !important}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden;overflow-y:auto;scroll-behavior:smooth}
-body{font-family:'Noto Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;max-width:var(--frame-max,1216px);margin:8px auto !important;border-radius:8px;box-shadow:var(--mb-shadow-frame);position:relative}
+body{font-family:'Noto Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased;width:calc(100% - 16px);max-width:var(--frame-max,1216px);margin:8px auto !important;border-radius:8px;box-shadow:var(--mb-shadow-frame);position:relative;background:#fff}
 button{font-family:inherit;cursor:pointer;border:none;background:none;touch-action:manipulation;color:inherit}
 :focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:2px}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -46,8 +46,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .btn.ghost:hover{background:#ebedfa;color:var(--navy)}
 .cover-art{position:relative;width:100%;aspect-ratio:945.9/423.6;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .cover-art svg.map{width:100%;max-width:100%;height:auto;display:block;transform:none}
-#cover.go .cover-title{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .1s forwards}
-#cover.go .btn-start{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .25s forwards}
+#cover.go .cover-title{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .1s both}
+#cover.go .btn-start{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .25s both}
 @keyframes slide-up-in{0%{opacity:0;transform:translateY(32px)}100%{opacity:1;transform:translateY(0)}}
 svg.map{width:100%;height:100%;display:block;overflow:visible}
 .bubble{opacity:0;transform-box:fill-box;transform-origin:center}
@@ -86,15 +86,15 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .yr:hover{background:var(--blue)}
 .yr[aria-pressed=true]{height:34px;min-width:80px;background:#1DC9A4;color:var(--ink);font-size:19px}
 /* ── modals ── */
-.ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);box-sizing:border-box}
+.ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);box-sizing:border-box;border-radius:8px}
 .ov.open{display:flex}
 .ov.intro{background:rgba(31,46,122,.94);backdrop-filter:none;overflow:hidden;align-items:center;justify-content:center;padding:40px clamp(16px,4vw,32px)}
-.box{background:#fff;border-radius:10px;max-width:720px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 16px 52px rgba(0,0,0,.24)}
+.box{background:#fff;border-radius:10px;max-width:720px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35),0 4px 16px rgba(0,0,0,.15)}
 .box-head{padding:18px 24px 14px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;flex:none}
 .box-head h2{font-size:18px;font-weight:700}
 .box-body{padding:18px 24px;overflow:auto;font-size:15px;line-height:1.72}
 .bib-entry{margin:0 0 14px;padding:0 0 0 24px;text-indent:-24px}
-.card{position:relative;background:#fff;max-width:680px;width:100%;margin:auto;padding:70px clamp(20px,5vw,48px) 32px;text-align:center;border-radius:4px;box-sizing:border-box}
+.card{position:relative;background:#fff;max-width:680px;width:100%;margin:auto;padding:70px clamp(20px,5vw,48px) 32px;text-align:center;border-radius:8px;box-sizing:border-box;box-shadow:0 16px 48px rgba(0,0,0,.3),0 2px 10px rgba(0,0,0,.12)}
 .card p{font-size:clamp(14px,1.4vw,16px);line-height:1.6;margin:0 auto 24px;max-width:580px}
 .card .illo{position:absolute;top:-55px;left:50%;transform:translateX(-50%);width:110px;height:110px}
 .card.done{padding-top:70px}
@@ -2058,7 +2058,7 @@ td b{font-weight:800}
 </g></defs></svg>
 <div id="srStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
-<div id="cover" class="screen is-active">
+<div id="cover" class="screen is-active go">
  <div class="cover-stage" role="main">
   <div class="cover-text">
    <h1 id="covTitle" class="cover-title">Global<br>demographic<br>changes</h1>
@@ -2226,7 +2226,7 @@ document.addEventListener('keydown',function(e){
  var f=[].slice.call(o.querySelectorAll('button,[tabindex]:not([tabindex="-1"])')).filter(function(x){return x.offsetParent!==null});if(!f.length)return;
  if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&document.activeElement===f[f.length-1]){e.preventDefault();f[0].focus()}});
 function goMain(){cur={tab:null,year:null};KEYS.forEach(function(x){var b=$('tab-'+x);b.setAttribute('aria-pressed','false');b.classList.toggle('visited',!!tabSeen[x]);var o=$('col-'+x).querySelector('.yrs');if(o)o.remove()});clearMap();$('ttl').textContent='';$('sub').innerHTML='';show('main');announce('Home: choose a topic.')}
-function triggerCoverAnimation(){var c=$('cover'),m=$('coverMap');c.classList.remove('go');m.classList.remove('go');requestAnimationFrame(function(){c.classList.add('go');m.classList.add('go')});}
+function triggerCoverAnimation(){var c=$('cover'),m=$('coverMap');c.classList.remove('go');if(m)m.classList.remove('go');void c.offsetWidth;c.classList.add('go');if(m)m.classList.add('go');}
 function goHome(){seen={};tabSeen={};doneShown=false;goMain();show('cover');triggerCoverAnimation();$('covTitle').setAttribute('tabindex','-1');$('covTitle').focus({preventScroll:true})}
 /* every screen gets the same height (as M1): the tallest at this width, never under 578px */
 function fitScreens(){var root=document.documentElement,w=innerWidth;if(w<=560){root.style.setProperty('--screen-min','620px');return}
