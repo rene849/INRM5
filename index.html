@@ -2210,8 +2210,9 @@ function openTable(){
  h+='</tbody></table><p class="tnote">'+d.unit+'. *UN projection.</p>';
  $('tblT').textContent=d.label;$('tblBody').innerHTML=h;openOv('tblOv');
 }
+function signalTop(){try{window.parent.postMessage({type:'ce-top',app:'ce-interactive'},'*')}catch(err){}}
 /* navigation */
-$('startBtn').onclick=function(){show('main');openOv('introOv')};
+$('startBtn').onclick=function(){show('main');openOv('introOv');signalTop()};
 $('contBtn').onclick=function(){closeOv('introOv');var t=$('tab-cont');if(t)t.focus()};
 $('bibBtn').onclick=function(){openOv('bibOv')};
 $('doneBib').onclick=function(){closeOv('doneOv');openOv('bibOv')};
@@ -2227,27 +2228,37 @@ document.addEventListener('keydown',function(e){
  if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&document.activeElement===f[f.length-1]){e.preventDefault();f[0].focus()}});
 function goMain(){cur={tab:null,year:null};KEYS.forEach(function(x){var b=$('tab-'+x);b.setAttribute('aria-pressed','false');b.classList.toggle('visited',!!tabSeen[x]);var o=$('col-'+x).querySelector('.yrs');if(o)o.remove()});clearMap();$('ttl').textContent='';$('sub').innerHTML='';show('main');announce('Home: choose a topic.')}
 function triggerCoverAnimation(){var c=$('cover'),m=$('coverMap');c.classList.remove('go');if(m)m.classList.remove('go');void c.offsetWidth;c.classList.add('go');if(m)m.classList.add('go');}
-function goHome(){seen={};tabSeen={};doneShown=false;goMain();show('cover');triggerCoverAnimation();$('covTitle').setAttribute('tabindex','-1');$('covTitle').focus({preventScroll:true})}
+function goHome(){seen={};tabSeen={};doneShown=false;goMain();show('cover');triggerCoverAnimation();$('covTitle').setAttribute('tabindex','-1');$('covTitle').focus({preventScroll:true});signalTop()}
+var moodleViewportHeight=null;
 /* every screen gets the same height (as M1): the tallest at this width, never under 578px */
 function fitScreens(){var root=document.documentElement,w=innerWidth;if(w<=560){root.style.setProperty('--screen-min','620px');return}
  var els=['cover','main'].map($),was=els.map(function(e){return e.classList.contains('is-active')}),max=578;
  els.forEach(function(e){e.classList.add('is-active');e.style.minHeight='0'});
  els.forEach(function(e){max=Math.max(max,Math.ceil(e.getBoundingClientRect().height))});
  els.forEach(function(e,i){if(!was[i])e.classList.remove('is-active');e.style.minHeight=''});
+ if(moodleViewportHeight&&moodleViewportHeight>max){max=moodleViewportHeight}
  root.style.setProperty('--screen-min',max+'px')}
 var _ft;addEventListener('resize',function(){clearTimeout(_ft);_ft=setTimeout(fitScreens,120)});
 fitScreens();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitScreens);
 BIB.forEach(function(b){var p=document.createElement('p');p.className='bib-entry';p.innerHTML=b;$('bibBody').appendChild(p)});
 triggerCoverAnimation();
-/* height reporting: identical to M1 */
+/* height reporting and Moodle container handshake */
 (function(){var last=0,q=false;
  function rep(f){var s=document.querySelector('.screen.is-active')||document.body;var h=Math.ceil(s.getBoundingClientRect().height)+28;if(h===last&&f!==true)return;last=h;window.parent.postMessage({type:'resize',app:'ce-interactive',height:h},'*')}
  function rq(){if(q)return;q=true;requestAnimationFrame(function(){q=false;rep()})}
+ function sendReady(){try{window.parent.postMessage({type:'ce-ready',app:'ce-interactive'},'*')}catch(err){}}
  [150,500,1200,2500,5000].forEach(function(t){setTimeout(function(){rep(true)},t)});
- addEventListener('pageshow',function(){rep(true)});
- addEventListener('message',function(e){if(e.data&&(e.data.type==='request-size'||e.data.type==='ce-interactive-request'))rep(true)});
+ addEventListener('pageshow',function(){rep(true);sendReady()});
+ addEventListener('message',function(e){
+  var d=e.data;
+  if(!d||typeof d!=='object')return;
+  if(d.type==='request-size'||d.type==='ce-interactive-request')rep(true);
+  if(d.type==='ce-viewport'&&typeof d.height==='number'){moodleViewportHeight=d.height;fitScreens();rq()}
+ });
  if(window.ResizeObserver)new ResizeObserver(rq).observe(document.body);
- addEventListener('resize',rq);addEventListener('load',rq);rq();})();
+ addEventListener('resize',rq);
+ addEventListener('load',function(){rq();sendReady()});
+ rq();})();
 </script>
 </body>
 </html>
