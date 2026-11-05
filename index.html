@@ -36,16 +36,16 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .icon-btn:hover,.icon-btn:focus-visible{--ring:#1f2e7a;--ring-fill:#ebedfa;--glyph:#1f2e7a}
 .icon-btn:active{--ring:#1dc9a4;--ring-fill:transparent}
 /* ── cover: two columns so text and map can never overlap ── */
-.cover-stage{width:100%;max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,3vw,36px);padding:clamp(20px,3vw,40px) var(--pad);flex:1 0 auto;box-sizing:border-box}
-.cover-text{flex:0 0 clamp(280px,30%,360px);max-width:380px;z-index:2}
-.cover-title{font-size:clamp(32px,3.8vw,50px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:24px;opacity:0;transform:translateY(28px)}
+.cover-stage{width:100%;max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:0;padding:clamp(16px,2.5vw,32px) clamp(12px,2vw,28px) clamp(16px,2.5vw,32px) var(--pad);flex:1 0 auto;box-sizing:border-box}
+.cover-text{flex:0 0 clamp(230px,26%,320px);max-width:320px;z-index:2}
+.cover-title{font-size:clamp(30px,3.4vw,46px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:24px;opacity:0;transform:translateY(28px)}
 .btn-start{display:inline-flex;align-items:center;justify-content:center;background:#2E45B8;color:#fff;font-weight:700;font-size:16px;min-width:156px;height:48px;padding:0 28px;border-radius:4px;opacity:0;transform:translateY(28px);transition:background .18s,transform .2s,opacity .2s}
 .btn-start:hover,.btn-start:focus-visible{background:#1F2E7A}
 .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-weight:700;font-size:15px;min-width:152px;height:44px;padding:0 24px;border-radius:4px;transition:background .18s}
 .btn:hover,.btn:focus-visible{background:var(--navy)}
 .btn.ghost{background:#fff;color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--blue)}
 .btn.ghost:hover{background:#ebedfa;color:var(--navy)}
-.cover-art{flex:1 1 auto;width:100%;min-width:0;aspect-ratio:945.9/423.6;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.cover-art{flex:1 1 0;width:auto;min-width:0;margin-left:clamp(-24px,-1.5vw,0px);aspect-ratio:945.9/423.6;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .cover-art svg.map{width:100%;height:auto;max-height:100%;display:block}
 #cover.go .cover-title{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .1s both}
 #cover.go .btn-start{animation:slide-up-in .65s cubic-bezier(.16,1,.3,1) .25s both}
@@ -54,37 +54,38 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .bubble{opacity:0;transform-box:fill-box;transform-origin:center}
 /* Staggered entrance pop for all bubbles */
 .go .bubble{animation:bubble-in .5s cubic-bezier(.16,1,.3,1) calc(150ms + var(--i)*35ms) forwards}
-/* Infinite gentle breathing pulse specifically for the cover screen dots */
-#coverMap.go .bubble{animation:bubble-in .5s cubic-bezier(.16,1,.3,1) calc(300ms + var(--i)*35ms) forwards, bubble-pulse 3.4s ease-in-out calc(800ms + var(--i)*35ms) infinite}
+/* gentle breathing pulse on the cover dots: two cycles only, so it stops by itself (WCAG 2.2.2) */
+#coverMap.go .bubble{animation:bubble-in .5s cubic-bezier(.16,1,.3,1) calc(300ms + var(--i)*35ms) forwards, bubble-pulse 3.4s ease-in-out calc(800ms + var(--i)*35ms) 2}
 @keyframes bubble-in{0%{opacity:0;transform:scale(.1)}70%{opacity:.95;transform:scale(1.15)}100%{opacity:.88;transform:scale(1)}}
 @keyframes bubble-pulse{0%,100%{transform:scale(1);opacity:.88}50%{transform:scale(1.22);opacity:1}}
 /* ── main map screen: same height as cover (see fitScreens) ── */
-.stage{flex:1 0 auto;width:100%;max-width:var(--maxw);margin:0 auto;padding:4px var(--pad) 32px;display:flex;flex-direction:column}
-.head{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:40px;margin-bottom:8px}
+.stage{flex:1 0 auto;width:100%;max-width:var(--maxw);margin:0 auto;padding:4px var(--pad) 36px;display:flex;flex-direction:column}
+.head{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:58px;margin-bottom:4px}
 .ttl{font-size:clamp(17px,1.8vw,22px);font-weight:700;line-height:1.3}
-.sub{display:none}
+.sub{display:block;min-height:0}.sub:empty{display:none}
 .yrbig{position:relative;font-size:clamp(30px,3.6vw,44px);font-weight:800;color:var(--blue);line-height:1;letter-spacing:-.02em;text-align:right}
 .yrbig .proj{position:absolute;right:0;top:100%;margin-top:4px;font-size:13px;font-weight:700;letter-spacing:0;color:var(--ink);white-space:nowrap}
-.map-wrap{width:min(100%,810px);margin:0 auto;aspect-ratio:945.9/423.6}
-.linkbtn{color:var(--blue);font-weight:700;font-size:13px;text-decoration:underline;text-underline-offset:3px;padding:0}
+.map-wrap{width:min(100%,var(--mapw,976px));margin:0 auto;aspect-ratio:976/472}
+.bring{fill:none;stroke:#141F52;stroke-width:.9}
 .ld{fill:none;stroke:#141F52;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
 .cb rect{fill:#fff;stroke:#0E0C0C;stroke-width:.8}
-.cb .nm{font-size:14px;fill:#0E0C0C}
-.cb .vl{font-size:17px;font-weight:800;fill:#E3120B}
+.cb .nm{font-size:16px;fill:#0E0C0C}
+.cb .vl{font-size:19.5px;font-weight:800;fill:#E3120B}
 .list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);list-style:none}
 .list li{display:flex;align-items:center;gap:8px;font-size:14px;padding:4px 0;border-bottom:1px solid var(--rule)}
 .list i{width:12px;height:12px;border-radius:50%;flex:none}
 .list .n{flex:1}.list .v{font-weight:800}
 .tabs{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0 var(--pad) 10px;width:100%;max-width:var(--maxw);margin:0 auto}
 .tabcol{position:relative}
-.tab{width:100%;height:52px;background:#d9d9d9;font-size:clamp(14px,1.5vw,18px);font-weight:500;color:var(--ink);transition:background .18s}
-.tab:hover{background:#c8c8c8}
-.tab.visited{background:var(--navy);color:#fff}
-.tab[aria-pressed=true]{background:var(--navy-deep);color:#fff}
+.tab{width:100%;height:52px;background:var(--navy);font-size:clamp(14px,1.5vw,18px);font-weight:500;color:#fff;transition:background .18s,box-shadow .18s}
+.tab:hover{background:var(--blue)}
+.tab[aria-pressed=true]{background:var(--navy-deep);box-shadow:inset 0 -5px 0 var(--teal)}
 /* year tabs sit directly above the selected tab */
 .yrs{position:absolute;bottom:100%;left:clamp(16px,9%,48px);display:flex;gap:4px;align-items:flex-end}
 .yr{min-width:68px;height:28px;padding:0 10px;background:var(--navy);color:#fff;font-weight:700;font-size:15px;transition:background .15s}
 .yr:hover{background:var(--blue)}
+.tabcol:last-child .yrs{left:auto;right:0}
+@media(max-width:900px){.yr{min-width:56px;padding:0 8px;font-size:14px}.yr[aria-pressed=true]{min-width:66px;font-size:17px}}
 .yr[aria-pressed=true]{height:34px;min-width:80px;background:#1DC9A4;color:var(--ink);font-size:19px}
 /* ── modals ── */
 .ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);box-sizing:border-box;border-radius:8px}
@@ -100,11 +101,6 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .card .illo{position:absolute;top:-55px;left:50%;transform:translateX(-50%);width:110px;height:110px}
 .card.done{padding-top:70px}
 .card .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}
-th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
-th{font-weight:800;background:#f4f5fb}
-td b{font-weight:800}
-.tnote{margin-top:10px;font-size:13px;color:var(--muted)}
 @media(max-width:760px){
  .cover-stage{flex-direction:column;align-items:flex-start;padding:24px 18px 32px;gap:20px}
  .cover-text{flex:none;max-width:100%;width:100%}
@@ -112,9 +108,30 @@ td b{font-weight:800}
  .cover-title{font-size:clamp(28px,7.5vw,40px);margin-bottom:18px}
  .btn-start{width:100%;height:50px}
 }
-@media(max-width:640px){.cb,.ld{display:none}.head{flex-wrap:wrap}.stage{padding-bottom:12px}.tabs{grid-template-columns:1fr}.yrs{position:static;margin:6px 0 0}.list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}}
+@media(max-width:640px){.head{flex-wrap:wrap}.stage{padding-bottom:12px}.tabs{grid-template-columns:1fr}.yrs{position:static;margin:6px 0 0}}
+/* list mode: map too small for readable callouts, so the values are shown as a text list instead (set by fitScreens) */
+.lm .cb,.lm .ld,.lm .cbx,.lm .cl{display:none}.lm .list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}.lm .stage{padding-bottom:44px}
 @media(max-width:560px){html,body{overflow:auto;height:auto}.screen{overflow:visible}.screen.is-active{min-height:0}html{overflow-y:auto;scrollbar-width:none}html::-webkit-scrollbar{display:none}.appbar-title{font-size:13px}.icon-btn{width:40px;height:40px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bubble{animation:none !important;opacity:.88 !important;transform:none !important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bubble{animation:none !important;opacity:.88 !important;transform:none !important}#cover.go .cover-title,#cover.go .btn-start{animation:none !important;opacity:1 !important;transform:none !important}}
+
+/* ── Population per continent: Hype-accurate bubbles, leader lines and callouts ── */
+.cl{fill:none;stroke:#0E0C0C;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600)}
+.go .cl{animation:cl-draw .55s cubic-bezier(.4,0,.2,1) calc(.4s + var(--i)*70ms) forwards}
+@keyframes cl-draw{to{stroke-dashoffset:0}}
+.cbx{opacity:0}
+.go .cbx{animation:cbx-in .45s ease-out calc(.7s + var(--i)*70ms) forwards}
+@keyframes cbx-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.cbx rect{fill:#fff;stroke:#0E0C0C;stroke-width:1}
+.cbx .nm{font-size:14px;font-weight:400;fill:#0E0C0C}
+.cbx .vl{font-size:17.5px;font-weight:700;fill:#E3120B}
+.yrbig.swap{animation:yr-swap .3s ease-out}
+@keyframes yr-swap{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+/* title + year share the band above the map, as in Hype (stacked on narrow screens) */
+@media(min-width:701px){
+ .stage{position:relative;padding-top:0}
+ .head{position:absolute;left:var(--pad);right:var(--pad);top:10px;min-height:0;margin:0;align-items:flex-start;z-index:3;pointer-events:none}
+}
+@media(prefers-reduced-motion:reduce){.cl{stroke-dashoffset:0 !important;animation:none !important}.cbx{opacity:1 !important;animation:none !important;transform:none !important}.yrbig.swap{animation:none !important}}
 
 /* ── Desktop balanced responsive scaling (matched to M1 iframe containment) ── */
 @media (min-width: 769px) {
@@ -123,10 +140,7 @@ td b{font-weight:800}
     --pad: clamp(16px, 2.5vw, 40px);
   }
   .stage {
-    padding: 4px var(--pad) 20px;
-  }
-  .map-wrap {
-    width: min(100%, 960px);
+    padding: 4px var(--pad) 36px;
   }
 }
 </style>
@@ -2122,8 +2136,8 @@ td b{font-weight:800}
  </div></div>
  <div class="stage" role="main">
   <h1 class="sr-only">Global demographic changes</h1>
-  <div class="head"><div><div class="ttl" id="ttl"></div><div class="sub" id="sub"></div></div><div class="yrbig" id="yrBig" aria-hidden="true"></div></div>
-  <div class="map-wrap" aria-hidden="true"><svg id="dataMap" class="map" viewBox="0 0 945.9 423.6" preserveAspectRatio="xMidYMid meet" focusable="false"><use href="#land" fill="#B3B3B3"/><g id="bub"></g></svg></div>
+  <div class="head"><div><h2 class="ttl" id="ttl"></h2><div class="sub" id="sub"></div></div><div class="yrbig" id="yrBig" aria-hidden="true"></div></div>
+  <div class="map-wrap" id="mapWrap" aria-hidden="true"><svg id="dataMap" class="map" viewBox="-24 -44 976 472" preserveAspectRatio="xMidYMid meet" focusable="false"><use href="#land" fill="#B3B3B3"/><g id="bub"></g></svg></div>
   <ul class="list" id="list" aria-label="Data for the selected year"></ul>
  </div>
  <div class="tabs" role="group" aria-label="Choose a topic" id="tabs"></div>
@@ -2234,17 +2248,13 @@ td b{font-weight:800}
 <div id="bibOv" class="ov" role="dialog" aria-modal="true" aria-labelledby="bibT"><div class="box">
  <div class="box-head"><h2 id="bibT">Bibliography</h2><button class="icon-btn" data-close aria-label="Close bibliography"><svg viewBox="0 0 32.83 32.83" aria-hidden="true" focusable="false"><path class="ring" d="M16.41,32.33A15.92,15.92,0,1,0,.5,16.41,15.92,15.92,0,0,0,16.41,32.33"/><path class="xglyph" d="M22.02,10.8L10.81,22.02M10.81,10.8L22.02,22.02"/></svg></button></div>
  <div class="box-body" id="bibBody" tabindex="0"></div></div></div>
-<div id="tblOv" class="ov" role="dialog" aria-modal="true" aria-labelledby="tblT"><div class="box">
- <div class="box-head"><h2 id="tblT">Data table</h2><button class="icon-btn" data-close aria-label="Close table"><svg viewBox="0 0 32.83 32.83" aria-hidden="true" focusable="false"><path class="ring" d="M16.41,32.33A15.92,15.92,0,1,0,.5,16.41,15.92,15.92,0,0,0,16.41,32.33"/><path class="xglyph" d="M22.02,10.8L10.81,22.02M10.81,10.8L22.02,22.02"/></svg></button></div>
- <div class="box-body" id="tblBody" tabindex="0"></div></div></div>
 
 <script>
 'use strict';
-var DATA={"cont": {"label": "Population per continent", "unit": "Population per continent (in millions)", "k": 0.72, "years": [1950, 1980, 2020, 2050], "proj": [2050], "rows": {"1950": [["Asia", 1405], ["Europe", 549], ["Africa", 228], ["North America", 173], ["South America", 169], ["Oceania", 13]], "1980": [["Asia", 2650], ["Europe", 694], ["Africa", 476], ["South America", 361], ["North America", 254], ["Oceania", 23]], "2020": [["Asia", 4641], ["Africa", 1341], ["Europe", 748], ["South America", 654], ["North America", 369], ["Oceania", 43]], "2050": [["Asia", 5290], ["Africa", 2489], ["South America", 762], ["Europe", 710], ["North America", 425], ["Oceania", 57]]}}, "ctry": {"label": "Five most populous countries", "unit": "Five most populous countries (in millions)", "k": 0.79, "years": [1950, 1980, 2020, 2050], "proj": [2050], "rows": {"1950": [["China", 554], ["India", 376], ["US", 159], ["Russia", 103], ["Japan", 83]], "1980": [["China", 1000], ["India", 699], ["US", 229], ["Indonesia", 147], ["Russia", 138]], "2020": [["China", 1439], ["India", 1380], ["US", 331], ["Indonesia", 274], ["Pakistan", 221]], "2050": [["India", 1639], ["China", 1402], ["Nigeria", 401], ["US", 379], ["Pakistan", 338]]}}, "city": {"label": "Ten most populous cities", "unit": "Ten most populous cities (in millions)", "k": 2.4, "years": [1950, 1980, 2020, 2035], "proj": [2035], "rows": {"1950": [["New York", 12], ["Tokyo", 11], ["London", 8], ["Osaka", 7], ["Paris", 6], ["Moscow", 5], ["Chicago", 5], ["Kolkata", 5], ["Buenos Aires", 5], ["Shanghai", 4]], "1980": [["Tokyo", 29], ["Osaka", 17], ["New York", 16], ["Mexico City", 13], ["São Paulo", 12], ["Los Angeles", 10], ["Buenos Aires", 10], ["Mumbai", 9], ["Kolkata", 9], ["Rio de Janeiro", 9]], "2020": [["Tokyo", 37], ["Delhi", 30], ["Shanghai", 27], ["Mexico City", 22], ["São Paulo", 22], ["Cairo", 21], ["Dhaka", 21], ["Beijing", 20], ["Mumbai", 20], ["Osaka", 19]], "2035": [["Delhi", 43], ["Tokyo", 36], ["Shanghai", 34], ["Dhaka", 31], ["Cairo", 29], ["Mumbai", 27], ["Kinshasa", 27], ["Beijing", 25], ["Mexico City", 25], ["São Paulo", 24]]}}}, LOC={"Asia": [676, 142, "AS"], "Africa": [510, 260, "AF"], "Europe": [473, 101, "EU"], "North America": [223, 135, "NA"], "South America": [297, 284, "SA"], "Oceania": [804, 324, "OC"], "China": [750, 152, "RD"], "India": [668, 206, "OR"], "US": [226, 132, "GD"], "Indonesia": [777, 238, "TL"], "Russia": [564, 76, "BL"], "Japan": [817, 152, "TL"], "Pakistan": [616, 168, "BL"], "Nigeria": [483, 220, "TL"], "New York": [255, 138, "GD"], "Chicago": [228, 127, "TL"], "Los Angeles": [150, 157, "RD"], "Mexico City": [184, 190, "OR"], "São Paulo": [297, 297, "TL"], "Rio de Janeiro": [319, 291, "BL"], "Buenos Aires": [280, 341, "RD"], "London": [435, 84, "BL"], "Paris": [447, 100, "OR"], "Moscow": [564, 80, "TL"], "Cairo": [524, 166, "RD"], "Kinshasa": [503, 257, "GD"], "Delhi": [659, 177, "BL"], "Mumbai": [645, 204, "TL"], "Kolkata": [682, 191, "OR"], "Dhaka": [697, 181, "GD"], "Beijing": [755, 138, "OR"], "Shanghai": [777, 168, "RD"], "Tokyo": [817, 150, "BL"], "Osaka": [809, 157, "GD"]}, COL={"NA": "#2E45B8", "SA": "#E67E22", "EU": "#1DC9A4", "AF": "#F1C40F", "AS": "#E3120B", "OC": "#2C3E50", "BL": "#2E45B8", "GD": "#F1C40F", "OR": "#E67E22", "TL": "#1DC9A4", "RD": "#E3120B"}, BIB=["United Nations, Department of Economic and Social Affairs, Population Division. 2019. <em>World population prospects 2019</em>. Available: https://population.un.org/wpp2019/Download/Standard/Population/ [2021, April 20].", "United Nations, Department of Economic and Social Affairs, Population Division. 2019. <em>World urbanization prospects: the 2018 revision</em>. Available: https://population.un.org/wup/Download/ [2021, April 20]."];
+var DATA={"cont": {"label": "Population per continent", "unit": "Population per continent (in millions)", "k": 0.72, "years": [1950, 1980, 2020, 2050], "proj": [2050], "rows": {"1950": [["Asia", 1405], ["Europe", 549], ["Africa", 228], ["North America", 173], ["South America", 169], ["Oceania", 13]], "1980": [["Asia", 2650], ["Europe", 694], ["Africa", 476], ["South America", 361], ["North America", 254], ["Oceania", 23]], "2020": [["Asia", 4641], ["Africa", 1341], ["Europe", 748], ["South America", 654], ["North America", 369], ["Oceania", 43]], "2050": [["Asia", 5290], ["Africa", 2489], ["South America", 762], ["Europe", 710], ["North America", 425], ["Oceania", 57]]}}, "ctry": {"label": "Five most populous countries", "unit": "Five most populous countries (in millions)", "k": 0.79, "years": [1950, 1980, 2020, 2050], "proj": [2050], "rows": {"1950": [["China", 554], ["India", 376], ["US", 159], ["Russia", 103], ["Japan", 83]], "1980": [["China", 1000], ["India", 699], ["US", 229], ["Indonesia", 147], ["Russia", 138]], "2020": [["China", 1439], ["India", 1380], ["US", 331], ["Indonesia", 274], ["Pakistan", 221]], "2050": [["India", 1639], ["China", 1402], ["Nigeria", 401], ["US", 379], ["Pakistan", 338]]}}, "city": {"label": "Ten most populous cities", "unit": "Ten most populous cities (in millions)", "k": 2.4, "years": [1950, 1980, 2020, 2035], "proj": [2035], "rows": {"1950": [["New York", 12], ["Tokyo", 11], ["London", 8], ["Osaka", 7], ["Paris", 6], ["Moscow", 5], ["Chicago", 5], ["Kolkata", 5], ["Buenos Aires", 5], ["Shanghai", 4]], "1980": [["Tokyo", 29], ["Osaka", 17], ["New York", 16], ["Mexico City", 13], ["São Paulo", 12], ["Los Angeles", 10], ["Buenos Aires", 10], ["Mumbai", 9], ["Kolkata", 9], ["Rio de Janeiro", 9]], "2020": [["Tokyo", 37], ["Delhi", 30], ["Shanghai", 27], ["Mexico City", 22], ["São Paulo", 22], ["Cairo", 21], ["Dhaka", 21], ["Beijing", 20], ["Mumbai", 20], ["Osaka", 19]], "2035": [["Delhi", 43], ["Tokyo", 36], ["Shanghai", 34], ["Dhaka", 31], ["Cairo", 29], ["Mumbai", 27], ["Kinshasa", 27], ["Beijing", 25], ["Mexico City", 25], ["São Paulo", 24]]}}}, LOC={"Asia": [676, 142, "AS"], "Africa": [510, 260, "AF"], "Europe": [473, 101, "EU"], "North America": [223, 135, "NA"], "South America": [297, 284, "SA"], "Oceania": [804, 324, "OC"], "China": [750, 152, "RD"], "India": [668, 206, "OR"], "US": [226, 132, "GD"], "Indonesia": [777, 238, "TL"], "Russia": [564, 76, "BL"], "Japan": [817, 152, "TL"], "Pakistan": [616, 168, "BL"], "Nigeria": [483, 220, "TL"], "New York": [255, 138, "GD"], "Chicago": [228, 127, "TL"], "Los Angeles": [150, 157, "RD"], "Mexico City": [184, 190, "OR"], "São Paulo": [297, 297, "TL"], "Rio de Janeiro": [319, 291, "BL"], "Buenos Aires": [280, 341, "RD"], "London": [435, 84, "BL"], "Paris": [447, 100, "OR"], "Moscow": [564, 80, "TL"], "Cairo": [524, 166, "RD"], "Kinshasa": [503, 257, "GD"], "Delhi": [659, 177, "BL"], "Mumbai": [645, 204, "TL"], "Kolkata": [682, 191, "OR"], "Dhaka": [697, 181, "GD"], "Beijing": [755, 138, "OR"], "Shanghai": [777, 168, "RD"], "Tokyo": [817, 150, "BL"], "Osaka": [809, 157, "GD"]}, COL={"NA": "#384BB4", "SA": "#F5802D", "EU": "#2CCBA9", "AF": "#F4C228", "AS": "#E21B14", "OC": "#1E1E1E", "BL": "#2E45B8", "GD": "#F1C40F", "OR": "#E67E22", "TL": "#1DC9A4", "RD": "#E3120B"}, BIB=["United Nations, Department of Economic and Social Affairs, Population Division. 2019. <em>World population prospects 2019</em>. Available: https://population.un.org/wpp2019/Download/Standard/Population/ [2021, April 20].", "United Nations, Department of Economic and Social Affairs, Population Division. 2019. <em>World urbanization prospects: the 2018 revision</em>. Available: https://population.un.org/wup/Download/ [2021, April 20]."];
 var KEYS=['cont','ctry','city'], NS='http://www.w3.org/2000/svg';
 var $=function(i){return document.getElementById(i)};
 var reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var SIDE={Mumbai:'l',Delhi:'t',Beijing:'l',Shanghai:'r',Osaka:'l',Dhaka:'r',Kolkata:'b',Pakistan:'l',India:'b',Japan:'r',Moscow:'t',Paris:'l',London:'l','Mexico City':'l'};
 var cur={tab:null,year:null}, seen={}, doneShown=false, opener=null;
 function fmt(n){return n.toLocaleString('en-GB')}
 function announce(t){var r=$('srStatus');r.textContent='';setTimeout(function(){r.textContent=t},60)}
@@ -2255,67 +2265,112 @@ function openOv(id){opener=document.activeElement;$(id).classList.add('open');ov
 function closeOv(id){$(id).classList.remove('open');if(!document.querySelector('.ov.open'))overlays().forEach(function(s){s.removeAttribute('inert')});if(opener&&opener.focus&&document.contains(opener))opener.focus()}
 /* tabs */
 var BOX={'Europe':[520,24,'l',486,46],'North America':[48,135,'r',210,148],'Asia':[815,172,'l',735,192],'Africa':[590,280,'l',550,298],'South America':[125,305,'r',278,324],'Oceania':[640,358,'r',730,374],
-'US':[30,120,'r'],'Russia':[620,6,'l'],'China':[870,205,'l'],'Japan':[870,100,'l'],'India':[535,225,'r'],'Pakistan':[545,128,'r'],'Indonesia':[840,290,'l'],'Nigeria':[400,262,'r'],
-'New York':[340,170,'l'],'Chicago':[30,80,'r'],'Los Angeles':[20,185,'r'],'Mexico City':[40,235,'r'],'São Paulo':[170,335,'r'],'Rio de Janeiro':[350,330,'l'],'Buenos Aires':[110,385,'r'],
+'US':[30,120,'r'],'Russia':[620,6,'l'],'China':[870,205,'l'],'Japan':[870,100,'l'],'India':[535,225,'r'],'Pakistan':[505,98,'r'],'Indonesia':[840,290,'l'],'Nigeria':[400,262,'r'],
+'New York':[340,170,'l'],'Chicago':[30,80,'r'],'Los Angeles':[20,168,'r'],'Mexico City':[40,235,'r'],'São Paulo':[170,322,'r'],'Rio de Janeiro':[350,330,'l'],'Buenos Aires':[110,385,'r'],
 'London':[330,35,'r'],'Paris':[468,128,'l'],'Moscow':[600,6,'l'],'Cairo':[440,205,'r'],'Kinshasa':[570,300,'l'],'Mumbai':[545,235,'r'],'Delhi':[570,112,'r'],'Kolkata':[705,298,'l'],'Dhaka':[770,250,'l'],'Beijing':[790,45,'l'],'Shanghai':[840,235,'l'],'Tokyo':[870,95,'l'],'Osaka':[865,170,'l']};
 var tabSeen={};
 KEYS.forEach(function(k){var w=document.createElement('div');w.className='tabcol';w.id='col-'+k;var b=document.createElement('button');b.className='tab';b.id='tab-'+k;b.textContent=DATA[k].label;b.setAttribute('aria-pressed','false');b.onclick=function(){pickTab(k)};w.appendChild(b);$('tabs').appendChild(w)});
-function clearMap(){$('bub').innerHTML='';$('list').innerHTML='';$('yrBig').textContent=''}
+var contLive=false,contRAF=0,contEls={};
+function clearMap(){cancelAnimationFrame(contRAF);contLive=false;$('bub').innerHTML='';$('list').innerHTML='';$('yrBig').textContent=''}
 function setSub(parts){var s=$('sub');s.innerHTML='';parts.forEach(function(p){if(typeof p==='string'){var sp=document.createElement('span');sp.textContent=p;s.appendChild(sp)}else s.appendChild(p)})}
-function tableLink(){var b=document.createElement('button');b.className='linkbtn';b.textContent='View all data as a table';b.onclick=openTable;return b}
 function pickTab(k){
  cur.tab=k;cur.year=null;tabSeen[k]=1;
  KEYS.forEach(function(x){var b=$('tab-'+x);b.setAttribute('aria-pressed',x===k);b.classList.toggle('visited',!!tabSeen[x]&&x!==k);var o=$('col-'+x).querySelector('.yrs');if(o)o.remove()});
  var d=DATA[k],y=document.createElement('div');y.className='yrs';y.setAttribute('role','group');y.setAttribute('aria-label','Year');
  d.years.forEach(function(yr){var b=document.createElement('button');b.className='yr';b.id='yr-'+yr;b.textContent=yr;b.setAttribute('aria-pressed','false');b.onclick=function(){pickYear(yr)};y.appendChild(b)});
- $('col-'+k).insertBefore(y,$('tab-'+k));
+ $('col-'+k).appendChild(y);   /* after the tab in the DOM so Tab goes tab > years; CSS puts them above */
  $('ttl').textContent=d.unit;
+ clearMap();
  pickYear(d.years[0]);
 }
+function setYear(yr,proj){var yb=$('yrBig');yb.textContent=yr;if(proj){var pj=document.createElement('span');pj.className='proj';pj.textContent='(UN projection)';yb.appendChild(pj)}yb.classList.remove('swap');void yb.offsetWidth;if(!reduced)yb.classList.add('swap')}
 function pickYear(yr){
- var k=cur.tab,d=DATA[k];cur.year=yr;seen[k+':'+yr]=1;
+ var k=cur.tab,d=DATA[k],ul=$('list');cur.year=yr;seen[k+':'+yr]=1;
  d.years.forEach(function(x){$('yr-'+x).setAttribute('aria-pressed',x===yr)});
- clearMap();var yb=$('yrBig');yb.textContent=yr;if(d.proj.indexOf(yr)>-1){var pj=document.createElement('span');pj.className='proj';pj.textContent='(UN projection)';yb.appendChild(pj)}
- /* clean header without extra subtitle */
- var g=$('bub'),gl=el('g',{}),gb=el('g',{}),gc=el('g',{'class':'cb'}),ul=$('list');g.append(gl,gb,gc);
- var rows=d.rows[yr],big=rows.slice().sort(function(a,b){return b[1]-a[1]});
- big.forEach(function(r,i){var l=LOC[r[0]],rad=d.k*Math.sqrt(r[1]),bx=BOX[r[0]];
-  if(bx){
-   var isLeft=(bx[2]==='l');
-   var w=Math.max(r[0].length*8.2+20,fmt(r[1]).length*11+20);
-   var h=44;
-   var ax=isLeft?bx[0]:bx[0]+w;
-   var ay=bx[1]+h/2;
-   var ex=(bx.length>3 && bx[3]!=null)?bx[3]:(ax+(isLeft?-14:14));
-   var ey=(bx.length>4 && bx[4]!=null)?bx[4]:ay;
-   gl.appendChild(el('path',{'class':'ld',d:'M'+l[0]+','+l[1]+' L'+ex+','+ey+' L'+ax+','+ay}));
-   var cg=el('g',{});
-   cg.appendChild(el('rect',{x:bx[0],y:bx[1],width:w,height:h,rx:2,ry:2}));
-   cg.appendChild(el('text',{'class':'nm',x:bx[0]+10,y:bx[1]+17},r[0]));
-   cg.appendChild(el('text',{'class':'vl',x:bx[0]+10,y:bx[1]+37},fmt(r[1])));
-   gc.appendChild(cg);
-  }
-  gb.appendChild(el('circle',{'class':'bubble',cx:l[0],cy:l[1],r:rad.toFixed(1),fill:COL[l[2]],stroke:'#fff','stroke-width':1.2,style:'--i:'+i}));
- });
- requestAnimationFrame(function(){g.classList.add('go')});
+ setYear(yr,d.proj.indexOf(yr)>-1);
+ ul.innerHTML='';
+ if(k==='cont')drawCont(yr);else drawOld(yr);
+ var rows=d.rows[yr];
  rows.forEach(function(r){var li=document.createElement('li'),i=document.createElement('i'),n=document.createElement('span'),v=document.createElement('span');
   i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);li.append(i,n,v);ul.appendChild(li)});
  announce(d.label+', '+yr+': '+rows.map(function(r){return r[0]+' '+fmt(r[1])+' million'}).join(', '));
  checkDone();
 }
+/* countries + cities: previous renderer, to be rebuilt next */
+function drawOld(yr){
+ var k=cur.tab,d=DATA[k],g=$('bub');g.innerHTML='';
+ var gl=el('g',{}),gb=el('g',{}),gc=el('g',{'class':'cb'});g.append(gl,gb,gc);
+ var rows=d.rows[yr],big=rows.slice().sort(function(a,b){return b[1]-a[1]});
+ big.forEach(function(r,i){var l=LOC[r[0]],rad=d.k*Math.sqrt(r[1]),bx=BOX[r[0]];
+  if(bx){
+   var isLeft=(bx[2]==='l'),w=Math.max(r[0].length*9.3+22,fmt(r[1]).length*12.5+22),h=50,ax=isLeft?bx[0]:bx[0]+w,ay=bx[1]+h/2,
+       ex=(bx.length>3&&bx[3]!=null)?bx[3]:(ax+(isLeft?-14:14)),ey=(bx.length>4&&bx[4]!=null)?bx[4]:ay;
+   gl.appendChild(el('path',{'class':'ld',d:'M'+l[0]+','+l[1]+' L'+ex+','+ey+' L'+ax+','+ay}));
+   var cg=el('g',{});
+   cg.appendChild(el('rect',{x:bx[0],y:bx[1],width:w,height:h,rx:2,ry:2}));
+   cg.appendChild(el('text',{'class':'nm',x:bx[0]+10,y:bx[1]+20},r[0]));
+   cg.appendChild(el('text',{'class':'vl',x:bx[0]+10,y:bx[1]+42},fmt(r[1])));
+   gc.appendChild(cg);
+  }
+  var bg=el('g',{'class':'bubble',style:'--i:'+i});
+  bg.appendChild(el('circle',{'class':'bring',cx:l[0],cy:l[1],r:(rad+1.3).toFixed(1)}));
+  bg.appendChild(el('circle',{cx:l[0],cy:l[1],r:rad.toFixed(1),fill:COL[l[2]],stroke:'#fff','stroke-width':1.2}));
+  gb.appendChild(bg);
+ });
+ requestAnimationFrame(function(){g.classList.add('go')});
+}
+/* ── Population per continent ──
+   Geometry measured from the Hype build, in map units (1 unit = 1px at 976px map width).
+   c = dot centre, b = callout box [x,y,w,h], p = text inset, r = bubble radius for 1950/1980/2020/2050 */
+var CONT={
+ 'Asia':{c:[690,108],b:[850,159,70,48],p:8,col:'#E21B14',r:[34.2,66,113.8,130.5]},
+ 'Africa':{c:[514,234.5],b:[597,255,67,48],p:8,col:'#F4C228',r:[5.1,10.7,32.5,61.8]},
+ 'Europe':{c:[479.5,84.7],b:[520,-40,72,48],p:11.5,col:'#2CCBA9',r:[12.5,16.6,18.6,18.4],v:25},
+ 'North America':{c:[200,106],b:[-19,112,114,47],p:9.5,col:'#384BB4',r:[4.2,5.3,8.2,10]},
+ 'South America':{c:[282.5,289],b:[70,312,112,47],p:6,col:'#F5802D',r:[3.9,8.3,16.2,19]},
+ 'Oceania':{c:[803,329],b:[649,364,80,48],p:11,col:'#1E1E1E',r:[1.8,2,2.4,2.6]}
+};
+function ctVal(yr,n){var r=DATA.cont.rows[yr];for(var i=0;i<r.length;i++)if(r[i][0]===n)return r[i][1];return 0}
+/* leader: dot > 45 degree diagonal > horizontal into the box (Europe rises vertically first, as in Hype) */
+function ctPath(o){
+ var c=o.c,b=o.b,ax=b[0]>c[0]?b[0]:b[0]+b[2],ay=b[1]+14,sx=ax>c[0]?1:-1,dy=Math.abs(ay-c[1]);
+ if(o.v)return 'M'+c[0]+','+c[1]+' L'+c[0]+','+(ay+o.v)+' L'+(c[0]+sx*o.v)+','+ay+' L'+ax+','+ay;
+ return 'M'+c[0]+','+c[1]+' L'+(c[0]+sx*dy)+','+ay+' L'+ax+','+ay;
+}
+function buildCont(g){
+ g.innerHTML='';contEls={};
+ var gb=el('g',{}),gl=el('g',{}),gx=el('g',{});g.append(gb,gl,gx);
+ Object.keys(CONT).forEach(function(n,i){
+  var o=CONT[n],b=o.b,e={r:0,v:0};
+  e.c=el('circle',{cx:o.c[0],cy:o.c[1],r:0,fill:o.col,stroke:'#fff','stroke-width':1.2,opacity:0});gb.appendChild(e.c);
+  e.l=el('path',{'class':'cl',d:ctPath(o)});e.l.style.setProperty('--i',i);gl.appendChild(e.l);
+  var L=500;try{L=Math.ceil(e.l.getTotalLength())+2}catch(x){}e.l.style.setProperty('--len',L);
+  var bg=el('g',{'class':'cbx'});bg.style.setProperty('--i',i);
+  bg.appendChild(el('rect',{x:b[0],y:b[1],width:b[2],height:b[3]}));
+  bg.appendChild(el('text',{'class':'nm',x:b[0]+o.p,y:b[1]+19},n));
+  e.vt=el('text',{'class':'vl',x:b[0]+o.p,y:b[1]+37.5},'');bg.appendChild(e.vt);gx.appendChild(bg);
+  contEls[n]=e;
+ });
+}
+function easeOut3(p){return 1-Math.pow(1-p,3)}
+function easeIO3(p){return p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2}
+function drawCont(yr){
+ var yi=DATA.cont.years.indexOf(yr),g=$('bub'),entry=!contLive;
+ if(entry){buildCont(g);contLive=true;requestAnimationFrame(function(){g.classList.add('go')})}
+ cancelAnimationFrame(contRAF);
+ var jobs=Object.keys(CONT).map(function(n,i){var e=contEls[n],v=ctVal(yr,n);
+  return {e:e,r0:e.r,r1:CONT[n].r[yi],v0:entry?v:e.v,v1:v,d:entry?120+i*70:0,fade:entry}});
+ var dur=entry?800:650,ez=entry?easeOut3:easeIO3;
+ function paint(j,p){var k=ez(p);j.e.r=j.r0+(j.r1-j.r0)*k;j.e.v=j.v0+(j.v1-j.v0)*k;
+  j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);j.e.vt.textContent=fmt(Math.round(j.e.v))}
+ if(reduced){jobs.forEach(function(j){paint(j,1)});return}
+ var t0=performance.now();
+ (function step(t){var live=false;jobs.forEach(function(j){var p=Math.max(0,Math.min(1,(t-t0-j.d)/dur));paint(j,p);if(p<1)live=true});if(live)contRAF=requestAnimationFrame(step)})(t0);
+}
 function checkDone(){
  if(doneShown)return;
  var all=KEYS.every(function(k){return DATA[k].years.every(function(y){return seen[k+':'+y]})});
  if(all){doneShown=true;setTimeout(function(){openOv('doneOv')},900)}
-}
-function openTable(){
- var k=cur.tab,d=DATA[k],h='<table><thead><tr>';
- if(k==='cont'){h+='<th scope="col">Continent</th>';d.years.forEach(function(y){h+='<th scope="col">'+y+(d.proj.indexOf(y)>-1?'*':'')+'</th>'});h+='</tr></thead><tbody>';
-  Object.keys(LOC).slice(0,6).forEach(function(n){h+='<tr><th scope="row">'+n+'</th>';d.years.forEach(function(y){var r=d.rows[y].filter(function(x){return x[0]===n})[0];h+='<td>'+fmt(r[1])+'</td>'});h+='</tr>'})}
- else{h+='<th scope="col">Rank</th>';d.years.forEach(function(y){h+='<th scope="col">'+y+(d.proj.indexOf(y)>-1?'*':'')+'</th>'});h+='</tr></thead><tbody>';
-  for(var i=0;i<d.rows[d.years[0]].length;i++){h+='<tr><th scope="row">'+(i+1)+'</th>';d.years.forEach(function(y){var r=d.rows[y][i];h+='<td>'+r[0]+' <b>'+fmt(r[1])+'</b></td>'});h+='</tr>'}}
- h+='</tbody></table><p class="tnote">'+d.unit+'. *UN projection.</p>';
- $('tblT').textContent=d.label;$('tblBody').innerHTML=h;openOv('tblOv');
 }
 function signalTop(){try{window.parent.postMessage({type:'ce-top',app:'ce-interactive'},'*')}catch(err){}}
 /* navigation */
@@ -2355,15 +2410,21 @@ function usableH(){
 
 /* every screen gets the same height (as M1): the tallest at this width, with responsive capping */
 function fitScreens(){
-  var root=document.documentElement,w=document.documentElement.clientWidth||window.innerWidth;
-  if(w<=560){root.style.setProperty('--screen-min','auto');return}
-  var base=w<800?620:578;
+  var root=document.documentElement,w=root.clientWidth||window.innerWidth,AR=976/472;
+  var main=$('main'),cover=$('cover'),mw=$('mapWrap'),list=$('list');
+  if(w<=560){root.style.setProperty('--screen-min','auto');root.style.removeProperty('--mapw');main.classList.add('lm');return}
   var cap=Math.max(480,usableH()-48);
-  base=Math.min(base,cap);
-  var els=['cover','main'].map($),was=els.map(function(e){return e.classList.contains('is-active')});
+  var T=Math.min(660,cap);                       /* target frame height: M1's 578 base, a little more room for the map */
+  var els=[cover,main],was=els.map(function(e){return e.classList.contains('is-active')}),keep=list.innerHTML;
   els.forEach(function(e){e.classList.add('is-active');e.style.minHeight='0'});
-  var max=base;
-  els.forEach(function(e){max=Math.max(max,Math.ceil(e.getBoundingClientRect().height))});
+  main.classList.remove('lm');root.style.setProperty('--mapw','976px');
+  var m0=mw.getBoundingClientRect().width,chrome=Math.ceil(main.getBoundingClientRect().height-mw.getBoundingClientRect().height);
+  var mapW=Math.min(m0,Math.max(780,Math.floor((T-chrome)*AR)));   /* never below 760px wide while the frame allows it, so callouts stay readable */
+  root.style.setProperty('--mapw',mapW+'px');
+  var lm=mapW<720;main.classList.toggle('lm',lm);
+  if(lm){root.style.setProperty('--mapw',Math.min(m0,976)+'px');var f='';for(var n=0;n<10;n++)f+='<li><i></i><span class="n">&nbsp;</span><span class="v">&nbsp;</span></li>';list.innerHTML=f}
+  var max=Math.max(Math.min(578,cap),Math.ceil(cover.getBoundingClientRect().height),Math.ceil(main.getBoundingClientRect().height));
+  list.innerHTML=keep;
   els.forEach(function(e,i){if(!was[i])e.classList.remove('is-active');e.style.minHeight=''});
   root.style.setProperty('--screen-min',Math.ceil(max)+'px');
 }
@@ -2381,7 +2442,7 @@ triggerCoverAnimation();
     requestAnimationFrame(function(){queued=false;_report()});
   }
   function _report(force){
-    var h=Math.ceil(document.body.getBoundingClientRect().height)+28;
+    var h=Math.ceil(document.body.getBoundingClientRect().height)+4;   /* body margins + shadow room come from the Moodle snippet's 20px buffer; 4px safety only */
     if(force!==true&&Math.abs(h-lastSent)<=2)return;
     lastSent=h;
     window.parent.postMessage({type:'resize',app:'ce-interactive',height:h},'*');
