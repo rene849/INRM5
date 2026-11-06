@@ -85,7 +85,7 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .yr{min-width:68px;height:28px;padding:0 10px;background:var(--navy);color:#fff;font-weight:700;font-size:15px;transition:background .15s}
 .yr:hover{background:var(--blue)}
 .tabcol:last-child .yrs{left:auto;right:0}
-@media(max-width:900px){.yr{min-width:56px;padding:0 8px;font-size:14px}.yr[aria-pressed=true]{min-width:66px;font-size:17px}}
+@media(max-width:900px){.yr{font-size:14px}.yr[aria-pressed=true]{font-size:17px}}
 .yr[aria-pressed=true]{height:34px;min-width:80px;background:#1DC9A4;color:var(--ink);font-size:19px}
 /* ── modals ── */
 .ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);box-sizing:border-box;border-radius:8px}
@@ -110,7 +110,7 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 }
 @media(max-width:640px){.head{flex-wrap:wrap}.stage{padding-bottom:12px}.tabs{grid-template-columns:1fr}.yrs{position:static;margin:6px 0 0}}
 /* list mode: map too small for readable callouts, so the values are shown as a text list instead (set by fitScreens) */
-.lm .cb,.lm .ld,.lm .cbx,.lm .cl{display:none}.lm .list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}.lm .stage{padding-bottom:44px}
+.lm .cb,.lm .ld,.lm .cbx,.lm .cl,.lm .sl,.lm .sx{display:none}.lm .list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}.lm .stage{padding-bottom:44px}
 @media(max-width:560px){html,body{overflow:auto;height:auto}.screen{overflow:visible}.screen.is-active{min-height:0}html{overflow-y:auto;scrollbar-width:none}html::-webkit-scrollbar{display:none}.appbar-title{font-size:13px}.icon-btn{width:40px;height:40px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bubble{animation:none !important;opacity:.88 !important;transform:none !important}#cover.go .cover-title,#cover.go .btn-start{animation:none !important;opacity:1 !important;transform:none !important}}
 
@@ -133,6 +133,23 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 }
 @media(prefers-reduced-motion:reduce){.cl{stroke-dashoffset:0 !important;animation:none !important}.cbx{opacity:1 !important;animation:none !important;transform:none !important}.yrbig.swap{animation:none !important}}
 
+/* ── Five most populous countries / Ten most populous cities: leader lines + callouts ── */
+.sl{fill:none;stroke:#0E0C0C;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.sx rect{fill:#fff;stroke:#0E0C0C;stroke-width:1}
+.sx .nm{font-size:14px;font-weight:400;fill:#0E0C0C}
+.sx .vl{font-size:17.5px;font-weight:700;fill:#E3120B}
+
+/* ── Tabs, as in the Hype build: not yet opened = grey, opened/selected = navy; year tabs are deep navy, selected = teal, centred above the selected tab ── */
+.tab{background:#D9D9D9;color:var(--ink)}
+.tab:hover{background:#c4c8d6}
+.tab.visited,.tab[aria-pressed=true]{background:var(--navy);color:#fff;box-shadow:none}
+.tab.visited:hover,.tab[aria-pressed=true]:hover{background:var(--blue)}
+.yrs{left:50%;right:auto;transform:translateX(-50%);bottom:calc(100% + 2px);gap:4px}
+.tabcol:last-child .yrs{left:50%;right:auto}
+.yr{min-width:65px;width:65px;height:22px;padding:0;background:#141F52;color:#fff;font-size:15px;font-weight:700}
+.yr:hover{background:var(--blue)}
+.yr[aria-pressed=true],.yr[aria-pressed=true]:hover{height:26px;min-width:65px;width:65px;background:#1DC9A4;color:var(--ink);font-size:19px;font-weight:700}
+@media(max-width:640px){.yrs,.tabcol:last-child .yrs{position:static;transform:none;margin:6px 0 0;justify-content:center}}
 /* ── Desktop balanced responsive scaling (matched to M1 iframe containment) ── */
 @media (min-width: 769px) {
   :root {
@@ -2264,14 +2281,10 @@ function overlays(){return ['cover','main'].map($)}
 function openOv(id){opener=document.activeElement;$(id).classList.add('open');overlays().forEach(function(s){s.setAttribute('inert','')});var f=$(id).querySelector('button');if(f)f.focus()}
 function closeOv(id){$(id).classList.remove('open');if(!document.querySelector('.ov.open'))overlays().forEach(function(s){s.removeAttribute('inert')});if(opener&&opener.focus&&document.contains(opener))opener.focus()}
 /* tabs */
-var BOX={'Europe':[520,24,'l',486,46],'North America':[48,135,'r',210,148],'Asia':[815,172,'l',735,192],'Africa':[590,280,'l',550,298],'South America':[125,305,'r',278,324],'Oceania':[640,358,'r',730,374],
-'US':[30,120,'r'],'Russia':[620,6,'l'],'China':[870,205,'l'],'Japan':[870,100,'l'],'India':[535,225,'r'],'Pakistan':[505,98,'r'],'Indonesia':[840,290,'l'],'Nigeria':[400,262,'r'],
-'New York':[340,170,'l'],'Chicago':[30,80,'r'],'Los Angeles':[20,168,'r'],'Mexico City':[40,235,'r'],'São Paulo':[170,322,'r'],'Rio de Janeiro':[350,330,'l'],'Buenos Aires':[110,385,'r'],
-'London':[330,35,'r'],'Paris':[468,128,'l'],'Moscow':[600,6,'l'],'Cairo':[440,205,'r'],'Kinshasa':[570,300,'l'],'Mumbai':[545,235,'r'],'Delhi':[570,112,'r'],'Kolkata':[705,298,'l'],'Dhaka':[770,250,'l'],'Beijing':[790,45,'l'],'Shanghai':[840,235,'l'],'Tokyo':[870,95,'l'],'Osaka':[865,170,'l']};
 var tabSeen={};
 KEYS.forEach(function(k){var w=document.createElement('div');w.className='tabcol';w.id='col-'+k;var b=document.createElement('button');b.className='tab';b.id='tab-'+k;b.textContent=DATA[k].label;b.setAttribute('aria-pressed','false');b.onclick=function(){pickTab(k)};w.appendChild(b);$('tabs').appendChild(w)});
 var contLive=false,contRAF=0,contEls={};
-function clearMap(){cancelAnimationFrame(contRAF);contLive=false;$('bub').innerHTML='';$('list').innerHTML='';$('yrBig').textContent=''}
+function clearMap(){cancelAnimationFrame(contRAF);cancelAnimationFrame(setRAF);contLive=false;setLive=false;$('bub').innerHTML='';$('list').innerHTML='';$('yrBig').textContent=''}
 function setSub(parts){var s=$('sub');s.innerHTML='';parts.forEach(function(p){if(typeof p==='string'){var sp=document.createElement('span');sp.textContent=p;s.appendChild(sp)}else s.appendChild(p)})}
 function pickTab(k){
  cur.tab=k;cur.year=null;tabSeen[k]=1;
@@ -2289,35 +2302,12 @@ function pickYear(yr){
  d.years.forEach(function(x){$('yr-'+x).setAttribute('aria-pressed',x===yr)});
  setYear(yr,d.proj.indexOf(yr)>-1);
  ul.innerHTML='';
- if(k==='cont')drawCont(yr);else drawOld(yr);
+ if(k==='cont')drawCont(yr);else drawSet(yr);
  var rows=d.rows[yr];
  rows.forEach(function(r){var li=document.createElement('li'),i=document.createElement('i'),n=document.createElement('span'),v=document.createElement('span');
   i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);li.append(i,n,v);ul.appendChild(li)});
  announce(d.label+', '+yr+': '+rows.map(function(r){return r[0]+' '+fmt(r[1])+' million'}).join(', '));
  checkDone();
-}
-/* countries + cities: previous renderer, to be rebuilt next */
-function drawOld(yr){
- var k=cur.tab,d=DATA[k],g=$('bub');g.innerHTML='';
- var gl=el('g',{}),gb=el('g',{}),gc=el('g',{'class':'cb'});g.append(gl,gb,gc);
- var rows=d.rows[yr],big=rows.slice().sort(function(a,b){return b[1]-a[1]});
- big.forEach(function(r,i){var l=LOC[r[0]],rad=d.k*Math.sqrt(r[1]),bx=BOX[r[0]];
-  if(bx){
-   var isLeft=(bx[2]==='l'),w=Math.max(r[0].length*9.3+22,fmt(r[1]).length*12.5+22),h=50,ax=isLeft?bx[0]:bx[0]+w,ay=bx[1]+h/2,
-       ex=(bx.length>3&&bx[3]!=null)?bx[3]:(ax+(isLeft?-14:14)),ey=(bx.length>4&&bx[4]!=null)?bx[4]:ay;
-   gl.appendChild(el('path',{'class':'ld',d:'M'+l[0]+','+l[1]+' L'+ex+','+ey+' L'+ax+','+ay}));
-   var cg=el('g',{});
-   cg.appendChild(el('rect',{x:bx[0],y:bx[1],width:w,height:h,rx:2,ry:2}));
-   cg.appendChild(el('text',{'class':'nm',x:bx[0]+10,y:bx[1]+20},r[0]));
-   cg.appendChild(el('text',{'class':'vl',x:bx[0]+10,y:bx[1]+42},fmt(r[1])));
-   gc.appendChild(cg);
-  }
-  var bg=el('g',{'class':'bubble',style:'--i:'+i});
-  bg.appendChild(el('circle',{'class':'bring',cx:l[0],cy:l[1],r:(rad+1.3).toFixed(1)}));
-  bg.appendChild(el('circle',{cx:l[0],cy:l[1],r:rad.toFixed(1),fill:COL[l[2]],stroke:'#fff','stroke-width':1.2}));
-  gb.appendChild(bg);
- });
- requestAnimationFrame(function(){g.classList.add('go')});
 }
 /* ── Population per continent ──
    Geometry measured from the Hype build, in map units (1 unit = 1px at 976px map width).
@@ -2366,6 +2356,113 @@ function drawCont(yr){
  if(reduced){jobs.forEach(function(j){paint(j,1)});return}
  var t0=performance.now();
  (function step(t){var live=false;jobs.forEach(function(j){var p=Math.max(0,Math.min(1,(t-t0-j.d)/dur));paint(j,p);if(p<1)live=true});if(live)contRAF=requestAnimationFrame(step)})(t0);
+}
+var GEO={
+ ctry:{
+  'US':{d:[200.1,115.9],b:[36,123,59,47],p:11,s:'R'},
+  'India':{d:[660,192.1],b:[491,110,73,48],p:13,s:'R'},
+  'Russia':{d:[612.4,54.6],b:[676,-6,73,48],p:12,s:'L'},
+  'China':{d:[749.5,106.5],b:[845,150,70,48],p:10,s:'L'},
+  'Japan':{d:[811.9,128.1],b:[875,68,64,48],p:12,s:'L'},
+  'Indonesia':{d:[769.1,252.9],b:[616,287,86,48],p:11,s:'R'},
+  'Pakistan':{d:[639,140],b:[522,11,77,48],p:11,s:'R',v:25},
+  'Nigeria':{d:[467.1,219.9],b:[329,242,73,48],p:13,s:'R'}
+ },
+ city:{
+  'Chicago':{d:[220.1,108.1],b:[82,62,78,48],p:13,s:'R'},
+  'Buenos Aires':{d:[291.6,359.4],b:[136,376,109,48],p:12,s:'R'},
+  'New York':{d:[254.9,116.9],b:[290,117,79,47],p:10,s:'L'},
+  'London':{d:[444.1,80],b:[332,35,73,48],p:12,s:'R'},
+  'Paris':{d:[453.8,94.8],b:[500,101,59,47],p:10,s:'L'},
+  'Moscow':{d:[543.4,66.6],b:[616,-3,77,48],p:12,s:'L'},
+  'Kolkata':{d:[682.7,180.6],b:[647,235,73,48],p:13,s:'T'},
+  'Shanghai':{d:[772,156.8],b:[731,52,82,48],p:12,s:'B'},
+  'Osaka':{d:[801.9,138.9],b:[850,156,64,48],p:10,s:'L'},
+  'Tokyo':{d:[812.3,132.1],b:[875,72,64,48],p:11,s:'L'},
+  'Los Angeles':{d:[130,132.1],b:[-7,97,98,48],p:13,s:'R'},
+  'Mexico City':{d:[168.4,179.6],b:[29,186,94,47],p:11,s:'R'},
+  'São Paulo':{d:[314.7,325.1],b:[362,342,89,48],p:13,s:'L'},
+  'Rio de Janeiro':{d:[331.9,304.1],b:[369,269,108,48],p:11,s:'L'},
+  'Mumbai':{d:[650.7,185.3],b:[540,195,78,48],p:12,s:'R'},
+  'Cairo':{d:[528.9,149.9],b:[435,108,58,48],p:13,s:'R'},
+  'Delhi':{d:[653,158],b:[558,108,60,48],p:13,s:'R'},
+  'Beijing':{d:[735.1,124.1],b:[637,85,70,48],p:13,s:'R'},
+  'Dhaka':{d:[697.4,173.4],b:[746,188,67,48],p:10,s:'L'},
+  'Kinshasa':{d:[484.6,260.4],b:[363,267,89,47],p:12,s:'R'}
+ }
+};
+/* Bubble size: countries r = millions / 20, cities r = millions / 2 (checked against every bubble in the Hype build).
+   Hype quirk: its India bubble is the same size in 1980 as in 1950 (r 18.6) although the value is 699. Data-true size is
+   used here; to reproduce Hype exactly set RAD_OVERRIDE['ctry:India:1980']=18.6. */
+var RAD={ctry:function(v){return v/20},city:function(v){return v/2}}, RAD_OVERRIDE={};
+var setLive=false,setRAF=0,setEls={},setNames=[];
+/* leader line: leaves the callout (side R/L: 14px below its top edge, T/B: straight from the edge), runs flat, then 45° to the dot;
+   v = bends 45° over v units then drops straight to the dot (Pakistan) */
+function leaderPts(o){
+ var b=o.b,d=o.d,s=o.s;
+ if(s==='B'||s==='T')return [[d[0],s==='B'?b[1]+b[3]:b[1]],d];
+ var ax=s==='R'?b[0]+b[2]:b[0],ay=b[1]+14,sx=d[0]>ax?1:-1,dy=Math.abs(d[1]-ay);
+ if(o.v)return [[ax,ay],[d[0]-sx*o.v,ay],[d[0],ay+(d[1]>ay?1:-1)*o.v],d];
+ var ex=d[0]-sx*dy;
+ if(sx*(ex-ax)<1)return [[ax,ay],d];
+ return [[ax,ay],[ex,ay],d];
+}
+function buildSet(g,k){
+ g.innerHTML='';setEls={};
+ var geo=GEO[k],d=DATA[k],peak={};
+ d.years.forEach(function(y){d.rows[y].forEach(function(r){peak[r[0]]=Math.max(peak[r[0]]||0,r[1])})});
+ setNames=Object.keys(geo).sort(function(a,b){return (peak[b]||0)-(peak[a]||0)});   /* big bubbles underneath, small on top */
+ var gb=el('g',{}),gl=el('g',{}),gx=el('g',{});g.append(gb,gl,gx);
+ setNames.forEach(function(n){
+  var o=geo[n],b=o.b,e={rad:0,val:0,co:0,lp:0,on:false};
+  e.c=el('circle',{cx:o.d[0],cy:o.d[1],r:0,fill:COL[LOC[n][2]],stroke:'#fff','stroke-width':1.2,opacity:0});gb.appendChild(e.c);
+  var pts=leaderPts(o).reverse();                                                   /* starts at the dot so it draws out from the bubble */
+  e.l=el('path',{'class':'sl',d:'M'+pts.map(function(p){return p[0]+','+p[1]}).join(' L')});gl.appendChild(e.l);
+  var L=300;try{L=Math.ceil(e.l.getTotalLength())+2}catch(x){}
+  e.L=L;e.l.style.strokeDasharray=L;e.l.style.strokeDashoffset=L;
+  var bg=el('g',{'class':'sx',opacity:0});
+  bg.appendChild(el('rect',{x:b[0],y:b[1],width:b[2],height:b[3]}));
+  bg.appendChild(el('text',{'class':'nm',x:b[0]+o.p,y:b[1]+19},n));
+  e.vt=el('text',{'class':'vl',x:b[0]+o.p,y:b[1]+37.5},'');bg.appendChild(e.vt);gx.appendChild(bg);e.g=bg;
+  setEls[n]=e;
+ });
+}
+function paintSet(e){
+ e.c.setAttribute('r',Math.max(0,e.rad).toFixed(2));
+ e.c.setAttribute('opacity',e.rad>.05?(Math.min(1,e.rad*1.5)*.88).toFixed(3):0);
+ e.l.style.strokeDashoffset=(e.L*(1-e.lp)).toFixed(1);
+ e.g.setAttribute('opacity',e.co.toFixed(3));
+ e.g.setAttribute('transform','translate(0,'+((1-e.co)*5).toFixed(2)+')');
+ e.vt.textContent=fmt(Math.round(e.val));
+}
+function drawSet(yr){
+ var k=cur.tab,d=DATA[k],g=$('bub'),entry=!setLive;
+ if(entry){buildSet(g,k);setLive=true}
+ cancelAnimationFrame(setRAF);
+ var rows={};d.rows[yr].forEach(function(r){rows[r[0]]=r[1]});
+ var chans=[],idx=0;
+ setNames.forEach(function(n){
+  var e=setEls[n],has=rows[n]!=null,isNew=has&&!e.on,v=has?rows[n]:e.val,ov=RAD_OVERRIDE[k+':'+n+':'+yr];
+  var r1=has?(ov!=null?ov:RAD[k](v)):0,i=has?idx++:0;
+  function ch(key,to,delay,dur,ez){chans.push({e:e,key:key,from:e[key],to:to,delay:delay,dur:dur,ez:ez})}
+  if(isNew){e.val=v;                      /* a new entry: bubble grows, line draws out, callout fades in */
+   if(entry){ch('rad',r1,120+i*70,800,easeOut3);ch('lp',1,400+i*70,550,easeIO3);ch('co',1,700+i*70,450,easeOut3)}
+   else{ch('rad',r1,0,500,easeOut3);ch('lp',1,250,450,easeIO3);ch('co',1,550,350,easeOut3)}
+  }else if(has){                          /* still in the top list: bubble and number move to the new value */
+   ch('rad',r1,0,650,easeIO3);ch('val',v,0,650,easeIO3);
+  }else if(e.on){                         /* dropped out: callout, line and bubble go away */
+   ch('co',0,0,200,easeOut3);ch('lp',0,0,300,easeIO3);ch('rad',0,150,400,easeIO3);
+  }
+  e.on=has;
+ });
+ if(reduced){chans.forEach(function(c){c.e[c.key]=c.to});setNames.forEach(function(n){paintSet(setEls[n])});return}
+ var t0=performance.now();
+ (function step(t){
+  var live=false;
+  chans.forEach(function(c){var p=Math.max(0,Math.min(1,(t-t0-c.delay)/c.dur));c.e[c.key]=c.from+(c.to-c.from)*c.ez(p);if(p<1)live=true});
+  setNames.forEach(function(n){paintSet(setEls[n])});
+  if(live)setRAF=requestAnimationFrame(step);
+ })(t0);
 }
 function checkDone(){
  if(doneShown)return;
