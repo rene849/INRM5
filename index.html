@@ -180,8 +180,8 @@ html.mobile .ttl{font-size:clamp(22px,6.4vw,28px);font-weight:800;padding:16px 0
 html.mobile .yrbig{text-align:left;font-size:44px;margin-top:14px}
 html.mobile .yrbig .proj{position:static;display:block;margin:6px 0 0}
 /* map: whole world fitted to the screen (data is in the table below); optional enlarged, swipe-able view with labels */
-html.mobile .mapscroll{display:block;overflow-x:auto;overflow-y:hidden;margin-top:4px;padding:6px 0 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-html.mobile .mapscroll::-webkit-scrollbar{display:none}
+html.mobile .mapscroll{display:block;overflow-x:auto;overflow-y:hidden;margin-top:4px;padding:6px 0 12px;scrollbar-width:thin;scrollbar-color:#8a8a8a #ececec;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+html.mobile .mapscroll::-webkit-scrollbar{height:10px;width:0}html.mobile .mapscroll::-webkit-scrollbar-track{background:#ececec;border-radius:5px}html.mobile .mapscroll::-webkit-scrollbar-thumb{background:#8a8a8a;border-radius:5px}
 html.mobile .mapscroll:focus-visible{outline-offset:-3px}
 html.mobile .mzoom{display:block;margin:12px 0 0}
 .mzc{display:flex;gap:12px;margin:12px 0 2px}
@@ -210,10 +210,10 @@ html.mobile .ov:not(.intro){padding-top:16px}
 html.mobile .box{max-height:calc(var(--vp,700px)*.86)}
 /* years as a text row below the map, as in Hype */
 html.mobile .tabs{display:block;padding:10px var(--pad) 0;margin:0}
-html.mobile .myhint{display:block;text-align:left;font-style:italic;font-size:16px;line-height:1.4;margin-bottom:10px}
+html.mobile .myhint{display:block;text-align:center;font-style:italic;font-size:16px;line-height:1.4;margin-bottom:10px}
 html.mobile .tab{display:none}html.mobile .tabcol{position:static;display:none}html.mobile .tabcol:has(.yrs){display:block}
 html.mobile .hint{display:none}
-html.mobile .yrs,html.mobile .tabcol:last-child .yrs{position:static;transform:none;width:auto;margin:0 0 0 -12px;display:flex;justify-content:flex-start;gap:2px}
+html.mobile .yrs,html.mobile .tabcol:last-child .yrs{position:static;transform:none;width:auto;margin:0;display:flex;justify-content:center;flex-wrap:wrap;gap:2px}
 html.mobile .yr{flex:0 0 auto;width:auto;min-width:64px;height:44px;padding:0 12px;background:transparent;color:var(--blue);font-size:18px}html.mobile .yr[aria-pressed=true]{flex:0 0 auto;width:auto;min-width:64px;height:44px;background:#1DC9A4;color:var(--ink);font-size:18px;font-weight:800;box-shadow:inset 0 -4px 0 var(--navy)}@media(hover:hover){html.mobile .yr[aria-pressed=true]:hover{flex:0 0 auto;width:auto;min-width:64px;height:44px;background:#1DC9A4;color:var(--ink);font-size:18px;font-weight:800;box-shadow:inset 0 -4px 0 var(--navy)}}
 /* data table + navigation */
 html.mobile .mctl{display:block;padding:12px var(--pad) 28px}
@@ -2393,7 +2393,9 @@ function pickTab(k){
 }
 function setYear(yr,proj){var yb=$('yrBig');yb.textContent=yr;if(proj){var pj=document.createElement('span');pj.className='proj';pj.textContent='(UN projection)';yb.appendChild(pj)}}
 /* sets a callout number; if it replaces a different number, only that number swipes in */
-function setNum(t,txt){var o=t.textContent;if(o===txt)return;t.textContent=txt;if(o&&!reduced){t.classList.remove('vsw');void t.getBoundingClientRect();t.classList.add('vsw')}}
+function swipe(t){if(reduced)return;t.classList.remove('vsw');void t.getBoundingClientRect();t.classList.add('vsw')}
+/* quiet = the callout is not visible yet; the swipe then plays when it appears, so every callout number animates the same way */
+function setNum(t,txt,quiet){var o=t.textContent;if(o===txt)return;t.textContent=txt;if(o&&!quiet)swipe(t)}
 function pickYear(yr){
  var k=cur.tab,d=DATA[k],ul=$('list');cur.year=yr;seen[k+':'+yr]=1;
  d.years.forEach(function(x){$('yr-'+x).setAttribute('aria-pressed',x===yr)});
@@ -2411,9 +2413,9 @@ function pickYear(yr){
    Geometry measured from the Hype build, in map units (1 unit = 1px at 976px map width).
    c = dot centre, b = callout box [x,y,w,h], p = text inset, r = bubble radius for 1950/1980/2020/2050 */
 var CONT={
- 'Asia':{c:[690,108],b:[850,159,70,48],p:8,col:'#E21B14',r:[34.2,66,113.8,130.5]},
+ 'Asia':{c:[690,120],b:[850,159,70,48],p:8,col:'#E21B14',r:[34.2,66,113.8,130.5]},
  'Africa':{c:[514,234.5],b:[597,255,67,48],p:8,col:'#F9C31F',r:[5.1,10.7,32.5,61.8]},
- 'Europe':{c:[479.5,84.7],b:[520,-40,72,48],p:11.5,col:'#1DC9A4',r:[12.5,16.6,18.6,18.4],v:25},
+ 'Europe':{c:[479.5,84.7],b:[520,-31,72,48],p:11.5,col:'#1DC9A4',r:[12.5,16.6,18.6,18.4],v:25},
  'North America':{c:[200,106],b:[-19,112,114,47],p:9.5,col:'#384BB4',r:[4.2,5.3,8.2,10]},
  'South America':{c:[282.5,289],b:[70,312,112,47],p:6,col:'#F5802D',r:[3.9,8.3,16.2,19]},
  'Oceania':{c:[803,329],b:[649,364,80,48],p:11,col:'#1E1E1E',r:[1.8,2,2.4,2.6]}
@@ -2460,8 +2462,9 @@ function drawCont(yr){
   return {e:e,r0:e.r,r1:CONT[n].r[yi],v0:entry?v:e.v,v1:v,d:entry?120+i*70:0,fade:entry}});
  var dur=entry?800:650,ez=entry?easeOut3:easeIO3;
  function paint(j,p){var k=ez(p);j.e.r=j.r0+(j.r1-j.r0)*k;j.e.v=j.v0+(j.v1-j.v0)*k;
-  j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);setNum(j.e.vt,fmt(j.v1))}
+  j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);setNum(j.e.vt,fmt(j.v1),j.fade)}
  if(reduced){jobs.forEach(function(j){paint(j,1)});return}
+ if(entry)jobs.forEach(function(j,i){setTimeout(function(){swipe(j.e.vt)},700+i*70+150)});
  var t0=performance.now();
  (function step(t){var live=false;jobs.forEach(function(j){var p=Math.max(0,Math.min(1,(t-t0-j.d)/dur));paint(j,p);if(p<1)live=true});if(live)contRAF=requestAnimationFrame(step)})(t0);
 }
@@ -2541,7 +2544,8 @@ function paintSet(e){
  e.l.style.strokeDashoffset=(e.L*(1-e.lp)).toFixed(1);
  e.g.setAttribute('opacity',e.co.toFixed(3));
  e.g.setAttribute('transform','translate(0,'+((1-e.co)*5).toFixed(2)+')');
- setNum(e.vt,fmt(Math.round(e.val)));
+ var vis=e.co>.3;setNum(e.vt,fmt(Math.round(e.val)),!vis);
+ if(vis&&!e.sh){e.sh=1;swipe(e.vt)}else if(e.co<.05)e.sh=0;
 }
 function drawSet(yr){
  var k=cur.tab,d=DATA[k],g=$('bub'),entry=!setLive;
