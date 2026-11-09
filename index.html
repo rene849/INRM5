@@ -59,9 +59,9 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 /* ── main map screen: same height as cover (see fitScreens) ── */
 .stage{flex:1 0 auto;width:100%;max-width:var(--maxw);margin:0 auto;padding:4px var(--pad) 36px;display:flex;flex-direction:column}
 .head{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:58px;margin-bottom:4px}
-.ttl{font-size:clamp(16px,1.25vw,17px);font-weight:700;line-height:1.3}
+.ttl{font-size:clamp(17px,1.2vw,18px);font-weight:700;line-height:1.3}
 .sub{display:block;min-height:0}.sub:empty{display:none}
-.yrbig{position:relative;font-size:clamp(24px,2.3vw,30px);font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.02em;text-align:right}
+.yrbig{position:relative;font-size:clamp(28px,2.6vw,36px);font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.02em;text-align:right}
 .yrbig .proj{position:absolute;right:0;top:100%;margin-top:4px;font-size:13px;font-weight:700;letter-spacing:0;color:var(--ink);white-space:nowrap}
 .map-wrap{width:min(100%,var(--mapw,976px));margin:0 auto;aspect-ratio:976/472}
 .bring{fill:none;stroke:#141F52;stroke-width:.9}
@@ -75,7 +75,7 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .list .n{flex:1}.list .v{font-weight:800}
 .tabs{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0 var(--pad) 10px;width:100%;max-width:var(--maxw);margin:0 auto}
 .tabcol{position:relative}
-.tab{width:100%;height:52px;background:var(--navy);font-size:14px;font-weight:500;color:#fff;transition:background .18s,box-shadow .18s}@media(hover:hover){.tab:hover{background:var(--blue)}}
+.tab{width:100%;height:52px;background:var(--navy);font-size:clamp(15px,1.1vw,16px);font-weight:500;color:#fff;transition:background .18s,box-shadow .18s}@media(hover:hover){.tab:hover{background:var(--blue)}}
 .tab[aria-pressed=true]{background:var(--navy-deep);box-shadow:inset 0 -5px 0 var(--teal)}
 /* year tabs sit directly above the selected tab */
 .yrs{position:absolute;bottom:100%;left:clamp(16px,9%,48px);display:flex;gap:4px;align-items:flex-end}
@@ -86,12 +86,12 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);box-sizing:border-box;border-radius:8px}
 .ov.open{display:flex}
 .ov.intro{background:rgba(31,46,122,.94);backdrop-filter:none;overflow:hidden;align-items:center;justify-content:center;padding:40px clamp(16px,4vw,32px)}
-.box{background:#fff;border-radius:10px;max-width:720px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35),0 4px 16px rgba(0,0,0,.15)}
+.box{background:#fff;border-radius:0;max-width:720px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35),0 4px 16px rgba(0,0,0,.15)}
 .box-head{padding:18px 24px 14px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;flex:none}
 .box-head h2{font-size:18px;font-weight:700}
 .box-body{padding:18px 24px;overflow:auto;font-size:15px;line-height:1.72}
 .bib-entry{margin:0 0 14px;padding:0 0 0 24px;text-indent:-24px}
-.card{position:relative;background:#fff;max-width:680px;width:100%;margin:auto;padding:70px clamp(20px,5vw,48px) 32px;text-align:center;border-radius:8px;box-sizing:border-box;box-shadow:0 16px 48px rgba(0,0,0,.3),0 2px 10px rgba(0,0,0,.12)}
+.card{position:relative;background:#fff;max-width:680px;width:100%;margin:auto;padding:70px clamp(20px,5vw,48px) 32px;text-align:center;border-radius:0;box-sizing:border-box;box-shadow:0 16px 48px rgba(0,0,0,.3),0 2px 10px rgba(0,0,0,.12)}
 .card p{font-size:clamp(14px,1.4vw,16px);line-height:1.6;margin:0 auto 24px;max-width:580px}
 .card .illo{position:absolute;top:-55px;left:50%;transform:translateX(-50%);width:110px;height:110px}
 .card.done{padding-top:70px}
@@ -137,12 +137,10 @@ html:not(.mobile) .head{position:absolute;left:var(--pad);right:var(--pad);top:1
 .tabcol:last-child .yrs{left:50%;right:auto}
 .yr{min-width:56px;width:56px;height:24px;padding:0;background:#141F52;color:#fff;font-size:14px;font-weight:700}@media(hover:hover){.yr:hover{background:var(--blue)}}.yr[aria-pressed=true]{height:28px;min-width:56px;width:56px;background:#1DC9A4;color:var(--ink);font-size:17px;font-weight:700}@media(hover:hover){.yr[aria-pressed=true]:hover{height:28px;min-width:56px;width:56px;background:#1DC9A4;color:var(--ink);font-size:17px;font-weight:700}}
 .hint{position:absolute;left:50%;bottom:calc(100% + 18px);width:44px;height:44px;transform:translateX(-50%);pointer-events:none;animation:hint-in .5s ease-out both,hint-bob 1.1s ease-in-out .5s 5}
-.hint::after{content:'';position:absolute;inset:0;border:2px solid #8B98D6;border-radius:50%;opacity:0;animation:hint-ring 1.1s ease-out .5s 5}
 @keyframes hint-in{from{opacity:0}to{opacity:1}}
-@keyframes hint-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.7);opacity:0}}
 .hint svg{display:block;width:100%;height:100%}
 @keyframes hint-bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
-@media(prefers-reduced-motion:reduce){.hint,.hint::after{animation:none}}
+@media(prefers-reduced-motion:reduce){.hint{animation:none}}
 
 /* ── responsiveness: drawers open / narrow frames ── */
 .map-wrap{margin:auto}                      /* centred horizontally and vertically in the space between title and tabs */
@@ -164,7 +162,11 @@ html.tablet .cover-frame,html.mobile .cover-frame,html.tablet .cover-text,html.m
 html.tablet .cover-title,html.mobile .cover-title{order:1;position:static;margin:0 14.7%;font-size:clamp(30px,9.8cqw,50px);line-height:1.15}
 html.tablet .cover-art,html.mobile .cover-art{order:2;width:85%;margin:clamp(28px,13.5%,64px) auto clamp(28px,14%,64px)}
 html.tablet .btn-start,html.mobile .btn-start{order:3;position:static;width:auto;margin:0 14.7%;height:clamp(48px,13cqw,56px);font-size:17px}
-html.tablet .cover-stage::after,html.mobile .cover-stage::after{content:'';order:4;height:1px;background:var(--rule);margin:clamp(28px,14%,64px) 14.7% 0}
+html.tablet .cover-stage::after,html.mobile .cover-stage::after{content:none}
+/* mobile cover: bigger map, Start button settles toward the bottom, balanced like M1 */
+html.tablet .cover-stage,html.mobile .cover-stage{min-height:clamp(540px,calc(var(--vp,640px) - 24px),780px)}
+html.tablet .cover-art,html.mobile .cover-art{width:94%;margin:auto}
+html.tablet .btn-start,html.mobile .btn-start{margin-top:0}
 /* top bar: large icons across the top, then the title line */
 html.mobile .appbar{height:auto}
 html.mobile .appbar-inner{flex-direction:column;padding:14px var(--pad) 0}
@@ -2417,7 +2419,7 @@ var CONT={
  'Oceania':{c:[803,329],b:[649,364,80,48],p:11,col:'#1E1E1E',r:[1.8,2,2.4,2.6]}
 };
 var MAP_S=1;
-function applyLS(){var L0=Math.min(1.25,Math.max(1,.9/MAP_S)),pad=0;
+function applyLS(){var L0=Math.min(1.25,Math.max(1.1,.9/MAP_S)),pad=0;
  if(document.documentElement.classList.contains('zoomed'))pad=14;else{try{pad=parseFloat(getComputedStyle(document.querySelector('#main .stage')).paddingLeft)||0}catch(e){}}
  var u=Math.max(0,pad-6)/MAP_S,lo=-12-u,hi=964+u;   /* map units that are still inside the frame */
  document.querySelectorAll('#bub .lbl').forEach(function(g){var a=g.getAttribute('data-a').split(','),x=+a[0],y=+a[1],r=g.firstChild,rx=+r.getAttribute('x'),rw=+r.getAttribute('width'),L=L0;
