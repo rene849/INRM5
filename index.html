@@ -109,10 +109,10 @@ html.tablet .btn-start,html.mobile .btn-start{width:100%;height:50px}
 
 /* ── Population per continent: Hype-accurate bubbles, leader lines and callouts ── */
 .cl{fill:none;stroke:#0E0C0C;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len,600);stroke-dashoffset:var(--len,600)}
-.go .cl{animation:cl-draw .55s cubic-bezier(.4,0,.2,1) calc(.4s + var(--i)*70ms) forwards}
+.go .cl{animation:cl-draw .55s cubic-bezier(.4,0,.2,1) .4s forwards}
 @keyframes cl-draw{to{stroke-dashoffset:0}}
 .cbx{opacity:0}
-.go .cbx{animation:cbx-in .45s ease-out calc(.7s + var(--i)*70ms) forwards}
+.go .cbx{animation:cbx-in .45s ease-out .7s forwards}
 @keyframes cbx-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .cbx rect{fill:#fff;stroke:#0E0C0C;stroke-width:1}
 .cbx .nm{font-size:14px;font-weight:400;fill:#0E0C0C}
@@ -171,7 +171,7 @@ html.mobile .stage{padding:0 var(--pad) 8px}
 html.mobile .head{display:block;position:static;margin:0;min-height:0}
 html.mobile .ttl{font-size:clamp(22px,6.4vw,28px);font-weight:800;padding:16px 0 12px;border-bottom:1px solid var(--rule)}
 html.mobile .yrbig{text-align:left;font-size:44px;margin-top:14px;width:auto}
-html.mobile .yrbig .proj{display:none}
+html.mobile .yrbig .proj{position:static;display:inline-block;margin:0 0 0 10px;font-size:18px;font-weight:700;letter-spacing:0;color:var(--ink);vertical-align:baseline;white-space:nowrap}
 /* map: whole world fitted to the screen (data is in the table below); optional enlarged, swipe-able view with labels */
 html.mobile .mapscroll{display:block;overflow-x:auto;overflow-y:hidden;margin-top:4px;padding:6px 0 12px;scrollbar-width:thin;scrollbar-color:#8a8a8a #ececec;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 html.mobile .mapscroll::-webkit-scrollbar{height:10px;width:0}html.mobile .mapscroll::-webkit-scrollbar-track{background:#ececec;border-radius:5px}html.mobile .mapscroll::-webkit-scrollbar-thumb{background:#8a8a8a;border-radius:5px}
@@ -202,6 +202,12 @@ html.mobile .ov{align-items:flex-start;padding:76px 14px 20px}html.mobile .ov.in
 html.mobile .ov:not(.intro){padding-top:16px}
 html.mobile .ov.intro .card{margin:0 auto}
 html.mobile .card .btn{height:48px;min-width:152px}
+.mbr{display:none}html.mobile .mbr{display:inline}
+html.mobile .ov.intro{padding-top:104px}
+html.mobile .ov.intro .card{padding:68px 10.5% 30px}
+html.mobile .ov.intro .card p{line-height:1.75;margin-bottom:22px}
+html.mobile .card.done{padding:70px 24px 30px}
+html.mobile .card.done p{text-align:center;line-height:1.7;margin-bottom:26px}
 html.mobile .box{max-height:calc(var(--vp,700px)*.86)}
 /* years as a text row below the map, as in Hype */
 html.mobile .tabs{display:block;padding:10px var(--pad) 0;margin:0}
@@ -2361,8 +2367,8 @@ html.tablet .btn-start{width:min(100%,360px);align-self:center}
 </div>
 <div id="doneOv" class="ov intro" role="dialog" aria-modal="true" aria-label="Completed">
  <div class="card done">
-  <svg class="illo" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><circle cx="80" cy="80" r="80" fill="#EBE9E0"/><path d="M62 60l28-24 8 0-30 52z" fill="#D6DBF5"/><rect x="30" y="38" width="100" height="68" fill="#fff" stroke="#141F52" stroke-width="3"/><rect x="38" y="46" width="30" height="52" fill="#141F52"/><circle cx="46" cy="64" r="3" fill="#E3120B"/><rect x="44" y="72" width="16" height="2" fill="#fff"/><rect x="44" y="78" width="16" height="2" fill="#fff"/><path d="M96 98V68l8-6 5-16c1-4 7-3 7 2l-3 12h14c4 0 7 4 5 8l-7 22c-1 4-4 8-8 8z" fill="#fff" stroke="#141F52" stroke-width="2.6" stroke-linejoin="round"/><rect x="80" y="66" width="12" height="32" fill="#141F52"/><rect x="72" y="106" width="16" height="10" fill="#141F52"/><rect x="58" y="116" width="44" height="6" fill="#141F52"/></svg><button class="icon-btn done-home" id="doneHome" aria-label="Home: return to the map"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><path class="ring" d="M16.5,32.5a16,16,0,1,0-16-16,16,16,0,0,0,16,16"/><polygon class="glyph" points="14.92 22.43 14.92 17.68 18.08 17.68 18.08 22.43 22.04 22.43 22.04 16.1 24.41 16.1 16.5 8.98 8.59 16.1 10.96 16.1 10.96 22.43 14.92 22.43"/></svg></button>
-  <p>You have completed this interactive infographic. What would you like to do next?</p>
+  <svg class="illo" viewBox="0 0 144 144" aria-hidden="true" focusable="false"><style> .dn-st0{fill:#EBE9E0;} .dn-st1{fill:none;stroke:#141F52;stroke-width:1.08;stroke-miterlimit:10;} .dn-st2{fill:#D6DBF5;stroke:#141F52;stroke-width:1.08;stroke-miterlimit:10;} .dn-st3{fill:#FFFFFF;stroke:#141F52;stroke-width:1.08;stroke-miterlimit:10;} .dn-st4{fill:#141F52;stroke:#141F52;stroke-width:1.08;stroke-miterlimit:10;} .dn-st5{fill:#FFFFFF;} .dn-st6{fill:#D6DBF5;} .dn-st7{fill:#E3120B;} </style><g> <g> <circle class="dn-st0" cx="72" cy="72" r="72"/> </g> <g> <g> <line class="dn-st1" x1="54.4" y1="112.4" x2="89.9" y2="112.4"/> <polygon class="dn-st2" points="79.8,92.3 72,92.3 64.2,92.3 60.4,112.4 72,112.4 83.6,112.4 			"/> <g> <g id="Book_cover_1_"> <rect x="30.9" y="85.3" class="dn-st3" width="82.2" height="14"/> <rect x="30.9" y="36.6" class="dn-st4" width="41.1" height="54.9"/> <rect x="72" y="36.6" transform="matrix(-1 -5.743995e-11 5.743995e-11 -1 185.089 128.0884)" class="dn-st4" width="41.1" height="54.9"/> <rect x="35.2" y="41.1" class="dn-st5" width="73.6" height="46.4"/> <polygon class="dn-st6" points="57.4,87.4 90.7,41.1 105.5,41.1 84.5,87.4 					"/> </g> </g> </g> <g id="Tumbs_up_icon_2_"> <g> <path class="dn-st3" d="M97.7,51.9L97.7,51.9c0-2-1.6-3.6-3.6-3.6h-15v-0.1c3.3-9.9,0.5-13.1,0-13.8c-0.9-1.1-3.9-1.9-4.6,1.3 c-0.7,3.2-2.5,6.7-5.5,10.6c-1.7,2.2-2.6,3-4,4.4c-1.2,1.1-2.7,2.1-4.3,2.1H57v20.9h2.9c1.7,0,3.8,0.2,5.8,1.7 c1.4,1.1,2.8,1.9,5.9,1.9h9.7h0h10.2c2,0,3.6-1.6,3.6-3.6l0,0c0-2-1.6-3.6-3.6-3.6h1.2c1.9,0,3.6-1.5,3.7-3.4 c0.1-2.1-1.5-3.9-3.6-3.9h1.2c2,0,3.6-1.6,3.6-3.6l0,0c0-2-1.6-3.6-3.6-3.6C96.1,55.5,97.7,53.9,97.7,51.9z"/> <g> <path class="dn-st6" d="M94.1,53.5H80.6c-1.7,0-3.2-1.2-3.5-2.8c-0.1,0.3-0.1,0.5-0.1,0.8l0,0c0,2,1.6,3.6,3.6,3.6h13.5 c2,0,3.6-1.6,3.6-3.6l0,0c0-0.3,0-0.6-0.1-0.8C97.2,52.3,95.8,53.5,94.1,53.5z"/> <path class="dn-st6" d="M94.1,60.8H78.8c-1.7,0-3.2-1.2-3.5-2.8c-0.1,0.3-0.1,0.5-0.1,0.8l0,0c0,2,1.6,3.6,3.6,3.6h15.3 c2,0,3.6-1.6,3.6-3.6l0,0c0-0.3,0-0.6-0.1-0.8C97.2,59.6,95.8,60.8,94.1,60.8z"/> <path class="dn-st6" d="M92.8,68H79.3c-1.7,0-3.2-1.2-3.5-2.8c-0.1,0.3-0.1,0.5-0.1,0.8c0,2,1.6,3.6,3.6,3.6h13.5 c2,0,3.6-1.6,3.6-3.6c0-0.3,0-0.6-0.1-0.8C96,66.8,94.6,68,92.8,68z"/> <path class="dn-st6" d="M91.6,75.3H81.5c-1.7,0-3.2-1.2-3.5-2.8c-0.1,0.3-0.1,0.5-0.1,0.8l0,0c0,2,1.6,3.6,3.6,3.6h10.1 c2,0,3.6-1.6,3.6-3.6l0,0c0-0.3,0-0.6-0.1-0.8C94.7,74.1,93.3,75.3,91.6,75.3z"/> <path class="dn-st1" d="M80.6,55.5h13.5c2,0,3.6-1.6,3.6-3.6v0c0-2-1.6-3.6-3.6-3.6H80.6c-2,0-3.6,1.6-3.6,3.6v0 C76.9,53.9,78.5,55.5,80.6,55.5z"/> <path class="dn-st1" d="M78.8,62.8h15.3c2,0,3.6-1.6,3.6-3.6v0c0-2-1.6-3.6-3.6-3.6H78.8c-2,0-3.6,1.6-3.6,3.6v0 C75.1,61.2,76.8,62.8,78.8,62.8z"/> <path class="dn-st1" d="M79.3,70.1h13.5c2,0,3.6-1.6,3.6-3.6v0c0-2-1.6-3.6-3.6-3.6H79.3c-2,0-3.6,1.6-3.6,3.6v0 C75.7,68.4,77.3,70.1,79.3,70.1z"/> <path class="dn-st1" d="M81.5,77.3h10.1c2,0,3.6-1.6,3.6-3.6v0c0-2-1.6-3.6-3.6-3.6H81.5c-2,0-3.6,1.6-3.6,3.6v0 C77.8,75.7,79.5,77.3,81.5,77.3z"/> </g> <rect x="46.3" y="52.8" class="dn-st4" width="12.2" height="24.4"/> <circle class="dn-st7" cx="52.4" cy="70" r="2.4"/> </g> </g> </g> </g> </svg><button class="icon-btn done-home" id="doneHome" aria-label="Home: return to the map"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><path class="ring" d="M16.5,32.5a16,16,0,1,0-16-16,16,16,0,0,0,16,16"/><polygon class="glyph" points="14.92 22.43 14.92 17.68 18.08 17.68 18.08 22.43 22.04 22.43 22.04 16.1 24.41 16.1 16.5 8.98 8.59 16.1 10.96 16.1 10.96 22.43 14.92 22.43"/></svg></button>
+  <p>You have completed<br class="mbr"> this interactive infographic.<br class="mbr"> What would you like to do next?</p>
   <div class="row"><button class="btn" id="doneFin">Finish</button><button class="btn ghost" id="doneBib">View bibliography</button></div>
  </div>
 </div>
@@ -2436,7 +2442,7 @@ var CONT={
  'Oceania':{c:[803,329],b:[649,364,80,48],p:11,col:'#1E1E1E',r:[1.8,2,2.4,2.6]}
 };
 var MAP_S=1;
-function applyLS(){var L0=Math.min(1.25,Math.max(1,.9/MAP_S)),pad=0;
+function applyLS(){var L0=Math.min(1.4,Math.max(1,1.04/MAP_S)),pad=0;
  if(document.documentElement.classList.contains('zoomed'))pad=14;else{try{pad=parseFloat(getComputedStyle(document.querySelector('#main .stage')).paddingLeft)||0}catch(e){}}
  var u=Math.max(0,pad-6)/MAP_S,lo=-12-u,hi=964+u;   /* map units that are still inside the frame */
  document.querySelectorAll('#bub .lbl').forEach(function(g){var a=g.getAttribute('data-a').split(','),x=+a[0],y=+a[1],r=g.firstChild,rx=+r.getAttribute('x'),rw=+r.getAttribute('width'),L=L0;
@@ -2474,7 +2480,7 @@ function drawCont(yr){
  if(entry){buildCont(g);applyLS();contLive=true;requestAnimationFrame(function(){g.classList.add('go')})}
  cancelAnimationFrame(contRAF);
  var jobs=Object.keys(CONT).map(function(n,i){var e=contEls[n],v=ctVal(yr,n);
-  return {e:e,r0:e.r,r1:CONT[n].r[yi],v0:entry?v:e.v,v1:v,d:entry?120+i*70:0,fade:entry}});
+  return {e:e,r0:e.r,r1:CONT[n].r[yi],v0:entry?v:e.v,v1:v,d:entry?120:0,fade:entry}});
  var dur=entry?800:650,ez=entry?easeOut3:easeIO3;
  function paint(j,p){var k=ez(p);j.e.r=j.r0+(j.r1-j.r0)*k;j.e.v=j.v0+(j.v1-j.v0)*k;
   j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);setNum(j.e.vt,fmt(j.v1))}
@@ -2571,7 +2577,7 @@ function drawSet(yr){
   var r1=has?(ov!=null?ov:RAD[k](v)):0,i=has?idx++:0;
   function ch(key,to,delay,dur,ez){chans.push({e:e,key:key,from:e[key],to:to,delay:delay,dur:dur,ez:ez})}
   if(isNew){e.val=v;                      /* a new entry: bubble grows, line draws out, callout fades in */
-   if(entry){ch('rad',r1,120+i*70,800,easeOut3);ch('lp',1,400+i*70,550,easeIO3);ch('co',1,700+i*70,450,easeOut3)}
+   if(entry){ch('rad',r1,120,800,easeOut3);ch('lp',1,400,550,easeIO3);ch('co',1,700,450,easeOut3)}
    else{ch('rad',r1,0,500,easeOut3);ch('lp',1,250,450,easeIO3);ch('co',1,550,350,easeOut3)}
   }else if(has){                          /* still in the top list: bubble and number move to the new value */
    ch('rad',r1,0,650,easeIO3);e.val=v;if(e.lp<1)ch('lp',1,0,350,easeIO3);if(e.co<1)ch('co',1,80,300,easeOut3);   /* finish any entry that a quick year change interrupted */
