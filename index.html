@@ -60,9 +60,9 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 /* ── main map screen: same height as cover (see fitScreens) ── */
 .stage{flex:1 0 auto;width:100%;max-width:var(--maxw);margin:0 auto;padding:4px var(--pad) 36px;display:flex;flex-direction:column}
 .head{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:58px;margin-bottom:4px}
-.ttl{font-size:max(16px,calc(18px*var(--s,1)));font-weight:700;line-height:1.3}
+.ttl{font-size:max(18px,calc(18px*var(--s,1)));font-weight:700;line-height:1.3}
 .sub{display:block;min-height:0}.sub:empty{display:none}
-.yrbig{position:relative;width:calc(110px*var(--s,1));margin-top:calc(-10px*var(--s,1));font-size:max(28px,calc(36px*var(--s,1)));font-weight:800;color:var(--blue);line-height:1;letter-spacing:-.03em;text-align:center}
+.yrbig{position:relative;width:max(110px,calc(110px*var(--s,1)));margin-top:calc(-10px*var(--s,1));font-size:max(36px,calc(36px*var(--s,1)));font-weight:800;color:var(--blue);line-height:1;letter-spacing:-.03em;text-align:center}
 .yrbig .proj{position:absolute;left:0;right:0;text-align:center;top:100%;margin-top:4px;font-size:max(12px,calc(13px*var(--s,1)));font-weight:700;letter-spacing:0;color:var(--ink);white-space:nowrap}
 .map-wrap{width:min(100%,var(--mapw,976px));margin:0 auto;aspect-ratio:976/472}
 .bring{fill:none;stroke:#141F52;stroke-width:.9}
@@ -76,13 +76,13 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .list .n{flex:1}.list .v{font-weight:800}
 .tabs{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0 var(--pad) 10px;width:100%;max-width:var(--maxw);margin:0 auto}
 .tabcol{position:relative}
-.tab{width:100%;height:max(48px,calc(56px*var(--s,1)));background:var(--navy);font-size:max(14px,calc(16px*var(--s,1)));font-weight:500;color:#fff;transition:background .18s,box-shadow .18s}@media(hover:hover){.tab:hover{background:var(--blue)}}
+.tab{width:100%;height:max(50px,calc(56px*var(--s,1)));background:var(--navy);font-size:max(17px,calc(17px*var(--s,1)));font-weight:500;color:#fff;transition:background .18s,box-shadow .18s}@media(hover:hover){.tab:hover{background:var(--blue)}}
 .tab[aria-pressed=true]{background:var(--navy-deep);box-shadow:inset 0 -5px 0 var(--teal)}
 /* year tabs sit directly above the selected tab */
 .yrs{position:absolute;bottom:100%;left:clamp(16px,9%,48px);display:flex;gap:4px;align-items:flex-end}
 .yr{min-width:68px;height:28px;padding:0 10px;background:var(--navy);color:#fff;font-weight:700;font-size:max(13px,calc(14px*var(--s,1)));transition:background .15s}@media(hover:hover){.yr:hover{background:var(--blue)}}
 .tabcol:last-child .yrs{left:auto;right:0}
-.yr[aria-pressed=true]{height:34px;min-width:80px;background:#1DC9A4;color:var(--ink);font-size:max(16px,calc(19px*var(--s,1)))}
+.yr[aria-pressed=true]{height:34px;min-width:80px;background:#1DC9A4;color:var(--ink);font-size:max(18px,calc(19px*var(--s,1)))}
 /* ── modals ── */
 .ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);box-sizing:border-box;border-radius:8px}
 .ov.open{display:flex}
@@ -95,7 +95,7 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .card{position:relative;background:#fff;max-width:680px;width:100%;margin:auto;padding:70px clamp(20px,5vw,48px) 32px;text-align:center;border-radius:0;box-sizing:border-box;box-shadow:0 16px 48px rgba(0,0,0,.3),0 2px 10px rgba(0,0,0,.12)}
 .card p{font-size:clamp(14px,1.4vw,16px);line-height:1.6;margin:0 auto 24px;max-width:580px}
 .card .illo{position:absolute;top:-55px;left:50%;transform:translateX(-50%);width:110px;height:110px}
-.card.done{padding-top:70px}
+.card.done{padding-top:78px}.card.done .done-home{position:absolute;top:12px;right:12px;width:32px;height:32px}html.mobile .card.done .row{flex-direction:column;align-items:center}html.mobile .card.done .btn{width:100%;max-width:240px}
 .card .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 html.tablet .cover-stage,html.mobile .cover-stage{flex-direction:column;align-items:flex-start;padding:32px 20px 36px;gap:36px}
 html.tablet .cover-text,html.mobile .cover-text{flex:none;max-width:100%;width:100%}
@@ -136,7 +136,7 @@ html:not(.mobile) .head{position:absolute;left:var(--pad);right:var(--pad);top:c
 .tab.visited,.tab[aria-pressed=true]{background:var(--navy);color:#fff;box-shadow:none}@media(hover:hover){.tab.visited:hover,.tab[aria-pressed=true]:hover{background:var(--blue)}}
 .yrs{left:50%;right:auto;transform:translateX(-50%);bottom:100%;gap:4px}
 .tabcol:last-child .yrs{left:50%;right:auto}
-.yr{min-width:65px;width:65px;height:22px;padding:0;background:#141F52;color:#fff;font-size:max(13px,calc(14px*var(--s,1)));font-weight:700}@media(hover:hover){.yr:hover{background:var(--blue)}}.yr[aria-pressed=true]{height:26px;min-width:65px;width:65px;background:#1DC9A4;color:var(--ink);font-size:max(16px,calc(19px*var(--s,1)));font-weight:700}@media(hover:hover){.yr[aria-pressed=true]:hover{height:26px;min-width:65px;width:65px;background:#1DC9A4;color:var(--ink);font-size:max(16px,calc(19px*var(--s,1)));font-weight:700}}
+.yr{min-width:65px;width:65px;height:22px;padding:0;background:#141F52;color:#fff;font-size:max(14px,calc(14px*var(--s,1)));font-weight:700}@media(hover:hover){.yr:hover{background:var(--blue)}}.yr[aria-pressed=true]{height:26px;min-width:65px;width:65px;background:#1DC9A4;color:var(--ink);font-size:max(18px,calc(19px*var(--s,1)));font-weight:700}@media(hover:hover){.yr[aria-pressed=true]:hover{height:26px;min-width:65px;width:65px;background:#1DC9A4;color:var(--ink);font-size:max(18px,calc(19px*var(--s,1)));font-weight:700}}
 .hint{position:absolute;left:50%;bottom:calc(100% + 18px);width:44px;height:44px;transform:translateX(-50%);pointer-events:none;opacity:0}
 .hint.go{animation:hint-in .45s ease-out both,hint-bob 1.1s ease-in-out .45s 4}
 @keyframes hint-in{from{opacity:0;transform:translateX(-50%) translateY(-12px)}to{opacity:1;transform:translateX(-50%)}}
@@ -171,12 +171,12 @@ html.mobile .stage{padding:0 var(--pad) 8px}
 html.mobile .head{display:block;position:static;margin:0;min-height:0}
 html.mobile .ttl{font-size:clamp(22px,6.4vw,28px);font-weight:800;padding:16px 0 12px;border-bottom:1px solid var(--rule)}
 html.mobile .yrbig{text-align:left;font-size:44px;margin-top:14px;width:auto}
-html.mobile .yrbig .proj{position:static;display:block;margin:6px 0 0;text-align:left}
+html.mobile .yrbig .proj{display:none}
 /* map: whole world fitted to the screen (data is in the table below); optional enlarged, swipe-able view with labels */
-html.mobile .mapscroll{display:block;overflow-x:auto;overflow-y:hidden;margin-top:4px;padding:6px 0 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-html.mobile .mapscroll::-webkit-scrollbar{display:none}
+html.mobile .mapscroll{display:block;overflow-x:auto;overflow-y:hidden;margin-top:4px;padding:6px 0 12px;scrollbar-width:thin;scrollbar-color:#8a8a8a #ececec;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+html.mobile .mapscroll::-webkit-scrollbar{height:10px;width:0}html.mobile .mapscroll::-webkit-scrollbar-track{background:#ececec;border-radius:5px}html.mobile .mapscroll::-webkit-scrollbar-thumb{background:#8a8a8a;border-radius:5px}
 html.mobile .mapscroll:focus-visible{outline-offset:-3px}
-html.mobile .mzoom{display:block;margin:12px 0 0}
+html.mobile .mzoom{display:block;margin:12px 0 0}html.mobile .mzc{display:none}
 .mzc{display:flex;gap:12px;margin:12px 0 2px}
 .icon-btn[aria-disabled=true]{opacity:.4;cursor:default}
 html.mobile .mzh{margin:0;font-size:16px;line-height:1.4;font-style:italic;text-align:left}
@@ -198,16 +198,18 @@ html.mobile .mtbl.full td{white-space:nowrap;text-align:right}
 html.mobile .mtbl caption{font-size:14px}
 html.mobile .list{display:block;position:absolute;width:1px;height:1px;margin:0;overflow:hidden;clip:rect(0,0,0,0)}
 html.mobile{scrollbar-width:none}html.mobile::-webkit-scrollbar{display:none}
-html.mobile .ov{align-items:flex-start;padding:76px 14px 20px}
+html.mobile .ov{align-items:flex-start;padding:76px 14px 20px}html.mobile .ov.intro{padding-top:60px}
 html.mobile .ov:not(.intro){padding-top:16px}
+html.mobile .ov.intro .card{margin:0 auto}
+html.mobile .card .btn{height:48px;min-width:152px}
 html.mobile .box{max-height:calc(var(--vp,700px)*.86)}
 /* years as a text row below the map, as in Hype */
 html.mobile .tabs{display:block;padding:10px var(--pad) 0;margin:0}
-html.mobile .myhint{display:block;text-align:left;font-style:italic;font-size:16px;line-height:1.4;margin-bottom:10px}
+html.mobile .myhint{display:block;text-align:center;font-style:italic;font-size:16px;line-height:1.4;margin-bottom:10px}
 html.mobile .tab{display:none}html.mobile .tabcol{position:static;display:none}html.mobile .tabcol:has(.yrs){display:block}
 html.mobile .hint{display:none}
-html.mobile .yrs,html.mobile .tabcol:last-child .yrs{position:static;transform:none;width:auto;margin:0 0 0 -12px;display:flex;justify-content:flex-start;gap:2px}
-html.mobile .yr{flex:0 0 auto;width:auto;min-width:64px;height:44px;padding:0 12px;background:transparent;color:var(--blue);font-size:18px}html.mobile .yr[aria-pressed=true]{flex:0 0 auto;width:auto;min-width:64px;height:44px;background:#1DC9A4;color:var(--ink);font-size:18px;font-weight:800;box-shadow:inset 0 -4px 0 var(--navy)}@media(hover:hover){html.mobile .yr[aria-pressed=true]:hover{flex:0 0 auto;width:auto;min-width:64px;height:44px;background:#1DC9A4;color:var(--ink);font-size:18px;font-weight:800;box-shadow:inset 0 -4px 0 var(--navy)}}
+html.mobile .yrs,html.mobile .tabcol:last-child .yrs{position:static;transform:none;width:auto;margin:0;display:flex;justify-content:center;flex-wrap:wrap;gap:2px}
+html.mobile .yr{flex:0 0 auto;width:auto;min-width:64px;height:44px;padding:0 12px;background:transparent;color:var(--blue);font-size:18px}html.mobile .yr[aria-pressed=true],html.mobile .yr[aria-pressed=true]:hover{flex:0 0 auto;width:auto;min-width:64px;height:44px;background:transparent;color:#141F52;font-size:18px;font-weight:800;box-shadow:inset 0 0 0 2px #1DC9A4}
 /* data table + navigation */
 html.mobile .mctl{display:block;padding:12px var(--pad) 28px}
 .mtw{overflow-x:auto}
@@ -221,8 +223,9 @@ html.mobile .mctl{display:block;padding:12px var(--pad) 28px}
 .mtbl i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:10px;vertical-align:-1px}
 .mtbl.full th,.mtbl.full td{padding:9px 8px;font-size:15px}.mtbl.full td{font-weight:700}
 .mwide{width:100%;margin:18px 0 8px}
-.mnav{display:flex;justify-content:center;gap:28px;margin-top:18px}
-.mnavb{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:150px;font-weight:700;font-size:15px;line-height:1.25;text-align:center;padding:4px}
+#tblT{font-size:20px;line-height:1.3;font-weight:700;margin:0 0 12px;padding-bottom:12px;border-bottom:1px solid var(--rule)}#tblT:focus{outline:none}.thint{font-style:italic;font-size:15px;margin:0 0 10px}.tnote{font-size:14px;margin:10px 0 0}.tclose{display:flex;justify-content:center;margin-top:22px}
+.mnav{display:flex;justify-content:center;flex-wrap:wrap;gap:18px 28px;margin-top:18px}
+.mnavb{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:170px;white-space:nowrap;font-weight:700;font-size:15px;line-height:1.25;text-align:center;padding:4px}
 .mnavb svg{width:56px;height:56px;display:block}.mnavb:focus-visible circle{fill:#ebedfa;stroke:#1f2e7a}@media(hover:hover){.mnavb:hover circle{fill:#ebedfa;stroke:#1f2e7a}}
 
 /* touch feedback: pressed colours (hover colours are only for devices that can hover) */
@@ -2264,9 +2267,10 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
 html.mobile .cover-stage,html.tablet .cover-stage{--cw:calc(100vw - 56px);font-size:16px;flex-direction:column;align-items:stretch;gap:0;padding:28px 20px 36px;justify-content:flex-start}
 html.tablet .cover-stage{--cw:calc(100vw - 48px);padding-left:16px;padding-right:16px}
 html.mobile .cover-text,html.tablet .cover-text{display:contents}
-html.mobile .cover-title,html.tablet .cover-title{order:1;font-size:clamp(30px,calc(var(--cw) * .1397),48px);line-height:1.12;margin:0 0 clamp(28px,calc(var(--cw) * .19),64px)}
-html.mobile .cover-art,html.tablet .cover-art{order:2;flex:none;width:min(calc((100% + 32px) / .836),780px);margin:0 0 clamp(32px,calc(var(--cw) * .225),72px);position:relative;left:50%;transform:translateX(-50%)}
-html.mobile .btn-start,html.tablet .btn-start{order:3;width:100%;height:clamp(50px,calc(var(--cw) * .1875),60px)}
+html.mobile .cover-title,html.tablet .cover-title{order:1;font-size:clamp(26px,10.25vw,40px);line-height:1.12;margin:0 0 clamp(20px,8.6vw,32px)}
+html.tablet .cover-title{font-size:clamp(34px,6.4vw,46px)}
+html.mobile .cover-art,html.tablet .cover-art{order:2;flex:none;width:min(calc(100% / .912),780px);margin:0 0 clamp(32px,calc(var(--cw) * .225),72px);position:relative;left:50%;transform:translateX(-50%)}
+html.mobile .btn-start,html.tablet .btn-start{order:3;width:100%;height:47px}
 html.tablet .btn-start{width:min(100%,360px);align-self:center}
 </style>
 <defs>
@@ -2357,8 +2361,9 @@ html.tablet .btn-start{width:min(100%,360px);align-self:center}
 </div>
 <div id="doneOv" class="ov intro" role="dialog" aria-modal="true" aria-label="Completed">
  <div class="card done">
+  <svg class="illo" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><circle cx="80" cy="80" r="80" fill="#EBE9E0"/><path d="M62 60l28-24 8 0-30 52z" fill="#D6DBF5"/><rect x="30" y="38" width="100" height="68" fill="#fff" stroke="#141F52" stroke-width="3"/><rect x="38" y="46" width="30" height="52" fill="#141F52"/><circle cx="46" cy="64" r="3" fill="#E3120B"/><rect x="44" y="72" width="16" height="2" fill="#fff"/><rect x="44" y="78" width="16" height="2" fill="#fff"/><path d="M96 98V68l8-6 5-16c1-4 7-3 7 2l-3 12h14c4 0 7 4 5 8l-7 22c-1 4-4 8-8 8z" fill="#fff" stroke="#141F52" stroke-width="2.6" stroke-linejoin="round"/><rect x="80" y="66" width="12" height="32" fill="#141F52"/><rect x="72" y="106" width="16" height="10" fill="#141F52"/><rect x="58" y="116" width="44" height="6" fill="#141F52"/></svg><button class="icon-btn done-home" id="doneHome" aria-label="Home: return to the map"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><path class="ring" d="M16.5,32.5a16,16,0,1,0-16-16,16,16,0,0,0,16,16"/><polygon class="glyph" points="14.92 22.43 14.92 17.68 18.08 17.68 18.08 22.43 22.04 22.43 22.04 16.1 24.41 16.1 16.5 8.98 8.59 16.1 10.96 16.1 10.96 22.43 14.92 22.43"/></svg></button>
   <p>You have completed this interactive infographic. What would you like to do next?</p>
-  <div class="row"><button class="btn ghost" id="doneBib">View bibliography</button><button class="btn" id="doneFin">Finish</button></div>
+  <div class="row"><button class="btn" id="doneFin">Finish</button><button class="btn ghost" id="doneBib">View bibliography</button></div>
  </div>
 </div>
 <div id="bibOv" class="ov" role="dialog" aria-modal="true" aria-labelledby="bibT"><div class="box">
@@ -2366,8 +2371,7 @@ html.tablet .btn-start{width:min(100%,360px);align-self:center}
  <div class="box-body" id="bibBody" tabindex="0"></div></div></div>
 
 <div id="tblOv" class="ov" role="dialog" aria-modal="true" aria-labelledby="tblT"><div class="box">
- <div class="box-head"><h2 id="tblT">All data</h2><button class="icon-btn" data-close aria-label="Close table"><svg viewBox="0 0 32.83 32.83" aria-hidden="true" focusable="false"><path class="ring" d="M16.41,32.33A15.92,15.92,0,1,0,.5,16.41,15.92,15.92,0,0,0,16.41,32.33"/><path class="xglyph" d="M22.02,10.8L10.81,22.02M10.81,10.8L22.02,22.02"/></svg></button></div>
- <div class="box-body" id="tblBody" tabindex="0"></div></div></div>
+ <div class="box-body" id="tblBody"><h2 id="tblT" tabindex="-1"></h2><p class="thint" id="tblHint" hidden>Scroll to the left to see the entire table</p><div class="mtw" id="tblWrap"></div><p class="tnote" id="tblNote" hidden>*UN projection</p><div class="tclose"><button type="button" class="btn" data-close>Close</button></div></div></div></div>
 
 <script>
 'use strict';
@@ -2381,7 +2385,7 @@ function announce(t){var r=$('srStatus');r.textContent='';setTimeout(function(){
 function el(t,a,txt){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e}
 function show(id){['cover','main'].forEach(function(s){$(s).classList.toggle('is-active',s===id)});window.scrollTo(0,0);if(window.ceSettle)window.ceSettle();signalTop()}
 function overlays(){return ['cover','main'].map($)}
-function openOv(id){opener=document.activeElement;$(id).classList.add('open');overlays().forEach(function(s){s.setAttribute('inert','')});var f=$(id).querySelector('button');if(f)f.focus({preventScroll:true});if(mobileOn())signalTop()}
+function openOv(id){if(id==='doneOv')$('doneFin').textContent=mobileOn()?'Exit':'Finish';opener=document.activeElement;$(id).classList.add('open');overlays().forEach(function(s){s.setAttribute('inert','')});var f=$(id).querySelector('button');if(f)f.focus({preventScroll:true});if(mobileOn())signalTop()}
 function startHint(){var h=document.querySelector('.hint');if(h)h.classList.add('go')}
 function closeOv(id){$(id).classList.remove('open');if(id==='introOv')startHint();if(!document.querySelector('.ov.open'))overlays().forEach(function(s){s.removeAttribute('inert')});if(opener&&opener.focus&&document.contains(opener))opener.focus()}
 /* tabs */
@@ -2416,7 +2420,7 @@ function pickYear(yr){
  var rows=d.rows[yr];
  rows.forEach(function(r){var li=document.createElement('li'),i=document.createElement('i'),n=document.createElement('span'),v=document.createElement('span');
   i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);li.append(i,n,v);ul.appendChild(li)});
- announce(d.label+', '+yr+': '+rows.map(function(r){return r[0]+' '+fmt(r[1])+' million'}).join(', '));
+ announce(d.label+', '+yr+(d.proj.indexOf(yr)>-1?' (UN projection)':'')+': '+rows.map(function(r){return r[0]+' '+fmt(r[1])+' million'}).join(', '));
  renderMobile();
  checkDone();
 }
@@ -2595,7 +2599,7 @@ function renderMobile(){
  var k=cur.tab;
  ensureZoom();
  var i=KEYS.indexOf(k),nav=$('mnav');nav.innerHTML='';
- function nb(label,pre,dir,fn){var b=document.createElement('button');b.type='button';b.className='mnavb';b.innerHTML=chev(dir)+'<span><span class="sr-only">'+pre+': </span>'+label+'</span>';b.onclick=fn;nav.appendChild(b)}
+ function nb(label,pre,dir,fn){var b=document.createElement('button');b.type='button';b.className='mnavb';b.innerHTML=chev(dir)+'<span><span class="sr-only">'+pre+': </span>'+label.replace(/^(Population|Five most|Ten most) /,'$1<br>')+'</span>';b.onclick=fn;nav.appendChild(b)}
  if(i>0)nb(DATA[KEYS[i-1]].label,'Previous topic',-1,function(){pickTab(KEYS[i-1]);signalTop()});
  if(i<KEYS.length-1)nb(DATA[KEYS[i+1]].label,'Next topic',1,function(){pickTab(KEYS[i+1]);signalTop()});
  else nb('Finish','Finish',1,function(){openOv('doneOv')});
@@ -2606,14 +2610,17 @@ $('tblBtn').onclick=function(){
  names.sort(function(a,b){return peak[b]-peak[a]});
  var h='<table class="mtbl full"><caption>'+d.unit+'</caption><thead><tr><th scope="col">'+HD[k]+'</th>'+d.years.map(function(y){return '<th scope="col">'+y+(d.proj.indexOf(y)>-1?'*':'')+'</th>'}).join('')+'</tr></thead><tbody>';
  names.forEach(function(n){h+='<tr><th scope="row">'+n+'</th>'+d.years.map(function(y){var v=null;d.rows[y].forEach(function(r){if(r[0]===n)v=r[1]});return '<td>'+(v==null?'–':fmt(v))+'</td>'}).join('')+'</tr>'});
- $('tblT').textContent='All data: '+d.label;$('tblBody').innerHTML=h+'</tbody></table>'+(d.proj.indexOf(d.years[d.years.length-1])>-1?'<p style="margin-top:10px;font-size:14px">*UN projection</p>':'');
+ $('tblT').textContent=d.unit;$('tblWrap').innerHTML=h+'</tbody></table>';$('tblNote').hidden=!(d.proj.indexOf(d.years[d.years.length-1])>-1);
  openOv('tblOv');
+ var w=$('tblWrap'),ov=w.scrollWidth>w.clientWidth+1;$('tblHint').hidden=!ov;
+ if(ov){w.setAttribute('tabindex','0');w.setAttribute('role','region');w.setAttribute('aria-label',d.unit+' table. Scroll sideways to see every column.')}else{w.removeAttribute('tabindex');w.removeAttribute('role');w.removeAttribute('aria-label')}
+ $('tblT').focus({preventScroll:true});
 };
 /* mobile map: Zoom out / Zoom in buttons change the map between whole-world (no labels) and its largest size (labelled).
    The map only ever moves sideways (swipe, arrow keys, or the buttons), so the page can still be scrolled up and down with a finger on the map. */
 var ZL=3,zInit=false;                                  /* 0 = whole map ... 3 = largest, labelled */
 function zWidths(){var f=Math.min(976,(document.documentElement.clientWidth||innerWidth)-32);return [0,1,2,3].map(function(i){return Math.round(f+(880-f)*i/3)})}
-function zHint(W){return W<640?'Use + to zoom in and see the labels.':matchMedia('(pointer:coarse)').matches?'Swipe the map sideways to move around it. Use + and \u2212 to zoom.':'Scroll sideways or use the arrow keys to move around the map. Use + and \u2212 to zoom.'}
+function zHint(W){return 'Scroll to the left to see the entire map'}
 function setZoomLevel(n,o){
  o=o||{};var r=document.documentElement,sc=$('mapScroll'),ws=zWidths();n=Math.max(0,Math.min(3,n));
  var frac=(zInit&&sc.scrollWidth)?(sc.scrollLeft+sc.clientWidth/2)/sc.scrollWidth:0;
@@ -2631,7 +2638,6 @@ function ensureZoom(){if(!mobileOn())return;if(!zInit)setZoomLevel(3,{start:true
 function leaveZoom(){var r=document.documentElement;if(!zInit)return;zInit=false;r.classList.remove('zoomed');r.style.removeProperty('--zw');var sc=$('mapScroll');sc.removeAttribute('tabindex');sc.removeAttribute('role');sc.removeAttribute('aria-label');sc.scrollLeft=0}
 $('zIn').onclick=function(){if(this.getAttribute('aria-disabled')!=='true')setZoomLevel(ZL+1)};
 $('zOut').onclick=function(){if(this.getAttribute('aria-disabled')!=='true')setZoomLevel(ZL-1)};
-$('mapScroll').addEventListener('keydown',function(e){if(e.ctrlKey||e.altKey||e.metaKey)return;if(e.key==='+'||e.key==='='){e.preventDefault();setZoomLevel(ZL+1)}else if(e.key==='-'||e.key==='_'||e.key==='\u2212'){e.preventDefault();setZoomLevel(ZL-1)}});
 function checkDone(){
  if(doneShown)return;
  var all=KEYS.every(function(k){return DATA[k].years.every(function(y){return seen[k+':'+y]})});
@@ -2643,6 +2649,7 @@ $('startBtn').onclick=function(){show('main');openOv('introOv');signalTop()};
 $('contBtn').onclick=function(){closeOv('introOv');if(mobileOn()){pickTab('cont');signalTop()}else{var t=$('tab-cont');if(t)t.focus()}};
 $('bibBtn').onclick=function(){openOv('bibOv')};
 $('doneBib').onclick=function(){closeOv('doneOv');openOv('bibOv')};
+$('doneHome').onclick=function(){closeOv('doneOv');goMain()};
 $('doneFin').onclick=function(){closeOv('doneOv');goHome()};
 $('exitBtn').onclick=goHome;
 $('homeBtn').onclick=function(){goMain()};
