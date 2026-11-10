@@ -104,7 +104,7 @@ html.tablet .cover-title{font-size:46px;line-height:1.1}
 html.mobile .cover-title{font-size:clamp(34px,11.5vw,46px);line-height:1.1}
 html.tablet .btn-start,html.mobile .btn-start{width:100%;height:50px}
 /* list mode: map too small for readable callouts, so the values are shown as a text list instead (set by fitScreens) */
-.lm .cb,.lm .ld,.lm .cbx,.lm .cl,.lm .sl,.lm .sx{display:none}.lm .list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}.lm .stage{padding-bottom:44px}
+.lm .cb,.lm .ld,.lm .cbx,.lm .cl,.lm .sl,.lm .sx{display:none}.lm .list li{order:var(--rk)}.lm .list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}.lm .stage{padding-bottom:44px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bubble{animation:none !important;opacity:.88 !important;transform:none !important}#cover.go .cover-title,#cover.go .btn-start{animation:none !important;opacity:1 !important;transform:none !important}}
 
 /* ── Population per continent: Hype-accurate bubbles, leader lines and callouts ── */
@@ -250,6 +250,7 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
 </style>
 </head>
 <body>
+<main id="app">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><g id="land">
 	<path  d="M252.2,208.1c-0.3,0-0.3-0.4-0.6-0.4C251.9,207.3,252,207.9,252.2,208.1"/>
 	<path  d="M616.6,402.8c-0.2,0-0.2-0.6,0.1-0.6C617.2,402.2,617,402.8,616.6,402.8 M616.3,402.9c0.5,0.1,0.7-0.4,1.2-0.4
@@ -2180,7 +2181,7 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
 <div id="cover" class="screen is-active">
  <div class="cover-stage">
   <div class="cover-text">
-   <h2 id="covTitle" class="cover-title">Global <br>demographic <br>changes</h2>
+   <h1 id="covTitle" class="cover-title">Global <br>demographic <br>changes</h1>
    <button class="btn-start" id="startBtn">Start</button>
   </div>
   <div class="cover-art" aria-hidden="true">
@@ -2243,7 +2244,7 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
   </div>
  </div></div>
  <div class="stage">
-  <h2 class="sr-only">Global demographic changes</h2>
+  <h1 class="sr-only">Global demographic changes</h1>
   <div class="head"><div><h2 class="ttl" id="ttl"></h2><div class="sub" id="sub"></div></div><div class="yrbig" id="yrBig" aria-hidden="true"></div></div>
   <div class="mzoom"><p class="mzh" id="mzh"></p><div class="mzc" role="group" aria-label="Zoom the map">
    <button type="button" class="icon-btn" id="zOut" aria-label="Zoom out"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><circle class="ring" cx="16.5" cy="16.5" r="16"/><path class="xglyph" d="M9.5 16.5H23.5"/></svg></button>
@@ -2386,6 +2387,7 @@ html.tablet .btn-start{width:min(100%,360px);align-self:center}
 <div id="tblOv" class="ov" role="dialog" aria-modal="true" aria-labelledby="tblT"><div class="box">
  <div class="box-body" id="tblBody"><h2 id="tblT" tabindex="-1"></h2><p class="thint" id="tblHint" hidden>Scroll to the left to see the entire table</p><div class="mtw" id="tblWrap"></div><p class="tnote" id="tblNote" hidden>*UN projection</p><div class="tclose"><button type="button" class="btn" data-close>Close</button></div></div></div></div>
 
+</main>
 <script>
 'use strict';
 var DATA={"cont": {"label": "Population per continent", "unit": "Population per continent (in millions)", "k": 0.72, "years": [1950, 1980, 2020, 2050], "proj": [2050], "rows": {"1950": [["Asia", 1405], ["Europe", 549], ["Africa", 228], ["North America", 173], ["South America", 169], ["Oceania", 13]], "1980": [["Asia", 2650], ["Europe", 694], ["Africa", 476], ["South America", 361], ["North America", 254], ["Oceania", 23]], "2020": [["Asia", 4641], ["Africa", 1341], ["Europe", 748], ["South America", 654], ["North America", 369], ["Oceania", 43]], "2050": [["Asia", 5290], ["Africa", 2489], ["South America", 762], ["Europe", 710], ["North America", 425], ["Oceania", 57]]}}, "ctry": {"label": "Five most populous countries", "unit": "Five most populous countries (in millions)", "k": 0.79, "years": [1950, 1980, 2020, 2050], "proj": [2050], "rows": {"1950": [["China", 554], ["India", 376], ["US", 159], ["Russia", 103], ["Japan", 83]], "1980": [["China", 1000], ["India", 699], ["US", 229], ["Indonesia", 147], ["Russia", 138]], "2020": [["China", 1439], ["India", 1380], ["US", 331], ["Indonesia", 274], ["Pakistan", 221]], "2050": [["India", 1639], ["China", 1402], ["Nigeria", 401], ["US", 379], ["Pakistan", 338]]}}, "city": {"label": "Ten most populous cities", "unit": "Ten most populous cities (in millions)", "k": 2.4, "years": [1950, 1980, 2020, 2035], "proj": [2035], "rows": {"1950": [["New York", 12], ["Tokyo", 11], ["London", 8], ["Osaka", 7], ["Paris", 6], ["Moscow", 5], ["Chicago", 5], ["Kolkata", 5], ["Buenos Aires", 5], ["Shanghai", 4]], "1980": [["Tokyo", 29], ["Osaka", 17], ["New York", 16], ["Mexico City", 13], ["São Paulo", 12], ["Los Angeles", 10], ["Buenos Aires", 10], ["Mumbai", 9], ["Kolkata", 9], ["Rio de Janeiro", 9]], "2020": [["Tokyo", 37], ["Delhi", 30], ["Shanghai", 27], ["Mexico City", 22], ["São Paulo", 22], ["Cairo", 21], ["Dhaka", 21], ["Beijing", 20], ["Mumbai", 20], ["Osaka", 19]], "2035": [["Delhi", 43], ["Tokyo", 36], ["Shanghai", 34], ["Dhaka", 31], ["Cairo", 29], ["Mumbai", 27], ["Kinshasa", 27], ["Beijing", 25], ["Mexico City", 25], ["São Paulo", 24]]}}}, LOC={"Asia": [676, 142, "AS"], "Africa": [510, 260, "AF"], "Europe": [473, 101, "EU"], "North America": [223, 135, "NA"], "South America": [297, 284, "SA"], "Oceania": [804, 324, "OC"], "China": [750, 152, "RD"], "India": [668, 206, "OR"], "US": [226, 132, "GD"], "Indonesia": [777, 238, "TL"], "Russia": [564, 76, "BL"], "Japan": [817, 152, "TL"], "Pakistan": [616, 168, "BL"], "Nigeria": [483, 220, "TL"], "New York": [255, 138, "GD"], "Chicago": [228, 127, "TL"], "Los Angeles": [150, 157, "RD"], "Mexico City": [184, 190, "OR"], "São Paulo": [297, 297, "TL"], "Rio de Janeiro": [319, 291, "BL"], "Buenos Aires": [280, 341, "RD"], "London": [435, 84, "BL"], "Paris": [447, 100, "OR"], "Moscow": [564, 80, "TL"], "Cairo": [524, 166, "RD"], "Kinshasa": [503, 257, "GD"], "Delhi": [659, 177, "BL"], "Mumbai": [645, 204, "TL"], "Kolkata": [682, 191, "OR"], "Dhaka": [697, 181, "GD"], "Beijing": [755, 138, "OR"], "Shanghai": [777, 168, "RD"], "Tokyo": [817, 150, "BL"], "Osaka": [809, 157, "GD"]}, COL={"NA": "#384BB4", "SA": "#F5802D", "EU": "#1DC9A4", "AF": "#F9C31F", "AS": "#E21B14", "OC": "#1E1E1E", "BL": "#2E45B8", "GD": "#F9C31F", "OR": "#E67E22", "TL": "#1DC9A4", "RD": "#E3120B"}, BIB=["United Nations, Department of Economic and Social Affairs, Population Division. 2019. <em>World population prospects 2019</em>. Available: https://population.un.org/wpp2019/Download/Standard/Population/ [2021, April 20].", "United Nations, Department of Economic and Social Affairs, Population Division. 2019. <em>World urbanization prospects: the 2018 revision</em>. Available: https://population.un.org/wup/Download/ [2021, April 20]."];
@@ -2434,9 +2436,11 @@ function pickYear(yr){
  setYear(yr,d.proj.indexOf(yr)>-1);
  ul.innerHTML='';
  if(k==='cont')drawCont(yr);else drawSet(yr);
- var rows=d.rows[yr];
+ var rows=d.rows[yr].slice(),G=k==='cont'?CONT:GEO[k],X=function(n){var o=G[n];return o?(o.c||o.d)[0]:0};
+ var rank={};rows.slice().sort(function(a,b){return b[1]-a[1]}).forEach(function(r,j){rank[r[0]]=j});
+ rows.sort(function(a,b){return X(a[0])-X(b[0])});   /* reading order = left to right across the map */
  rows.forEach(function(r){var li=document.createElement('li'),i=document.createElement('i'),n=document.createElement('span'),v=document.createElement('span');
-  i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);li.append(i,n,v);ul.appendChild(li)});
+  i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);var u=document.createElement('span');u.className='sr-only';u.textContent=' million';v.appendChild(u);li.style.setProperty('--rk',rank[r[0]]);li.append(i,n,v);ul.appendChild(li)});
  announce(d.label+', '+yr+(d.proj.indexOf(yr)>-1?' (UN projection)':'')+': '+rows.map(function(r){return r[0]+' '+fmt(r[1])+' million'}).join(', '));
  renderMobile();
  checkDone();
