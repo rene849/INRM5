@@ -28,7 +28,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;touch-acti
 .appbar{position:relative;z-index:40;flex:none;background:#fff;height:60px;display:flex}
 .appbar-inner{width:100%;max-width:var(--maxw);margin:0 auto;display:flex;align-items:stretch;padding:0 var(--pad);position:relative}
 .appbar-inner::after{content:'';position:absolute;left:var(--pad);right:var(--pad);bottom:0;height:1px;background:var(--rule)}
-.appbar-title{flex:1;display:flex;align-items:center;font-size:max(13px,calc(14px*var(--s,1)));font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appbar-title{flex:1;display:flex;align-items:center;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .appbar-tools{display:flex;align-items:center;gap:8px;flex:none}
 .icon-btn{--ring:var(--blue);--ring-fill:transparent;--glyph:var(--blue);width:var(--icon);height:var(--icon);padding:0;flex:none;display:block;border-radius:50%}
 .icon-btn svg{width:100%;height:100%;display:block;overflow:visible}
@@ -89,11 +89,11 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .ov.intro{background:rgba(31,46,122,.94);backdrop-filter:none;overflow:hidden;align-items:center;justify-content:center;padding:40px clamp(16px,4vw,32px)}
 .box{background:#fff;border-radius:0;max-width:720px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35),0 4px 16px rgba(0,0,0,.15)}
 .box-head{padding:18px 24px 14px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;flex:none}
-.box-head h2{font-size:18px;font-weight:700}
+.box-head h2{font-size:24px;font-weight:700;line-height:1.25}html.mobile .box-head h2,html.mobile #tblT{font-size:20px}
 .box-body{padding:18px 24px;overflow:auto;font-size:15px;line-height:1.72}
-.bib-entry{margin:0 0 14px;padding:0 0 0 24px;text-indent:-24px}
+.bib-entry{line-height:24px;margin:0 0 14px;padding:0 0 0 24px;text-indent:-24px}
 .card{position:relative;background:#fff;max-width:680px;width:100%;margin:auto;padding:70px clamp(20px,5vw,48px) 32px;text-align:center;border-radius:0;box-sizing:border-box;box-shadow:0 16px 48px rgba(0,0,0,.3),0 2px 10px rgba(0,0,0,.12)}
-.card p{font-size:clamp(14px,1.4vw,16px);line-height:1.6;margin:0 auto 24px;max-width:580px}
+.card p{font-size:16px;line-height:1.6;margin:0 auto 24px;max-width:580px}
 .card .illo{position:absolute;top:-55px;left:50%;transform:translateX(-50%);width:110px;height:110px}
 .card.done{padding-top:78px}.card.done .done-home{position:absolute;top:12px;right:12px;width:var(--icon);height:var(--icon)}html.mobile .card.done .row{flex-direction:column;align-items:center}html.mobile .card.done .btn{width:100%;max-width:240px}
 .card .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -166,7 +166,7 @@ html.tablet,html.mobile{--pad:16px}
 html.mobile,html.mobile body{overflow-x:hidden;overflow-y:visible;height:auto}
 html.mobile .screen{overflow:visible}html.mobile .screen.is-active{min-height:0}
 html.mobile .d-only{display:none}html.mobile .m-only{display:block}
-html.mobile .card p{margin-bottom:16px;text-align:left}
+html.mobile .card p{font-size:15px;margin-bottom:16px;text-align:left}
 /* cover: title, map, then the Start button */
 html.mobile .cover-text{display:contents}
 html.mobile .cover-stage{flex-direction:column;align-items:stretch;gap:20px}
@@ -180,7 +180,7 @@ html.mobile{--icon:44px}
 /* heading block */
 html.mobile .stage{padding:0 var(--pad) 8px}
 html.mobile .head{display:block;position:static;margin:0;min-height:0}
-html.mobile .ttl{font-size:clamp(22px,6.4vw,28px);font-weight:800;padding:16px 0 12px;border-bottom:1px solid var(--rule)}
+html.mobile .ttl{font-size:clamp(22px,6.4vw,28px);font-weight:700;padding:16px 0 12px;border-bottom:1px solid var(--rule)}
 html.mobile .yrbig{text-align:left;font-size:44px;margin-top:14px;width:auto}
 html.mobile .yrbig .proj{position:static;display:inline-block;margin:0 0 0 10px;font-size:18px;font-weight:700;letter-spacing:0;color:var(--ink);vertical-align:baseline;white-space:nowrap}
 /* map: whole world fitted to the screen (data is in the table below); optional enlarged, swipe-able view with labels */
@@ -2285,14 +2285,14 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
    Everything scales with the frame width, so it holds in every Moodle frame (drawers open or closed). */
 .cover-stage{font-size:clamp(30px,4.1vw,48px)}
 .cover-text{flex:0 0 7em;max-width:none;padding-top:1.7em;display:flex;flex-direction:column;align-items:flex-start}           /* column is always wide enough for "demographic" */
-.cover-title{font-size:1em;font-weight:700;letter-spacing:0;line-height:1.18;margin:0 0 1em}
+.cover-title{font-size:1em;font-weight:700;letter-spacing:0;line-height:1.35;margin:0 0 1em}
 .btn-start{min-width:152px;height:48px;font-size:16px}
 .cover-art{flex:1 1 0;margin-left:calc(21.5% - 7em);margin-right:-5.3%}  /* map ~84% of the width; its empty left margin tucks behind the title column */
 /* phones + portrait tablets: title, map, button stacked */
 html.mobile .cover-stage,html.tablet .cover-stage{--cw:calc(100vw - 56px);font-size:16px;flex-direction:column;align-items:stretch;gap:0;padding:28px 20px 36px;justify-content:flex-start}
 html.tablet .cover-stage{--cw:calc(100vw - 48px);padding-left:16px;padding-right:16px}
 html.mobile .cover-text,html.tablet .cover-text{display:contents}
-html.mobile .cover-title,html.tablet .cover-title{order:1;font-size:clamp(26px,10.25vw,40px);line-height:1.12;margin:0 0 clamp(20px,8.6vw,32px)}
+html.mobile .cover-title,html.tablet .cover-title{order:1;font-size:clamp(26px,10.25vw,40px);line-height:1.35;margin:0 0 clamp(20px,8.6vw,32px)}
 html.tablet .cover-title{font-size:clamp(34px,6.4vw,46px)}
 html.mobile .cover-art,html.tablet .cover-art{order:2;flex:none;width:min(calc(100% / .912),780px);margin:0 0 clamp(32px,calc(var(--cw) * .225),72px);position:relative;left:50%;transform:translateX(-50%)}
 html.mobile .btn-start,html.tablet .btn-start{order:3;width:100%;height:47px}
@@ -2448,6 +2448,7 @@ function pickTab(k){
 }
 function setYear(yr,proj){var yb=$('yrBig');yb.textContent=yr;if(proj){var pj=document.createElement('span');pj.className='proj';pj.textContent='(UN projection)';yb.appendChild(pj)}}
 /* sets a callout number; if it replaces a different number, only that number swipes in */
+var NUM_T=100,numTok=0;   /* year change: everything (bubbles, lines, new boxes, every number) starts together; numbers swap + swipe at this beat */
 function swipeNum(t){if(reduced)return;t.classList.remove('vsw');void t.getBoundingClientRect();t.classList.add('vsw')}
 /* quiet = the box is not fully visible yet (appearing): set the text only; its swipe is timed to the moment the box shows */
 function setNum(t,txt,quiet){var o=t.textContent;if(o===txt)return;t.textContent=txt;if(o&&!quiet)swipeNum(t)}
@@ -2528,11 +2529,13 @@ function drawCont(yr){
  if(entry){buildCont(g);applyLS();contLive=true;requestAnimationFrame(function(){g.classList.add('go')})}
  cancelAnimationFrame(contRAF);
  var jobs=Object.keys(CONT).map(function(n,i){var e=contEls[n],v=ctVal(yr,n);
-  return {e:e,r0:e.r,r1:CONT[n].r[yi],v0:entry?v:e.v,v1:v,d:entry?120:0,fade:entry}});
+  return {e:e,r0:e.r,r1:CONT[n].r[yi],v0:entry?v:e.v,v1:v,d:entry?120:0,fade:entry,hold:!entry&&!reduced&&fmt(v)!==e.vt.textContent,hv:+(e.vt.textContent.replace(/,/g,''))||v}});
  var dur=entry?800:650,ez=entry?easeOut3:easeIO3;
  function paint(j,p){var k=ez(p);j.e.r=j.r0+(j.r1-j.r0)*k;j.e.v=j.v0+(j.v1-j.v0)*k;
-  j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);setNum(j.e.vt,fmt(j.v1),j.fade)}
+  j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);setNum(j.e.vt,j.hold?fmt(j.hv):fmt(j.v1),j.fade||j.hold)}
  if(reduced){jobs.forEach(function(j){paint(j,1)});return}
+ var tok=++numTok;
+ if(!entry)setTimeout(function(){if(tok!==numTok)return;jobs.forEach(function(j){if(j.hold){j.hold=false;setNum(j.e.vt,fmt(j.v1),true);swipeNum(j.e.vt)}})},NUM_T);
  if(entry)setTimeout(function(){jobs.forEach(function(j){swipeNum(j.e.vt)})},760);   /* boxes fade in at .7s: all numbers swipe in together */
  var t0=performance.now();
  (function step(t){var live=false;jobs.forEach(function(j){var p=Math.max(0,Math.min(1,(t-t0-j.d)/dur));paint(j,p);if(p<1)live=true});if(live)contRAF=requestAnimationFrame(step)})(t0);
@@ -2613,24 +2616,25 @@ function paintSet(e){
  e.l.style.strokeDashoffset=(e.L*(1-e.lp)).toFixed(1);
  e.g.setAttribute('opacity',e.co.toFixed(3));
  e.g.setAttribute('transform','translate(0,'+((1-e.co)*5).toFixed(2)+')');
- setNum(e.vt,fmt(Math.round(e.val)),e.co<.999);
+ if(!e.hold)setNum(e.vt,fmt(Math.round(e.val)),e.co<.999);
 }
 function drawSet(yr){
  var k=cur.tab,d=DATA[k],g=$('bub'),entry=!setLive;
  if(entry){buildSet(g,k);applyLS();setLive=true}
  cancelAnimationFrame(setRAF);
  var rows={};d.rows[yr].forEach(function(r){rows[r[0]]=r[1]});
- var chans=[],idx=0;
+ var chans=[],idx=0,tok=++numTok;
+ setNames.forEach(function(n){setEls[n].hold=false});   /* a newer year supersedes any number still waiting to swap */
  setNames.forEach(function(n){
   var e=setEls[n],has=rows[n]!=null,isNew=has&&!e.on,v=has?rows[n]:e.val,ov=RAD_OVERRIDE[k+':'+n+':'+yr];
   var r1=has?(ov!=null?ov:RAD[k](v)):0,i=has?idx++:0;
   function ch(key,to,delay,dur,ez){chans.push({e:e,key:key,from:e[key],to:to,delay:delay,dur:dur,ez:ez})}
   if(isNew){e.val=v;                      /* a new entry: bubble grows, line draws out, callout fades in */
    if(entry){ch('rad',r1,120,800,easeOut3);ch('lp',1,400,550,easeIO3);ch('co',1,700,450,easeOut3)}
-   else{ch('rad',r1,0,500,easeOut3);ch('lp',1,250,450,easeIO3);ch('co',1,550,350,easeOut3)}
-   if(!reduced)setTimeout(function(){swipeNum(e.vt)},entry?760:610);   /* the number swipes in as its box shows, on every tab and year */
+   else{ch('rad',r1,0,500,easeOut3);ch('lp',1,0,350,easeIO3);ch('co',1,0,300,easeOut3)}
+   if(!reduced)setTimeout(function(){if(entry||tok===numTok)swipeNum(e.vt)},entry?760:NUM_T);   /* the number swipes in as its box shows, on every tab and year */
   }else if(has){                          /* still in the top list: bubble and number move to the new value */
-   ch('rad',r1,0,650,easeIO3);e.val=v;if(e.lp<1)ch('lp',1,0,350,easeIO3);if(e.co<1)ch('co',1,80,300,easeOut3);   /* finish any entry that a quick year change interrupted */
+   ch('rad',r1,0,650,easeIO3);if(!reduced&&fmt(Math.round(v))!==e.vt.textContent&&e.co>.999){e.hold=true;setTimeout(function(){if(tok!==numTok)return;e.hold=false;paintSet(e);swipeNum(e.vt)},NUM_T)}e.val=v;if(e.lp<1)ch('lp',1,0,350,easeIO3);if(e.co<1)ch('co',1,80,300,easeOut3);   /* finish any entry that a quick year change interrupted */
   }else if(e.on){                         /* dropped out: callout, line and bubble go away */
    ch('co',0,0,200,easeOut3);ch('lp',0,0,300,easeIO3);ch('rad',0,150,400,easeIO3);
   }
