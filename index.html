@@ -84,7 +84,7 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .tabcol:last-child .yrs{left:auto;right:0}
 .yr[aria-pressed=true]{height:34px;min-width:80px;background:var(--teal);color:var(--ink);font-size:max(18px,calc(19px*var(--s,1)))}
 /* ── modals ── */
-.ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.65);backdrop-filter:blur(3px);box-sizing:border-box;border-radius:8px}
+.ov{display:none;position:absolute;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(31,46,122,.94);backdrop-filter:none;box-sizing:border-box;border-radius:8px}
 .ov.open{display:flex}
 .ov.intro{background:rgba(31,46,122,.94);backdrop-filter:none;overflow:hidden;align-items:center;justify-content:center;padding:40px clamp(16px,4vw,32px)}
 .box{background:#fff;border-radius:0;max-width:720px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.35),0 4px 16px rgba(0,0,0,.15)}
@@ -2448,7 +2448,9 @@ function pickTab(k){
 }
 function setYear(yr,proj){var yb=$('yrBig');yb.textContent=yr;if(proj){var pj=document.createElement('span');pj.className='proj';pj.textContent='(UN projection)';yb.appendChild(pj)}}
 /* sets a callout number; if it replaces a different number, only that number swipes in */
-function setNum(t,txt){var o=t.textContent;if(o===txt)return;t.textContent=txt;if(o&&!reduced){t.classList.remove('vsw');void t.getBoundingClientRect();t.classList.add('vsw')}}
+function swipeNum(t){if(reduced)return;t.classList.remove('vsw');void t.getBoundingClientRect();t.classList.add('vsw')}
+/* quiet = the box is not fully visible yet (appearing): set the text only; its swipe is timed to the moment the box shows */
+function setNum(t,txt,quiet){var o=t.textContent;if(o===txt)return;t.textContent=txt;if(o&&!quiet)swipeNum(t)}
 function pickYear(yr){
  var k=cur.tab,d=DATA[k],ul=$('list');cur.year=yr;seen[k+':'+yr]=1;
  d.years.forEach(function(x){$('yr-'+x).setAttribute('aria-pressed',x===yr)});
@@ -2529,8 +2531,9 @@ function drawCont(yr){
   return {e:e,r0:e.r,r1:CONT[n].r[yi],v0:entry?v:e.v,v1:v,d:entry?120:0,fade:entry}});
  var dur=entry?800:650,ez=entry?easeOut3:easeIO3;
  function paint(j,p){var k=ez(p);j.e.r=j.r0+(j.r1-j.r0)*k;j.e.v=j.v0+(j.v1-j.v0)*k;
-  j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);setNum(j.e.vt,fmt(j.v1))}
+  j.e.c.setAttribute('r',j.e.r.toFixed(2));j.e.c.setAttribute('opacity',j.fade?Math.min(1,p*4)*.88:.88);setNum(j.e.vt,fmt(j.v1),j.fade)}
  if(reduced){jobs.forEach(function(j){paint(j,1)});return}
+ if(entry)setTimeout(function(){jobs.forEach(function(j){swipeNum(j.e.vt)})},760);   /* boxes fade in at .7s: all numbers swipe in together */
  var t0=performance.now();
  (function step(t){var live=false;jobs.forEach(function(j){var p=Math.max(0,Math.min(1,(t-t0-j.d)/dur));paint(j,p);if(p<1)live=true});if(live)contRAF=requestAnimationFrame(step)})(t0);
 }
@@ -2610,7 +2613,7 @@ function paintSet(e){
  e.l.style.strokeDashoffset=(e.L*(1-e.lp)).toFixed(1);
  e.g.setAttribute('opacity',e.co.toFixed(3));
  e.g.setAttribute('transform','translate(0,'+((1-e.co)*5).toFixed(2)+')');
- setNum(e.vt,fmt(Math.round(e.val)));
+ setNum(e.vt,fmt(Math.round(e.val)),e.co<.999);
 }
 function drawSet(yr){
  var k=cur.tab,d=DATA[k],g=$('bub'),entry=!setLive;
@@ -2625,6 +2628,7 @@ function drawSet(yr){
   if(isNew){e.val=v;                      /* a new entry: bubble grows, line draws out, callout fades in */
    if(entry){ch('rad',r1,120,800,easeOut3);ch('lp',1,400,550,easeIO3);ch('co',1,700,450,easeOut3)}
    else{ch('rad',r1,0,500,easeOut3);ch('lp',1,250,450,easeIO3);ch('co',1,550,350,easeOut3)}
+   if(!reduced)setTimeout(function(){swipeNum(e.vt)},entry?760:610);   /* the number swipes in as its box shows, on every tab and year */
   }else if(has){                          /* still in the top list: bubble and number move to the new value */
    ch('rad',r1,0,650,easeIO3);e.val=v;if(e.lp<1)ch('lp',1,0,350,easeIO3);if(e.co<1)ch('co',1,80,300,easeOut3);   /* finish any entry that a quick year change interrupted */
   }else if(e.on){                         /* dropped out: callout, line and bubble go away */
