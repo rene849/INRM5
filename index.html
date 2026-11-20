@@ -2294,9 +2294,9 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
    Button: 152 x 48 on desktop, full width x 60 on phones.  Map: land ~64% of the frame width (phones: edge to edge).
    Everything scales with the frame width, so it holds in every Moodle frame (drawers open or closed). */
 .cover-stage{font-size:clamp(30px,4.1vw,48px)}
-.cover-text{flex:0 0 7em;max-width:none;padding-top:1.7em;display:flex;flex-direction:column;align-items:flex-start}           /* column is always wide enough for "demographic" */
-.cover-title{font-size:1em;font-weight:700;letter-spacing:0;line-height:1.35;margin:0 0 1em}
-.btn-start{min-width:152px;height:48px;font-size:16px}
+.cover-text{flex:0 0 7em;max-width:none;display:flex;flex-direction:column;align-items:flex-start}           /* column is always wide enough for "demographic" */
+.cover-title{font-size:1em;font-weight:700;letter-spacing:0;line-height:1.35;margin:0 0 24px}
+.btn-start{min-width:156px;height:48px;font-size:16px}
 .cover-art{flex:1 1 0;margin-left:calc(21.5% - 7em);margin-right:-5.3%}  /* map ~84% of the width; its empty left margin tucks behind the title column */
 /* phones + portrait tablets: title, map, button stacked */
 html.mobile .cover-stage,html.tablet .cover-stage{--cw:calc(100vw - 56px);font-size:16px;flex-direction:column;align-items:stretch;gap:0;padding:28px 20px 36px;justify-content:flex-start}
@@ -2429,13 +2429,13 @@ function announce(t){var r=$('srStatus');r.textContent='';setTimeout(function(){
 function el(t,a,txt){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e}
 function show(id){['cover','main'].forEach(function(s){$(s).classList.toggle('is-active',s===id)});window.scrollTo(0,0);if(window.ceSettle)window.ceSettle();signalTop()}
 function overlays(){return ['cover','main'].map($)}
-function openOv(id){if(id==='doneOv')$('doneFin').textContent=mobileOn()?'Exit':'Finish';opener=document.activeElement;$(id).classList.add('open');fitOv(id);overlays().forEach(function(s){s.setAttribute('inert','')});var f=$(id).querySelector('button');if(f)f.focus({preventScroll:true});if(mobileOn())signalTop();setTimeout(function(){fitOv(id)},120)}
+function openOv(id){if(id==='doneOv')$('doneFin').textContent=mobileOn()?'Exit':'Finish';opener=document.activeElement;$(id).classList.add('open');fitOv(id);overlays().forEach(function(s){s.setAttribute('inert','');s.setAttribute('aria-hidden','true')});var f=$(id).querySelector('button');if(f)f.focus({preventScroll:true});if(mobileOn())signalTop();setTimeout(function(){fitOv(id)},120)}
 addEventListener('resize',function(){var o=document.querySelector('.ov.open');if(o)fitOv(o.id)});
 function startHint(){var h=document.querySelector('.hint');if(h)h.classList.add('go')}
 function fitOv(id){var o=$(id);document.body.style.minHeight='';if(!o.classList.contains('open'))return;
  var c=o.querySelector('.card,.box');if(!c)return;var bt=document.body.getBoundingClientRect().top,need=Math.ceil(c.getBoundingClientRect().bottom-bt+(o.classList.contains('intro')?36:24));
  var cs=getComputedStyle(o).paddingTop;if(need>document.body.getBoundingClientRect().height)document.body.style.minHeight=need+'px'}
-function closeOv(id){document.body.style.minHeight='';$(id).classList.remove('open');if(id==='introOv')startHint();if(!document.querySelector('.ov.open'))overlays().forEach(function(s){s.removeAttribute('inert')});if(opener&&opener.focus&&document.contains(opener))opener.focus()}
+function closeOv(id){document.body.style.minHeight='';$(id).classList.remove('open');if(id==='introOv')startHint();if(!document.querySelector('.ov.open'))overlays().forEach(function(s){s.removeAttribute('inert');s.removeAttribute('aria-hidden')});if(opener&&opener.focus&&document.contains(opener))opener.focus()}
 /* tabs */
 var tabSeen={};
 KEYS.forEach(function(k){var w=document.createElement('div');w.className='tabcol';w.id='col-'+k;var b=document.createElement('button');b.className='tab';b.id='tab-'+k;b.textContent=DATA[k].label;b.setAttribute('aria-pressed','false');b.onclick=function(){pickTab(k)};w.appendChild(b);$('tabs').appendChild(w)});
@@ -2713,7 +2713,7 @@ $('zOut').onclick=function(){if(this.getAttribute('aria-disabled')!=='true')setZ
 function checkDone(){
  if(doneShown)return;
  var all=KEYS.every(function(k){return DATA[k].years.every(function(y){return seen[k+':'+y]})});
- if(all){doneShown=true;if(mobileOn()&&matchMedia('(pointer:coarse)').matches)setTimeout(function(){openOv('doneOv')},900)}
+ if(all){doneShown=true;if(mobileOn()&&matchMedia('(pointer:coarse)').matches){overlays().forEach(function(s){s.setAttribute('inert','');s.setAttribute('aria-hidden','true')});if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();setTimeout(function(){openOv('doneOv')},900)}}
 }
 function signalTop(){try{window.parent.postMessage({type:'ce-top',app:'ce-interactive'},'*')}catch(err){}}
 /* navigation */
@@ -2769,7 +2769,7 @@ function fitScreens(){
     if(t==='mobile'){root.style.setProperty('--screen-min','auto');root.style.removeProperty('--mapw');root.style.setProperty('--s','1');if(zInit)setZoomLevel(ZL,{quiet:true});else{main.classList.add('lm');MAP_S=Math.min(1,(w-32)/976);applyLS()}tierChanged(changed);return}
   leaveZoom();main.classList.remove('lm');
   var cap=Math.max(480,usableH()-48);
-  var T=Math.min(660,cap);                       /* target frame height: M1's 578 base, a little more room for the map */
+  var T=Math.min(w>=1100?644:(w>=1000?614:578),cap);   /* one frame height for all four modules */
   var els=[cover,main],was=els.map(function(e){return e.classList.contains('is-active')});
   els.forEach(function(e){e.classList.add('is-active');e.style.minHeight='0'});
   root.style.setProperty('--mapw','976px');
@@ -2777,7 +2777,7 @@ function fitScreens(){
   var mapW=Math.min(m0,Math.max(780,Math.floor((T-chrome)*AR)));
   root.style.setProperty('--mapw',mapW+'px');root.style.setProperty('--s',Math.min(1,mapW/976).toFixed(3));
   MAP_S=mapW/976;applyLS();
-  var max=Math.max(Math.min(578,cap),Math.ceil(cover.getBoundingClientRect().height),Math.ceil(main.getBoundingClientRect().height));
+  var max=Math.max(T,Math.ceil(cover.getBoundingClientRect().height),Math.ceil(main.getBoundingClientRect().height));
   els.forEach(function(e,i){if(!was[i])e.classList.remove('is-active');e.style.minHeight=''});
   root.style.setProperty('--screen-min',Math.ceil(max)+'px');
   tierChanged(changed);
