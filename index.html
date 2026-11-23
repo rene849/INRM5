@@ -260,7 +260,7 @@ html.mobile .mctl{display:block;padding:12px var(--pad) 28px}
 .mtbl.full th,.mtbl.full td{padding:9px 8px;font-size:15px}.mtbl.full td{font-weight:700}
 .mwide{width:100%;margin:18px 0 8px}
 #tblT{font-size:20px;line-height:1.3;font-weight:700;margin:0 0 12px;padding-bottom:12px;border-bottom:1px solid var(--rule)}#tblT:focus{outline:none}.thint{font-style:italic;font-size:15px;margin:0 0 10px}.tnote{font-size:14px;margin:10px 0 0}.tclose{display:flex;justify-content:center;margin-top:22px}
-.mnav{display:flex;justify-content:center;flex-wrap:wrap;gap:18px 28px;margin-top:18px}
+.mnav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));justify-items:center;align-items:start;gap:18px 12px;margin-top:18px}.mnav .mnavb:only-child{grid-column:2}   /* previous always left, next/Finish always right, so the arrows keep one position on every topic */
 .mnavb{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:170px;white-space:nowrap;font-weight:700;font-size:15px;line-height:1.25;text-align:center;padding:4px}
 .mnavb svg{width:56px;height:56px;display:block}.mnavb:focus-visible circle{fill:var(--tint);stroke:var(--navy)}@media(hover:hover){.mnavb:hover circle{fill:var(--tint);stroke:var(--navy)}}
 
@@ -268,6 +268,7 @@ html.mobile .mctl{display:block;padding:12px var(--pad) 28px}
 .btn-start:active{background:var(--navy)}.btn:active{background:var(--navy)}.btn.ghost:active{background:var(--tint);color:var(--navy)}.tab:active{background:var(--blue)}.mnavb:active circle{fill:var(--tint);stroke:var(--navy)}
 .ttl:empty{display:none}   /* no empty heading for screen readers before a topic is chosen */
 
+html.mobile .done-home{display:none}   /* no Home icon on the last pop-up on a phone */
 html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Close icon returns to the start on desktop) */
 .card,.box{border-radius:0}
 /* Hover matches the original: year tabs grow slightly (no colour change); the topic block keeps its colour */
@@ -2272,7 +2273,7 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
  <div class="appbar"><div class="appbar-inner">
   <span class="appbar-title">Global demographic changes</span>
   <div class="appbar-tools">
-   <button class="icon-btn" id="homeBtn" aria-label="Home: return to the map"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><path class="ring" d="M16.5,32.5a16,16,0,1,0-16-16,16,16,0,0,0,16,16"/><polygon class="glyph" points="14.92 22.43 14.92 17.68 18.08 17.68 18.08 22.43 22.04 22.43 22.04 16.1 24.41 16.1 16.5 8.98 8.59 16.1 10.96 16.1 10.96 22.43 14.92 22.43"/></svg></button>
+   <button class="icon-btn" id="homeBtn" aria-label="Home: show the instructions"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><path class="ring" d="M16.5,32.5a16,16,0,1,0-16-16,16,16,0,0,0,16,16"/><polygon class="glyph" points="14.92 22.43 14.92 17.68 18.08 17.68 18.08 22.43 22.04 22.43 22.04 16.1 24.41 16.1 16.5 8.98 8.59 16.1 10.96 16.1 10.96 22.43 14.92 22.43"/></svg></button>
    <button class="icon-btn" id="bibBtn" aria-label="Open bibliography"><svg viewBox="0 0 32.83 32.83" aria-hidden="true" focusable="false"><path class="ring" d="M16.41,32.33A15.92,15.92,0,1,0,.5,16.41,15.92,15.92,0,0,0,16.41,32.33"/><path class="glyph" d="M22.66,20.23a8.16,8.16,0,0,0-2.43-.35,8.38,8.38,0,0,0-3.82,1V13a8.38,8.38,0,0,1,3.82-1,8.16,8.16,0,0,1,2.43.34Zm0-9.37a8.3,8.3,0,0,0-2.43-.34,6.5,6.5,0,0,0-3.82,1,6.45,6.45,0,0,0-3.81-1,6.5,6.5,0,0,0-3.82,1V21.72a.38.38,0,0,0,.35.35c.07,0,.1,0,.17,0a8.5,8.5,0,0,1,3.3-.76,6.45,6.45,0,0,1,3.81,1,8.38,8.38,0,0,1,3.82-1,7.12,7.12,0,0,1,3.3.73.34.34,0,0,0,.17,0,.38.38,0,0,0,.35-.34V11.56a5,5,0,0,0-1.39-.7"/></svg></button>
    <button class="icon-btn" id="exitBtn" aria-label="Close and return to the start"><svg viewBox="0 0 32.83 32.83" aria-hidden="true" focusable="false"><path class="ring" d="M16.41,32.33A15.92,15.92,0,1,0,.5,16.41,15.92,15.92,0,0,0,16.41,32.33"/><path class="xglyph" d="M22.02,10.8L10.81,22.02M10.81,10.8L22.02,22.02"/></svg></button>
   </div>
@@ -2737,7 +2738,7 @@ $('doneBib').onclick=function(){closeOv('doneOv');openOv('bibOv')};
 $('doneHome').onclick=function(){closeOv('doneOv');goMain()};
 $('doneFin').onclick=function(){closeOv('doneOv');goHome()};
 $('exitBtn').onclick=goHome;
-$('homeBtn').onclick=function(){goMain()};
+$('homeBtn').onclick=function(){openOv('introOv')};   /* Home shows the instructions layer */
 document.querySelectorAll('[data-close]').forEach(function(b){b.onclick=function(){closeOv(b.closest('.ov').id)}});
 document.querySelectorAll('.ov').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o&&o.id!=='introOv'&&o.id!=='doneOv')closeOv(o.id)})});
 document.addEventListener('keydown',function(e){
