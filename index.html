@@ -2769,7 +2769,7 @@ function fitScreens(){
     if(t==='mobile'){root.style.setProperty('--screen-min','auto');root.style.removeProperty('--mapw');root.style.setProperty('--s','1');if(zInit)setZoomLevel(ZL,{quiet:true});else{main.classList.add('lm');MAP_S=Math.min(1,(w-32)/976);applyLS()}tierChanged(changed);return}
   leaveZoom();main.classList.remove('lm');
   var cap=Math.max(480,usableH()-48);
-  var T=Math.min(w>=1100?644:(w>=1000?614:578),cap);   /* one frame height for all four modules */
+  var T=Math.min(610,cap);   /* one frame height for all four modules */
   var els=[cover,main],was=els.map(function(e){return e.classList.contains('is-active')});
   els.forEach(function(e){e.classList.add('is-active');e.style.minHeight='0'});
   root.style.setProperty('--mapw','976px');
