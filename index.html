@@ -268,6 +268,17 @@ html.mobile .mctl{display:block;padding:12px var(--pad) 28px}
 
 html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Close icon returns to the start on desktop) */
 .card,.box{border-radius:0}
+/* Hover matches the original: year tabs grow slightly (no colour change); the topic block keeps its colour */
+.yr{transform-origin:50% 100%;transition:transform .15s ease}
+@media(hover:hover){
+ html:not(.mobile) .yr:hover{background:var(--navy-deep);transform:scale(1.1)}
+ html:not(.mobile) .yr[aria-pressed=true]:hover{background:var(--teal);color:var(--ink);height:28px;transform:scale(1.1)}
+ html.mobile .yr:hover{background:transparent}
+ .tab:hover{background:#D9D9D9}
+ .tab.visited:hover,.tab[aria-pressed=true]:hover{background:var(--navy)}
+}
+.tab:active{background:#D9D9D9}.tab.visited:active,.tab[aria-pressed=true]:active{background:var(--navy)}
+@media(prefers-reduced-motion:reduce){.yr{transition:none}html:not(.mobile) .yr:hover,html:not(.mobile) .yr[aria-pressed=true]:hover{transform:none}}
 </style>
 </head>
 <body>
