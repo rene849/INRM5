@@ -2593,7 +2593,7 @@ var GEO={
   'Mumbai':{d:[650.7,185.3],b:[540,195,78,48],p:11,s:'R'},
   'Cairo':{d:[528.9,149.9],b:[435,108,58,48],p:12,s:'R'},
   'Delhi':{d:[653,158],b:[558,108,60,48],p:12,s:'R'},
-  'Beijing':{d:[735.1,124.1],b:[647,66,70,48],p:12,s:'R',v:16},
+  'Beijing':{d:[735.1,124.1],b:[643,48,70,48],p:12,s:'D'},
   'Dhaka':{d:[697.4,173.4],b:[746,188,67,48],p:9,s:'L'},
   'Kinshasa':{d:[484.6,260.4],b:[363,267,89,47],p:11,s:'R'}
  }
@@ -2603,11 +2603,12 @@ var GEO={
    used here; to reproduce Hype exactly set RAD_OVERRIDE['ctry:India:1980']=18.6. */
 var RAD={ctry:function(v){return v/20},city:function(v){return v/2}}, RAD_OVERRIDE={};
 var setLive=false,setRAF=0,setEls={},setNames=[];
-/* leader line: leaves the callout (side R/L: 14px below its top edge, T/B: straight from the edge), runs flat, then 45° to the dot;
+/* leader line (side D: see below): leaves the callout (side R/L: 14px below its top edge, T/B: straight from the edge), runs flat, then 45° to the dot;
    v = bends 45° over v units then drops straight to the dot (Pakistan) */
 function leaderPts(o){
  var b=o.b,d=o.d,s=o.s;
  if(s==='B'||s==='T')return [[d[0],s==='B'?b[1]+b[3]:b[1]],d];
+ if(s==='D'){var yb=b[1]+b[3],sx=d[0]>b[0]+b[2]/2?1:-1;return [[d[0]-sx*(d[1]-yb),yb],d]}   /* D = leaves the bottom edge and runs straight at 45° to the dot */
  var ax=s==='R'?b[0]+b[2]:b[0],ay=b[1]+14,sx=d[0]>ax?1:-1,dy=Math.abs(d[1]-ay);
  if(o.v)return [[ax,ay],[d[0]-sx*o.v,ay],[d[0],ay+(d[1]>ay?1:-1)*o.v],d];
  var ex=d[0]-sx*dy;
