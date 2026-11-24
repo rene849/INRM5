@@ -2284,7 +2284,7 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
   <div class="mzoom"><p class="mzh" id="mzh"></p><div class="mzc" role="group" aria-label="Zoom the map">
    <button type="button" class="icon-btn" id="zOut" aria-label="Zoom out"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><circle class="ring" cx="16.5" cy="16.5" r="16"/><path class="xglyph" d="M9.5 16.5H23.5"/></svg></button>
    <button type="button" class="icon-btn" id="zIn" aria-label="Zoom in"><svg viewBox="0 0 33 33" aria-hidden="true" focusable="false"><circle class="ring" cx="16.5" cy="16.5" r="16"/><path class="xglyph" d="M9.5 16.5H23.5M16.5 9.5V23.5"/></svg></button></div></div>
-  <div class="mapscroll" id="mapScroll"><div class="map-wrap" id="mapWrap" aria-hidden="true"><svg id="dataMap" class="map" viewBox="-12 -44 976 472" preserveAspectRatio="xMidYMid meet" focusable="false"><use href="#land" fill="#B3B3B3"/><g id="bub"></g></svg></div></div>
+  <div class="mapscroll" id="mapScroll"><div class="map-wrap" id="mapWrap"><svg id="dataMap" class="map" aria-hidden="true" viewBox="-12 -44 976 472" preserveAspectRatio="xMidYMid meet" focusable="false"><use href="#land" fill="#B3B3B3"/><g id="bub"></g></svg></div></div>
   <ul class="list" id="list" aria-label="Data for the selected year"></ul>
  </div>
  <div class="tabs" role="group" aria-label="Choose a topic" id="tabs"><p class="myhint">View population growth by clicking on the dates below</p></div>
@@ -2443,7 +2443,7 @@ function announce(t){var r=$('srStatus');r.textContent='';setTimeout(function(){
 function el(t,a,txt){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e}
 function show(id){['cover','main'].forEach(function(s){$(s).classList.toggle('is-active',s===id)});window.scrollTo(0,0);if(window.ceSettle)window.ceSettle();signalTop()}
 function overlays(){return ['cover','main'].map($)}
-function openOv(id){if(id==='doneOv')$('doneFin').textContent=mobileOn()?'Exit':'Finish';opener=document.activeElement;$(id).classList.add('open');fitOv(id);overlays().forEach(function(s){s.setAttribute('inert','');s.setAttribute('aria-hidden','true')});var f=[].slice.call($(id).querySelectorAll('button')).filter(function(x){return x.offsetParent!==null})[0];if(f)f.focus({preventScroll:true});if(mobileOn())signalTop();setTimeout(function(){fitOv(id)},120)}
+function openOv(id){if(id==='doneOv')$('doneFin').textContent=mobileOn()?'Exit':'Finish';opener=document.activeElement;$(id).classList.add('open');fitOv(id);overlays().forEach(function(s){s.setAttribute('inert','');s.setAttribute('aria-hidden','true')});var f=[].slice.call($(id).querySelectorAll('button')).filter(function(x){return x.offsetParent!==null})[0];var hd=(id==='bibOv'||id==='tblOv')?$(id).querySelector('h2'):null;if(hd){hd.setAttribute('tabindex','-1');hd.focus({preventScroll:true})}else if(f)f.focus({preventScroll:true});if(mobileOn())signalTop();setTimeout(function(){fitOv(id)},120)}
 addEventListener('resize',function(){var o=document.querySelector('.ov.open');if(o)fitOv(o.id)});
 function startHint(){var h=document.querySelector('.hint');if(h)h.classList.add('go')}
 function fitOv(id){var o=$(id);document.body.style.minHeight='';if(!o.classList.contains('open'))return;
@@ -2482,9 +2482,9 @@ function pickYear(yr){
  setYear(yr,d.proj.indexOf(yr)>-1);
  ul.innerHTML='';
  if(k==='cont')drawCont(yr);else drawSet(yr);
- var rows=d.rows[yr].slice(),G=k==='cont'?CONT:GEO[k],X=function(n){var o=G[n];return o?(o.c||o.d)[0]:0};
+ var rows=d.rows[yr].slice(),G=k==='cont'?CONT:GEO[k],X=function(n){var o=G[n];return o&&o.b?o.b[0]+o.b[2]/2:(o?(o.c||o.d)[0]:0)},Y=function(n){var o=G[n];return o&&o.b?o.b[1]:0};
  var rank={};rows.slice().sort(function(a,b){return b[1]-a[1]}).forEach(function(r,j){rank[r[0]]=j});
- rows.sort(function(a,b){return X(a[0])-X(b[0])});   /* reading order = left to right across the map */
+ rows.sort(function(a,b){return (X(a[0])-X(b[0]))||(Y(a[0])-Y(b[0]))});   /* reading order = left to right, then top to bottom, by the callout boxes as drawn */
  rows.forEach(function(r){var li=document.createElement('li'),i=document.createElement('i'),n=document.createElement('span'),v=document.createElement('span');
   i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);var u=document.createElement('span');u.className='sr-only';u.textContent=' million';v.appendChild(u);li.style.setProperty('--rk',rank[r[0]]);li.append(i,n,v);ul.appendChild(li)});
  announce(d.label+', '+yr+(d.proj.indexOf(yr)>-1?' (UN projection)':'')+': '+rows.map(function(r){return r[0]+' '+fmt(r[1])+' million'}).join(', '));
@@ -2730,7 +2730,7 @@ function checkDone(){
  var all=KEYS.every(function(k){return DATA[k].years.every(function(y){return seen[k+':'+y]})});
  if(all)doneShown=true;   /* the Completed layer opens only when the person presses Finish */
 }
-function signalTop(){try{window.parent.postMessage({type:'ce-top',app:'ce-interactive'},'*')}catch(err){}}
+function signalTop(){if((document.documentElement.clientWidth||window.innerWidth)>690)return;try{window.parent.postMessage({type:'ce-top',app:'ce-interactive'},'*')}catch(err){}}
 /* navigation */
 $('startBtn').onclick=function(){show('main');openOv('introOv');signalTop()};
 $('contBtn').onclick=function(){closeOv('introOv');if(mobileOn()){pickTab('cont');signalTop();focusTitle()}else{var t=$('tab-cont');if(t)t.focus()}};
