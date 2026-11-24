@@ -81,6 +81,13 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .cb .nm{font-size:16px;fill:var(--ink)}
 .cb .vl{font-size:19.5px;font-weight:800;fill:var(--red)}
 .list{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);list-style:none}
+html:not(.mobile) .map-wrap{position:relative}
+html:not(.mobile) .list{position:absolute;left:0;top:0;right:0;bottom:0;width:auto;height:auto;margin:0;padding:0;clip:auto;overflow:visible;list-style:none;pointer-events:none}
+html:not(.mobile) .list li{position:absolute;display:block;box-sizing:border-box;margin:0;padding:2px 6px;overflow:hidden;color:transparent;font-size:12px;line-height:1.25;pointer-events:auto;user-select:text;-webkit-user-select:text;cursor:text}
+html:not(.mobile) .list li i{display:none}
+html:not(.mobile) .list li .n,html:not(.mobile) .list li .v{display:block;color:transparent}
+html:not(.mobile) .list li ::selection,html:not(.mobile) .list li::selection{background:rgba(29,201,164,.35);color:transparent}
+
 .list li{display:flex;align-items:center;gap:8px;font-size:14px;padding:4px 0;border-bottom:1px solid var(--rule)}
 .list i{width:12px;height:12px;border-radius:50%;flex:none}
 .list .n{flex:1}.list .v{font-weight:800}
@@ -107,12 +114,11 @@ svg.map{width:100%;height:100%;display:block;overflow:visible}
 .card .illo{position:absolute;top:-55px;left:50%;transform:translateX(-50%);width:110px;height:110px}
 .card.done{padding-top:78px}.card.done .done-home{position:absolute;top:12px;right:12px;width:var(--icon);height:var(--icon)}html.mobile .card.done .row{flex-direction:column;align-items:center}html.mobile .card.done .btn{width:100%;max-width:240px}
 .card .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-html.tablet .cover-stage,html.mobile .cover-stage{flex-direction:column;align-items:flex-start;padding:32px 20px 36px;gap:36px}
-html.tablet .cover-text,html.mobile .cover-text{flex:none;max-width:100%;width:100%}
-html.tablet .cover-art,html.mobile .cover-art{width:100%;margin:0}
-html.tablet .cover-title{font-size:46px;line-height:1.1}
+html.mobile .cover-stage{flex-direction:column;align-items:flex-start;padding:32px 20px 36px;gap:36px}
+html.mobile .cover-text{flex:none;max-width:100%;width:100%}
+html.mobile .cover-art{width:100%;margin:0}
 html.mobile .cover-title{font-size:clamp(34px,11.5vw,46px);line-height:1.1}
-html.tablet .btn-start,html.mobile .btn-start{width:100%;height:50px}
+html.mobile .btn-start{width:100%;height:50px}
 /* list mode: map too small for readable callouts, so the values are shown as a text list instead (set by fitScreens) */
 .lm .cb,.lm .ld,.lm .cbx,.lm .cl,.lm .sl,.lm .sx{display:none}.lm .list li{order:var(--rk)}.lm .list{position:static;width:auto;height:auto;clip:auto;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:2px 20px;margin-top:8px}.lm .stage{padding-bottom:44px}
 /* ── forced-colours (Windows High Contrast): system colours, borders carry the states that colour used to ── */
@@ -182,7 +188,7 @@ html.mobile .card p{font-size:15px;margin-bottom:16px;text-align:left}
 /* cover: title, map, then the Start button */
 html.mobile .cover-text{display:contents}
 html.mobile .cover-stage{flex-direction:column;align-items:stretch;gap:20px}
-html.mobile .cover-title,html.tablet .cover-title{order:1;margin:0}html.mobile .cover-art{order:2;width:100%;margin:0}html.mobile .btn-start{order:3;width:100%}
+html.mobile .cover-title{order:1;margin:0}html.mobile .cover-art{order:2;width:100%;margin:0}html.mobile .btn-start{order:3;width:100%}
 /* top bar: large icons across the top, then the title line */
 html.mobile .appbar{height:auto}
 html.mobile .appbar-inner{flex-direction:column;padding:14px var(--pad) 0}
@@ -2313,14 +2319,12 @@ html:not(.mobile) #homeBtn{display:none}   /* Home icon is mobile-only (the Clos
 .btn-start{min-width:156px;height:48px;font-size:16px}
 .cover-art{flex:1 1 0;margin-left:calc(21.5% - 7em);margin-right:-5.3%}  /* map ~84% of the width; its empty left margin tucks behind the title column */
 /* phones + portrait tablets: title, map, button stacked */
-html.mobile .cover-stage,html.tablet .cover-stage{--cw:calc(100vw - 56px);font-size:16px;flex-direction:column;align-items:stretch;gap:0;padding:28px 20px 36px;justify-content:flex-start}
-html.tablet .cover-stage{--cw:calc(100vw - 48px);padding-left:16px;padding-right:16px}
-html.mobile .cover-text,html.tablet .cover-text{display:contents}
-html.mobile .cover-title,html.tablet .cover-title{order:1;font-size:clamp(26px,10.25vw,40px);line-height:1.35;margin:0 0 clamp(20px,8.6vw,32px)}
-html.tablet .cover-title{font-size:clamp(34px,6.4vw,46px)}
-html.mobile .cover-art,html.tablet .cover-art{order:2;flex:none;width:min(calc(100% / .912),780px);margin:0 0 clamp(32px,calc(var(--cw) * .225),72px);position:relative;left:50%;transform:translateX(-50%)}
-html.mobile .btn-start,html.tablet .btn-start{order:3;width:100%;height:47px}
-html.tablet .btn-start{width:min(100%,360px);align-self:center}
+html.mobile .cover-stage{--cw:calc(100vw - 56px);font-size:16px;flex-direction:column;align-items:stretch;gap:0;padding:28px 20px 36px;justify-content:flex-start}
+html.tablet .cover-stage{font-size:clamp(30px,4.4vw,34px);padding-left:clamp(18px,4vw,52px);padding-right:clamp(18px,4vw,52px)}   /* tablet cover = desktop layout, same title size and left edge as the other modules */
+html.mobile .cover-text{display:contents}
+html.mobile .cover-title{order:1;font-size:clamp(26px,10.25vw,40px);line-height:1.35;margin:0 0 clamp(20px,8.6vw,32px)}
+html.mobile .cover-art{order:2;flex:none;width:min(calc(100% / .912),780px);margin:0 0 clamp(32px,calc(var(--cw) * .225),72px);position:relative;left:50%;transform:translateX(-50%)}
+html.mobile .btn-start{order:3;width:100%;height:47px}
 </style>
 <defs>
 </defs>
@@ -2476,6 +2480,20 @@ var NUM_T=100,numTok=0;   /* year change: everything (bubbles, lines, new boxes,
 function swipeNum(t){if(reduced)return;t.classList.remove('vsw');void t.getBoundingClientRect();t.classList.add('vsw')}
 /* quiet = the box is not fully visible yet (appearing): set the text only; its swipe is timed to the moment the box shows */
 function setNum(t,txt,quiet){var o=t.textContent;if(o===txt)return;t.textContent=txt;if(o&&!quiet)swipeNum(t)}
+/* Desktop/tablet: the data list is laid exactly over the callout boxes (real text, see-through), so the screen reader's
+   highlight, mouse selection and read-aloud tools land on the callout the learner sees. Phones keep their own list layouts. */
+function placeList(){
+ var ul=$('list'),wrap=$('mapWrap');if(!ul||!wrap)return;
+ var phone=document.documentElement.classList.contains('mobile');
+ var lis=[].slice.call(ul.children);
+ if(phone){lis.forEach(function(li){li.style.left=li.style.top=li.style.width=li.style.height=''});return}
+ var wr=ul.getBoundingClientRect(),gs=[].slice.call(document.querySelectorAll('#bub .lbl'));
+ lis.forEach(function(li){var nm=li.querySelector('.n'),name=nm&&nm.textContent;
+  var g=gs.filter(function(x){var q=x.querySelector('.nm');return q&&q.textContent===name})[0];
+  var r=g&&g.firstChild&&g.firstChild.getBoundingClientRect&&g.firstChild.getBoundingClientRect();
+  if(!r||!r.width){li.style.left=li.style.top='0';li.style.width=li.style.height='1px';return}
+  li.style.left=(r.left-wr.left)+'px';li.style.top=(r.top-wr.top)+'px';li.style.width=r.width+'px';li.style.height=r.height+'px'})}
+addEventListener('resize',function(){clearTimeout(window._plT);window._plT=setTimeout(placeList,200)});
 function pickYear(yr){
  var k=cur.tab,d=DATA[k],ul=$('list');cur.year=yr;seen[k+':'+yr]=1;
  d.years.forEach(function(x){$('yr-'+x).setAttribute('aria-pressed',x===yr)});
@@ -2486,7 +2504,8 @@ function pickYear(yr){
  var rank={};rows.slice().sort(function(a,b){return b[1]-a[1]}).forEach(function(r,j){rank[r[0]]=j});
  rows.sort(function(a,b){return (X(a[0])-X(b[0]))||(Y(a[0])-Y(b[0]))});   /* reading order = left to right, then top to bottom, by the callout boxes as drawn */
  rows.forEach(function(r){var li=document.createElement('li'),i=document.createElement('i'),n=document.createElement('span'),v=document.createElement('span');
-  i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);var u=document.createElement('span');u.className='sr-only';u.textContent=' million';v.appendChild(u);li.style.setProperty('--rk',rank[r[0]]);li.append(i,n,v);ul.appendChild(li)});
+  i.style.background=COL[LOC[r[0]][2]];n.className='n';n.textContent=r[0];v.className='v';v.textContent=fmt(r[1]);var u=document.createElement('span');u.className='sr-only';u.textContent=' million';v.appendChild(u);li.style.setProperty('--rk',rank[r[0]]);li.append(i,n,document.createTextNode(' '),v);ul.appendChild(li)});
+ placeList();setTimeout(placeList,300);setTimeout(placeList,1100);
  announce(d.label+', '+yr+(d.proj.indexOf(yr)>-1?' (UN projection)':'')+': '+rows.map(function(r){return r[0]+' '+fmt(r[1])+' million'}).join(', '));
  renderMobile();
  checkDone();
@@ -2862,6 +2881,31 @@ setTimeout(_rd,2500);
     setTimeout(reportHeight,300);
   });
   reportHeight();
+})();
+</script>
+<script>
+/* Focus visibility inside the Moodle page: tells the Moodle snippet where keyboard focus / the screen-reader cursor is,
+   so it can scroll just enough to clear Moodle's fixed header (WCAG 2.4.11). No message is sent for mouse use. */
+(function(){
+  if(window.self===window.top) return;
+  var timer, lastPointer=0;
+  addEventListener('pointerdown',function(){ lastPointer=Date.now(); },true);
+  function rectOf(){
+    var a=document.activeElement, r=null;
+    if(a && a!==document.body && a!==document.documentElement && !(a.closest && a.closest('[inert]'))) r=a.getBoundingClientRect();
+    else { var s=getSelection&&getSelection(); if(s && s.rangeCount && !s.isCollapsed){ r=s.getRangeAt(0).getBoundingClientRect(); } else if(s && s.rangeCount){ var n=s.anchorNode&&(s.anchorNode.nodeType===1?s.anchorNode:s.anchorNode.parentElement); if(n) r=n.getBoundingClientRect(); } }
+    return r;
+  }
+  function report(){
+    if(Date.now()-lastPointer<600) return;
+    clearTimeout(timer);
+    timer=setTimeout(function(){
+      var r=rectOf(); if(!r || (!r.width && !r.height)) return;
+      try{ window.parent.postMessage({type:'ce-focus',app:'ce-interactive',top:Math.round(r.top),bottom:Math.round(r.bottom)},'*'); }catch(e){}
+    },120);
+  }
+  document.addEventListener('focusin',report,true);
+  document.addEventListener('selectionchange',report);
 })();
 </script>
 </body>
