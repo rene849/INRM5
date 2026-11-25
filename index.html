@@ -2908,5 +2908,14 @@ setTimeout(_rd,2500);
   document.addEventListener('selectionchange',report);
 })();
 </script>
+<style id="phone-cover-standard">
+/* PHONE COVER STANDARD (same in all four modules): 560px frame, 28px top/bottom and 20px side padding,
+   title at the top, art centred in the space between, full-width 48px Start at the bottom. */
+html.mobile #cover .cover-stage{min-height:560px;padding:28px 20px 28px;justify-content:flex-start;gap:0}
+html.mobile .cover-title{font-size:clamp(26px,10.25vw,40px);line-height:1.35;margin:0 0 16px}
+html.mobile .cover-art{flex:1 1 0;min-height:0;aspect-ratio:auto;height:auto;margin:0}
+html.mobile .cover-art svg.map{position:absolute;inset:0;width:100%;height:100%;max-height:none}
+html.mobile .btn-start{height:48px;margin-top:16px;flex:none}
+</style>
 </body>
 </html>
